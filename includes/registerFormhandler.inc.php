@@ -34,9 +34,9 @@ $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
 // Choose table based on role
 if ($role === "student") {
-    $sql = "INSERT INTO students (username, mname, email, pwd) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO students (username, studentName, email, pwd) VALUES (?, ?, ?, ?)";
 } elseif ($role === "teacher") {
-    $sql = "INSERT INTO teachers (username, mname, email, pwd) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO teachers (username, teacherName, email, pwd) VALUES (?, ?, ?, ?)";
 } else {
     redirectWithData("invalidrole", $email, $username, $mname);
 }

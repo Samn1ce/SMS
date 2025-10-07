@@ -11,8 +11,16 @@
     <form action="includes/loginFormhandler.inc.php" method="post">
         <div class="flex gap-4">
             <div>
-                <input type="text" name="email" placeholder="email" class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' ?>" />
-                <?php if (isset($_GET['error']) && $_GET['error'] === 'emptyfields') { echo '<p class="text-red-500 text-xs">This field is empty</p>'; } ?>
+                <input 
+                    type="text" name="email" 
+                    placeholder="email" 
+                    class="w-60 h-10 border mt-2 <?= 
+                        (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' 
+                    ?>" 
+                />
+                    <?php 
+                        if (isset($_GET['error']) && $_GET['error'] === 'emptyfields') { echo '<p class="text-red-500 text-xs">This field is empty</p>';}
+                    ?>
             </div>
             <select name="role" class="w-60 h-10 border border-black mt-2">
                 <option value="">What's your role?</option>
@@ -20,8 +28,15 @@
                 <option value="teacher">Teacher</option>
             </select>
             <div>
-                <input type="password" name="pwd" placeholder="password" class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' ?>" />
-                <?php if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields')) { echo '<p class="text-red-500 text-xs">This field is empty</p>'; } ?>
+                <input 
+                    type="password" 
+                    name="pwd" 
+                    placeholder="password" 
+                    class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' ?>" 
+                />
+                <?php 
+                    if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields')) { echo '<p class="text-red-500 text-xs">This field is empty</p>'; } 
+                ?>
             </div>
         </div>
         <div class="flex gap-4">

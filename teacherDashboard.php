@@ -19,12 +19,13 @@ session_start();
         ?>
     </p>
     <div x-data="{ open: false }">
-    <button  class="border-2 border-black cursor-pointer p-3" x-on:click="open = ! open">Log out</button>
- 
-    <div x-show="open">
-        <div>
-            <p>Are you sure you want to log out</p>
-            <a href="logout.php" class="text-blue-400 underline">Yes</a> / <a x-on:click="open = ! open" href="#" class="text-blue-400 underline" >No</a>
+        <button  class="border-2 border-black cursor-pointer p-3" x-on:click="open = ! open">Log out</button>
+    
+        <div x-show="open">
+            <div>
+                <p>Are you sure you want to log out</p>
+                <a href="logout.php" class="text-blue-400 underline">Yes</a> / <a x-on:click="open = ! open" href="#" class="text-blue-400 underline" >No</a>
+            </div>
         </div>
     </div>
 </body>

@@ -9,10 +9,31 @@
 <body>
     <h1 class="text-blue-500 text-xl">REGISTER</h1>
     <form action="includes/registerFormhandler.inc.php" method="post">
-        <input type="text" name="email" placeholder="email" value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>" class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-black') ?>" />
-        <input type="text" name="mname" placeholder="name" value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '') ? 'border-red-500' : 'border-black') ?>" />
-        <input type="text" name="username" placeholder="username" value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>" class="w-60 border h-10 mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['username'] === '') ? 'border-red-500' : 'border-black') ?>" />
-        <select name="role" class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-black') ?>">
+        <input 
+            type="text" 
+            name="email" 
+            placeholder="email" 
+            value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>" 
+            class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-black') ?>" 
+        />
+        <input 
+            type="text" 
+            name="mname" 
+            placeholder="name" 
+            value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" 
+            class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '') ? 'border-red-500' : 'border-black') ?>" 
+        />
+        <input 
+            type="text" 
+            name="username" 
+            placeholder="username" 
+            value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>" 
+            class="w-60 border h-10 mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['username'] === '') ? 'border-red-500' : 'border-black') ?>" 
+        />
+        <select 
+            name="role" 
+            class="w-60 h-10 border mt-2 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-black') ?>"
+        >
             <option value="none">What's your role?</option>
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
