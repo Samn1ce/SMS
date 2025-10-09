@@ -16,11 +16,25 @@ mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
-$showModal = $row["login_count"] <= 1;
+$showModal = $row["login_count"] < 1;
 
 // Fetch available subjects
 $subjectsQuery = "SELECT * FROM subjects";
 $subjectsResult = mysqli_query($conn, $subjectsQuery);
+
+function getSelectedSubjects($conn, $student_id) {
+    $subjectsSql = "SELECT subject_name FROM student_subjects WHERE student_id = ?";
+    $stmt = mysqli_prepare($conn, $subjectsSql);
+    mysqli_stmt_bind_param($stmt, "i", $student_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $subjects = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $subjects[] = $row['subject_name'];
+    }
+    return $subjects;
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,13 +55,13 @@ $subjectsResult = mysqli_query($conn, $subjectsQuery);
         </p>
    </div>
    <div>
-    <a href="">Check Result</a>
-    <a href="">Check Attendance</a>
+    <a href="" class="text-blue-800 underline">Check Result</a>
+    <a href="" class="text-blue-800 underline">Check Attendance</a>
    </div>
 
     <div x-data="{ showModal: <?= $showModal ? 'true' : 'false' ?> }" class="w-full flex flex-col items-center absolute">
   <!-- SUBJECT SELECTION MODAL -->
-        <div x-if="showModal">
+        <div x-show="showModal">
             <div class="bg-zinc-300 p-6 rounded-xl w-96 shadow-lg">
                 <h2 class="text-xl font-semibold mb-4 text-center">Select Your Subjects</h2>
 
@@ -72,7 +86,16 @@ $subjectsResult = mysqli_query($conn, $subjectsQuery);
             </div>
         </div>
     </div>
-
+    <br/>
+    <div>
+        <p class="font-bold">Your Subjects are:</p>
+        <ul>
+            <?php foreach (getSelectedSubjects($conn, $id) as $subject): ?>
+                <li><?= htmlspecialchars($subject) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <br/>
    <div x-data="{ open: false }">
         <button  class="border-2 border-black cursor-pointer p-3" x-on:click="open = ! open">Log out</button>
     
