@@ -98,7 +98,7 @@ function getSelectedSubjects($conn, $student_id) {
     <br/>
    <div x-data="{ open: false }">
         <button  class="border-2 border-black cursor-pointer p-3" x-on:click="open = ! open">Log out</button>
-    
+
         <div x-show="open">
             <div>
                 <p>Are you sure you want to log out</p>
