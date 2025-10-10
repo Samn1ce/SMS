@@ -1,3 +1,9 @@
+<?php
+    include 'includes/dbh.inc.php';
+    $classQuery = "SELECT * FROM classes";
+    $classResult = mysqli_query($conn, $classQuery);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +43,14 @@
             <option value="none">What's your role?</option>
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
+        </select>
+        <select name="class_id" id="class" required class="border p-2 rounded w-60 h-10">
+            <option value="">-- Select Class --</option>
+            <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
+            <option value="<?= $class['id'] ?>">
+                <?= htmlspecialchars($class['class_name']) ?>
+            </option>
+            <?php endwhile; ?>
         </select>
         <input type="password" name="pwd" placeholder="password" class="w-60 h-10 border border-black mt-2" />
         <input type="password" name="confirmPwd" placeholder="confirm password" class="w-60 h-10 border border-black mt-2" />

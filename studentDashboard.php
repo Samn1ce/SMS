@@ -10,13 +10,25 @@ if (!isset($_SESSION["user_id"])) {
 $id = $_SESSION["user_id"];
 
 // Fetch login count
-$sql = "SELECT login_count FROM students WHERE id = ?";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$loginStmt = mysqli_prepare($conn, "SELECT login_count FROM students WHERE id = ?");
+mysqli_stmt_bind_param($loginStmt, "i", $id);
+mysqli_stmt_execute($loginStmt);
+$result = mysqli_stmt_get_result($loginStmt);
 $row = mysqli_fetch_assoc($result);
 $showModal = $row["login_count"] < 1;
+
+// 2. Fetch student's class name using JOIN
+$classStmt = mysqli_prepare($conn, "
+    SELECT class_name 
+    FROM classes 
+    JOIN students ON students.class_id = classes.id 
+    WHERE students.id = ?
+");
+mysqli_stmt_bind_param($classStmt, "i", $id);
+mysqli_stmt_execute($classStmt);
+$classResult = mysqli_stmt_get_result($classStmt);
+$classRow = mysqli_fetch_assoc($classResult);
+$className = $classRow['class_name'] ?? 'Unknown';
 
 // Fetch available subjects
 $subjectsQuery = "SELECT * FROM subjects";
@@ -50,7 +62,7 @@ function getSelectedSubjects($conn, $student_id) {
    <div>
         <p>
         <?php
-            echo "Hello <b>" . $_SESSION["student_name"] . "</b>, you're a " . $_SESSION["role"];
+            echo "Hello <b>" . htmlspecialchars($_SESSION["student_name"]) . "</b>(" . htmlspecialchars($className) . "), you're a " . $_SESSION["role"];
         ?>
         </p>
    </div>
@@ -89,7 +101,7 @@ function getSelectedSubjects($conn, $student_id) {
     <br/>
     <div>
         <p class="font-bold">Your Subjects are:</p>
-        <ul>
+        <ul class="list-disc pl-6">
             <?php foreach (getSelectedSubjects($conn, $id) as $subject): ?>
                 <li><?= htmlspecialchars($subject) ?></li>
             <?php endforeach; ?>

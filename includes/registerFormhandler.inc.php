@@ -8,6 +8,7 @@ $confirmPwd = $_POST["confirmPwd"];
 $username = $_POST["username"];
 $mname = $_POST["mname"];
 $role = $_POST["role"];
+$class = $_POST["class_id"];
 
 // Function to easily redirect with old input values
 function redirectWithData($error, $email, $username, $mname) {
@@ -20,7 +21,7 @@ function redirectWithData($error, $email, $username, $mname) {
 }
 
 // Validate all fields
-if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role)) {
+if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role) || empty($class)) {
     redirectWithData("emptyfields", $email, $username, $mname);
 }
 
@@ -34,7 +35,7 @@ $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
 // Choose table based on role
 if ($role === "student") {
-    $sql = "INSERT INTO students (username, studentName, email, pwd) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO students (username, studentName, email, pwd, class_id) VALUES (?, ?, ?, ?, ?)";
 } elseif ($role === "teacher") {
     $sql = "INSERT INTO teachers (username, teacherName, email, pwd) VALUES (?, ?, ?, ?)";
 } else {
@@ -43,7 +44,7 @@ if ($role === "student") {
 
 // Insert user data
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "ssss", $username, $mname, $email, $hashedPwd);
+mysqli_stmt_bind_param($stmt, "ssssi", $username, $mname, $email, $hashedPwd, $class);
 
 if (mysqli_stmt_execute($stmt)) {
     header("Location: ../login.php?register=success");
