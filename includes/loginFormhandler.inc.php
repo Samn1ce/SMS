@@ -32,6 +32,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     if (password_verify($pwd, $row["pwd"])) {
         $_SESSION["user_id"] = $row["id"];
         $_SESSION["username"] = $row["username"];
+        $_SESSION["student_name"] = $row["studentName"];
         $_SESSION["role"] = $role;
 
         // Redirect to correct dashboard

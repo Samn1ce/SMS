@@ -50,12 +50,12 @@ function getSelectedSubjects($conn, $student_id) {
    <div>
         <p>
         <?php
-            echo "Hello " . $_SESSION["username"] . ", you're a " . $_SESSION["role"];
+            echo "Hello <b>" . $_SESSION["student_name"] . "</b>, you're a " . $_SESSION["role"];
         ?>
         </p>
    </div>
    <div>
-    <a href="" class="text-blue-800 underline">Check Result</a>
+    <a href="studentResult.php" class="text-blue-800 underline">Check Result</a>
     <a href="" class="text-blue-800 underline">Check Attendance</a>
    </div>
 
