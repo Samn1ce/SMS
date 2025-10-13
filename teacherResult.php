@@ -17,14 +17,21 @@
 </head>
 <body>
     <select name="class_id" id="class" required class="border p-2 rounded w-60 h-10">
-            <option value="">-- Select Class --</option>
-            <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
+        <option value="">-- Select Class --</option>
+        <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
             <option value="<?= $class['id'] ?>">
                 <?= htmlspecialchars($class['class_name']) ?>
             </option>
-            <?php endwhile; ?>
-        </select>
+        <?php endwhile; ?>
+    </select>
     <br/>
+    <input type="text" placeholder="Search students..." name="searchQuery" class="w-60 h-10 border" <?php if($_POST['class_id'] === "") {?> disabled <?php} ?> />
+    <div>
+        <h3 class="font-bold text-lg">Students</h3>
+        <ul class="list-disc pl-6">
+            <li>Samuel Adewale(Jss3)</li>
+        </ul>
+    </div>
     <form action="" method="POST">
 
     </form>
