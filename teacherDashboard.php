@@ -18,9 +18,13 @@ session_start();
         echo "Hello " . $_SESSION["username"] . ", you're a " . $_SESSION["role"];
         ?>
     </p>
+
+    <div>
+        <a href="teacherResult.php" class="underline text-blue-800">Assign Results</a>
+    </div>
+
     <div x-data="{ open: false }">
         <button  class="border-2 border-black cursor-pointer p-3" x-on:click="open = ! open">Log out</button>
-    
         <div x-show="open">
             <div>
                 <p>Are you sure you want to log out</p>

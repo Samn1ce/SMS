@@ -21,8 +21,10 @@ function redirectWithData($error, $email, $username, $mname) {
 }
 
 // Validate all fields
-if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role) || empty($class)) {
-    redirectWithData("emptyfields", $email, $username, $mname);
+if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role)) {
+    if ($role === "student") {
+        redirectWithData("emptyfields", $email, $username, $mname);
+    }
 }
 
 // Confirm password check
@@ -44,7 +46,13 @@ if ($role === "student") {
 
 // Insert user data
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "ssssi", $username, $mname, $email, $hashedPwd, $class);
+// mysqli_stmt_bind_param($stmt, "ssssi", $username, $mname, $email, $hashedPwd, $class);
+if ($role === "student") {
+    mysqli_stmt_bind_param($stmt, "ssssi", $username, $mname, $email, $hashedPwd, $class);
+} else {
+    mysqli_stmt_bind_param($stmt, "ssss", $username, $mname, $email, $hashedPwd);
+
+}
 
 if (mysqli_stmt_execute($stmt)) {
     header("Location: ../login.php?register=success");

@@ -44,7 +44,7 @@
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
         </select>
-        <select name="class_id" id="class" required class="border p-2 rounded w-60 h-10">
+        <select name="class_id" id="class" class="border p-2 rounded w-60 h-10">
             <option value="">-- Select Class --</option>
             <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
             <option value="<?= $class['id'] ?>">
