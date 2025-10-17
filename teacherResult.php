@@ -47,7 +47,10 @@
             <template x-if="students.length > 0">
                 <ul class="list-disc pl-6 space-y-1">
                     <template x-for="student in students" :key="student.id">
-                        <li x-text="student.name + ' (' + student.class_name + ')'"></li>
+                        <div class="flex items-center justify-between w-80">
+                            <li x-text="student.name + ' (' + student.class_name + ')'"></li>
+                            <a href="studentProfile.php" class="border border-black px-2 py-1 rounded cursor-pointer hover:bg-gray-100">View Student</a>
+                        </div>
                     </template>
                 </ul>
             </template>
