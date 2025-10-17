@@ -84,13 +84,6 @@
                     const res = await fetch(`includes/getStudents.php?class_id=${this.selectedClass}&search=${encodeURIComponent(this.search)}`);
                     this.students = await res.json();
                 },
-
-                // get filteredStudents() {
-                //     const query = this.search.toLowerCase();
-                //     return this.students.filter(s => 
-                //         s.studentName.toLowerCase().includes(query)
-                //     );
-                // }
             }
         }
     </script>
