@@ -8,9 +8,9 @@ $search = $_GET['search'] ?? '';
 if (!$class_id) {
     echo json_encode([]);
     exit;
-}   
+}
 
-$sql = "SELECT s.id, s.studentName AS name, c.class_name 
+$sql = "SELECT s.id, s.studentName AS name, c.class_name
         FROM students s
         JOIN classes c ON s.class_id = c.id
         WHERE s.class_id = ? AND s.studentName LIKE ?";

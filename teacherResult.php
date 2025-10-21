@@ -49,7 +49,7 @@
                     <template x-for="student in students" :key="student.id">
                         <div class="flex items-center justify-between w-80">
                             <li x-text="student.name + ' (' + student.class_name + ')'"></li>
-                            <a href="studentProfile.php" class="border border-black px-2 py-1 rounded cursor-pointer hover:bg-gray-100">View Student</a>
+                            <a :href="'studentProfile.php?id=' + student.id" class="border border-black px-2 py-1 rounded cursor-pointer hover:bg-gray-100">View Student</a>
                         </div>
                     </template>
                 </ul>
