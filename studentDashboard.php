@@ -67,7 +67,7 @@ function getSelectedSubjects($conn, $student_id) {
         </p>
    </div>
    <div>
-    <a href="studentResult.php" class="text-blue-800 underline">Check Result</a>
+    <a href="'studentResult.php?id=${$id}'" class="text-blue-800 underline">Check Result</a>
     <a href="" class="text-blue-800 underline">Check Attendance</a>
    </div>
 
@@ -108,8 +108,11 @@ function getSelectedSubjects($conn, $student_id) {
         </ul>
     </div>
     <br/>
+
+    <a href="'studentProfile.php?id=<?php $id ?>'" class="px-2 py-1 border bg-zinc-200 rounded">View Profile</a>
+    <br/>
    <div x-data="{ open: false }">
-        <button  class="border-2 border-black cursor-pointer p-3" x-on:click="open = ! open">Log out</button>
+        <button  class="border-2 border-black cursor-pointer p-3 mt-2" x-on:click="open = ! open">Log out</button>
 
         <div x-show="open">
             <div>

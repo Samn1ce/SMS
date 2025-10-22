@@ -1,3 +1,8 @@
+<?php 
+    session_start();
+    include 'includes/dbh.inc.php'; 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +13,19 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Student Result</h1>
+    <p>Student name: </p>
+    <br/>
+    <ul class="list-disc pl-6">
+        <li>
+            <p>maths: <span>A1</span></p>
+        </li>
+        <li>
+            <p>English: <span>E8</span></p>
+        </li>
+        <li>
+            <p>music: <span>B3</span></p>
+        </li>
+    </ul>
 </body>
 </html>
