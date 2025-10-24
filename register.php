@@ -55,8 +55,10 @@
         </select>
         <select name="sex" class="border p-2 rounded w-60 h-10">
             <option value="">-- Select Sex --</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
         </select>
-        <input type="date" name="dob" placeholder="DOB" class="w-60 h-10 border border-black mt-2" />
+        <input type="date" name="dob" class="w-60 h-10 border border-black mt-2" />
         <input type="password" name="pwd" placeholder="password" class="w-60 h-10 border border-black mt-2" />
         <input type="password" name="confirmPwd" placeholder="confirm password" class="w-60 h-10 border border-black mt-2" />
         <button class="block border border-black mt-2 p-2 cursor-pointer">REGISTER</button>

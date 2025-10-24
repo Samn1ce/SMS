@@ -9,7 +9,7 @@ $username = $_POST["username"];
 $mname = $_POST["mname"];
 $role = $_POST["role"];
 $class = $_POST["class_id"];
-$sex = $_POST["sex"];
+$gender = $_POST["gender"];
 $dob = $_POST["dob"];
 
 // Function to easily redirect with old input values
@@ -23,7 +23,7 @@ function redirectWithData($error, $email, $username, $mname) {
 }
 
 // Validate all fields
-if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role)) {
+if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role) || empty($dob) || empty($gender)) {
     if ($role === "student") {
         redirectWithData("emptyfields", $email, $username, $mname);
     }
@@ -39,20 +39,19 @@ $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
 // Choose table based on role
 if ($role === "student") {
-    $sql = "INSERT INTO students (username, studentName, email, pwd, class_id) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO students (username, studentName, email, pwd, class_id, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?)";
 } elseif ($role === "teacher") {
-    $sql = "INSERT INTO teachers (username, teacherName, email, pwd) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO teachers (username, teacherName, email, pwd, gender, dob) VALUES (?, ?, ?, ?, ?, ?)";
 } else {
     redirectWithData("invalidrole", $email, $username, $mname);
 }
 
 // Insert user data
 $stmt = mysqli_prepare($conn, $sql);
-// mysqli_stmt_bind_param($stmt, "ssssi", $username, $mname, $email, $hashedPwd, $class);
 if ($role === "student") {
-    mysqli_stmt_bind_param($stmt, "ssssi", $username, $mname, $email, $hashedPwd, $class);
+    mysqli_stmt_bind_param($stmt, "ssssiss", $username, $mname, $email, $hashedPwd, $class, $gender, $dob);
 } else {
-    mysqli_stmt_bind_param($stmt, "ssss", $username, $mname, $email, $hashedPwd);
+    mysqli_stmt_bind_param($stmt, "ssssss", $username, $mname, $email, $hashedPwd, $gender, $dob);
 
 }
 
