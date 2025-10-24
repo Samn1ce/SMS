@@ -9,6 +9,8 @@ $username = $_POST["username"];
 $mname = $_POST["mname"];
 $role = $_POST["role"];
 $class = $_POST["class_id"];
+$sex = $_POST["sex"];
+$dob = $_POST["dob"];
 
 // Function to easily redirect with old input values
 function redirectWithData($error, $email, $username, $mname) {

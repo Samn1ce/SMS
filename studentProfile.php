@@ -53,7 +53,7 @@
 <body>
     <h1>Student Summary</h1>
    <div>
-     <p><?= htmlspecialchars($student['studentName']) ?></p>
+     <p class="font-semibold"><?= htmlspecialchars($student['studentName']) ?></p>
      <p>Class: <?= htmlspecialchars($student['class_name']) ?></p>
      <p>Gender: M</p>
      <p>DOB: 12-02-02</p>
