@@ -82,7 +82,7 @@ function getSelectedSubjects($conn, $student_id) {
 
                     <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : ?>
                         <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="subjects[]" value="<?= htmlspecialchars($subject['subject_name']) ?>"> 
+                        <input type="checkbox" name="subjects[]" value="<?= htmlspecialchars($subject['id']) ?>"> 
                         <span><?= htmlspecialchars($subject['subject_name']) ?></span>
                         </label>
                     <?php endwhile; ?>
