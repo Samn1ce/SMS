@@ -15,17 +15,17 @@
 </head>
 <body>
     <form action="includes/registerFormhandler.inc.php" method="post">
-        <div class="w-full h-screen border bg-zinc-200">
+        <div class="w-full h-screen border bg-zinc-50">
             <h1 class="text-blue-500 text-xl">REGISTER</h1>
             <div class="w-full flex justify-center items-center">  
                 <div class="w-1/4 rounded-md bg-white p-3 flex flex-col gap-4 items-center">
-                    <div class="rounded w-11/12 h-8 p-1 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-b-red-500' : 'border-black') ?>">
+                    <div class="border-b rounded w-11/12 h-8 p-1">
                         <input 
                             type="text" 
                             name="email" 
                             placeholder="email" 
                             value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>" 
-                            class="w-full outline-none"
+                            class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-b-red-500' : 'border-black') ?>"
                         />
                     </div>
                     <div class="border-b rounded w-11/12 h-8 p-1">
@@ -82,7 +82,10 @@
                     <div class="border-b rounded w-11/12 h-8 p-1">
                         <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
                     </div>
-                    <button class="block border border-black mt-2 p-2 cursor-pointer">REGISTER</button>
+                    <div>
+                        <button class="block border border-black text-sm font-semibold mt-2 p-1 rounded cursor-pointer mx-auto">REGISTER</button>
+                        <a href="login.php" class="border-b border-dotted border-blue-400 text-sm text-blue-400">I already have an account</a>
+                    </div>
                 </div>            
             </div>
         </div>
