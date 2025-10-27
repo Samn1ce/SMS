@@ -23,7 +23,7 @@
                     </div>
                     <div class="w-full flex flex-col gap-4">
                         <div class="flex flex-col gap-2">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-600 rounded-md p-3">
+                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 rounded-md p-3">
                                 <?php renderIcon('email', 'w-6 h-6') ?>
                                 <input 
                                     type="text" name="email" 
@@ -37,7 +37,7 @@
                                     ?>
                             </div>
                         </div>
-                        <div class="w-full flex gap-2 items-center border-b-2 border-zinc-600 rounded-md p-3">
+                        <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 rounded-md p-3">
                             <select name="role" class="w-full outline-none">
                                 <option value="">What's your role?</option>
                                 <option value="student">Student</option>
@@ -45,7 +45,7 @@
                             </select>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-600 rounded-md p-3">
+                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 rounded-md p-3">
                                 <?php renderIcon('password', 'w-6 h-6') ?>
                                 <input 
                                     type="password" 
@@ -59,8 +59,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-2 justify-end items-end mt-1">
-                        <button class="bg-black w-full text-zinc-50 p-3 font-semibold rounded-full">Login</button>
+                    <div class="flex flex-col gap-2 justify-end items-end mt-2">
+                        <button class="bg-black/90 hover:bg-black transition-all duration-300 cursor-pointer w-full text-zinc-50 p-3 font-semibold rounded-full">Login</button>
                         <a href="register.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
                     </div>
                 </div>
