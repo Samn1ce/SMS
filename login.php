@@ -1,3 +1,8 @@
+<?php 
+    include 'components/icons.php'
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,43 +13,56 @@
 </head>
 <body>
     <form action="includes/loginFormhandler.inc.php" method="post">
-        <div class="w-full h-screen border bg-zinc-50">
-            <h1 class="text-blue-500 text-xl">LOGIN</h1>
-            <div class="w-full flex justify-center items-center">
-                <div class="w-1/4 rounded-md bg-white p-3 flex flex-col gap-4 items-center">
-                <div class="border-b rounded w-11/12 h-8 p-1">
-                    <input 
-                        type="text" name="email" 
-                        placeholder="email" 
-                        class="w-full outline-none <?= 
-                            (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' 
-                        ?>" 
-                    />
-                        <?php 
-                            if (isset($_GET['error']) && $_GET['error'] === 'emptyfields') { echo '<p class="text-red-500 text-xs">This field is empty</p>';}
-                        ?>
-                </div>
-                <div class="border-b rounded w-11/12 h-8 p-1">
-                    <select name="role" class="w-full outline-none">
-                        <option value="">What's your role?</option>
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                    </select>
-                </div>
-                <div class="border-b rounded w-11/12 h-8 p-1">
-                    <input 
-                        type="password" 
-                        name="pwd" 
-                        placeholder="password" 
-                        class="w-full outline-none<?= (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' ?>" 
-                    />
-                    <?php 
-                        if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields')) { echo '<p class="text-red-500 text-xs">This field is empty</p>'; } 
-                    ?>
-                </div>
-                <div>
-                    <button class="mx-auto block border border-black mt-2 p-1 font-semibold rounded cursor-pointer">Login</button>
-                    <a href="register.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
+        <div class="w-full h-screen border bg-black p-3 flex items-end justify-end">
+            <!-- <h1 class="text-blue-500 text-xl">LOGIN</h1> -->
+            <div class="w-1/2 p-3 bg-zinc-50 h-full rounded-md flex justify-center items-center">
+                <div class="w-3/4 h-3/4 flex flex-col gap-8">
+                    <div>
+                        <h1 class=" text-4xl font-bold">Welcome!</h1>
+                        <p class=" text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                    </div>
+                    <div class="w-full flex flex-col gap-4">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-600 rounded-md p-3">
+                                <?php renderIcon('email', 'w-6 h-6') ?>
+                                <input 
+                                    type="text" name="email" 
+                                    placeholder="Email" 
+                                    class="w-full font-semibold outline-none <?= 
+                                        (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' 
+                                    ?>" 
+                                />
+                                    <?php 
+                                        if (isset($_GET['error']) && $_GET['error'] === 'emptyfields') { echo '<p class="text-red-500 text-xs">This field is empty</p>';}
+                                    ?>
+                            </div>
+                        </div>
+                        <div class="w-full flex gap-2 items-center border-b-2 border-zinc-600 rounded-md p-3">
+                            <select name="role" class="w-full outline-none">
+                                <option value="">What's your role?</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-600 rounded-md p-3">
+                                <?php renderIcon('password', 'w-6 h-6') ?>
+                                <input 
+                                    type="password" 
+                                    name="pwd" 
+                                    placeholder="Password" 
+                                    class="w-full font-semibold outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' ?>" 
+                                />
+                                <?php 
+                                    if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields')) { echo '<p class="text-red-500 text-xs">This field is empty</p>'; } 
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2 justify-end items-end mt-1">
+                        <button class="bg-black w-full text-zinc-50 p-3 font-semibold rounded-full">Login</button>
+                        <a href="register.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
+                    </div>
                 </div>
             </div>
             <div class="flex gap-4">
