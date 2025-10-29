@@ -28,7 +28,8 @@
                                 <input
                                     type="text" 
                                     name="email" 
-                                    placeholder="email" 
+                                    placeholder="email"
+                                    required
                                     value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"    
                                     class="w-full outline-none font-semibold"
                                 />
@@ -46,7 +47,8 @@
                                 <input 
                                     type="text" 
                                     name="mname" 
-                                    placeholder="name" 
+                                    placeholder="name"
+                                    required
                                     value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" 
                                     class="w-full outline-none"
                                 />
@@ -65,6 +67,7 @@
                                     <select 
                                         name="role" 
                                         class="w-full outline-none"
+                                        required
                                     >
                                         <option value="none">-- Select role --</option>
                                         <option value="student">Student</option>
@@ -73,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
-                                <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && $_GET['error'] === 'emptyfields' && isset($_GET['class']) && $_GET['class'] === '') ? 'border-red-500' : 'border-zinc-400' ?>">
+                                <div class="w-full flex gap-2 items-center border-b-2 p-3">
                                     <select name="class_id" id="class" class="w-full outline-none">
                                         <option value="">-- Select Class --</option>
                                         <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
@@ -88,12 +91,12 @@
                         <div class="w-full flex justify-between gap-4">
                             <div class="flex flex-col">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <input type="date" name="dob" class="w-full outline-none" />
+                                    <input type="date" name="dob" required class="w-full outline-none" />
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <select name="gender" class="w-full outline-none">
+                                    <select name="gender" required class="w-full outline-none">
                                         <option value="">-- Select Sex --</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -104,12 +107,12 @@
                         <div class="w-full flex flex-col md:flex-row justify-between gap-4">
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <input type="password" name="pwd" placeholder="password" class="w-full outline-none" />
+                                    <input type="password" name="pwd" placeholder="password" required class="w-full outline-none" />
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
+                                    <input type="password" name="confirmPwd" placeholder="confirm password" required class="w-full outline-none" />
                                 </div>
                             </div>
                         </div>
