@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Document</title>
+    <title>Register</title>
 </head>
 <body>
     <form action="includes/registerFormhandler.inc.php" method="post">
@@ -31,7 +31,7 @@
                                     placeholder="email" 
                                     value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"
                                     required
-                                    class="w-full font-semibold outline-none"
+                                    class="w-full font-semibold border <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>"
                                 />
                                 <?php 
                                     if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '')) { echo '
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
                                 <input 
                                     type="text" 
                                     name="mname" 
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['username'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
                                 <input 
                                     type="text" 
                                     name="username" 
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                        <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === 'none') ? 'border-red-500' : 'border-zinc-400') ?>">
                                 <select 
                                     name="role" 
                                     class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-black') ?>"
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                        <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['class'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
                                 <select name="class_id" id="class" class="w-full outline-none">
                                     <option value="">-- Select Class --</option>
                                     <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['sex'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
                                 <select name="sex" class="w-full outline-none">
                                     <option value="">-- Select Sex --</option>
                                     <option value="male">Male</option>
@@ -98,22 +98,22 @@
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3">
                                 <input type="date" name="dob" class="w-full outline-none" />
                             </div>
                         </div>
                        <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3">
                                 <input type="password" name="pwd" placeholder="password" class="w-full outline-none" />
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3">
                                 <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
                             </div>
                         </div>
                         <div class="flex flex-col gap-2 justify-end items-end mt-2">
-                            <button class="bg-black/90 hover:bg-black transition-all duration-300 cursor-pointer w-full text-zinc-50 p-3 font-semibold rounded-full">REGISTER</button>
+                            <button class="bg-black/90 hover:bg-black transition-all duration-300 cursor-pointer w-full text-zinc-50 p-3 font-semibold rounded-full">Register</button>
                             <a href="login.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I already have an account</a>
                         </div>
                     </div>
