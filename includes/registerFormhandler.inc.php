@@ -25,13 +25,17 @@ function redirectWithData($error, $email, $username, $mname) {
 // Validate all fields
 if (empty($email) || empty($mname) || empty($pwd) || empty($confirmPwd) || empty($username) || empty($role) || empty($dob) || empty($gender)) {
     if ($role === "student") {
-        redirectWithData("emptyfields", $email, $username, $mname);
+        redirectWithData("emptyfields", $email, $username, $mname, $role, $class);
     }
+}
+
+if ($role === "student" && empty($class)) {
+    redirectWithData("emptyfields", $email, $username, $mname, $role, $class);
 }
 
 // Confirm password check
 if ($pwd !== $confirmPwd) {
-    redirectWithData("verifyconfirmpassword", $email, $username, $mname);
+    redirectWithData("verifyconfirmpassword", $email, $username, $mname, $role, $class);
 }
 
 // Hash password
@@ -43,7 +47,7 @@ if ($role === "student") {
 } elseif ($role === "teacher") {
     $sql = "INSERT INTO teachers (username, teacherName, email, pwd, gender, dob) VALUES (?, ?, ?, ?, ?, ?)";
 } else {
-    redirectWithData("invalidrole", $email, $username, $mname);
+    redirectWithData("invalidrole", $email, $username, $mname, $role, $class);
 }
 
 // Insert user data
@@ -59,5 +63,5 @@ if (mysqli_stmt_execute($stmt)) {
     header("Location: ../login.php?register=success");
     exit();
 } else {
-    redirectWithData("sqlerror", $email, $username, $mname);
+    redirectWithData("sqlerror", $email, $username, $mname, $role, $class);
 }
