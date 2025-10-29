@@ -15,78 +15,109 @@
 </head>
 <body>
     <form action="includes/registerFormhandler.inc.php" method="post">
-        <div class="w-full h-screen border bg-zinc-50">
-            <h1 class="text-blue-500 text-xl">REGISTER</h1>
-            <div class="w-full flex justify-center items-center">  
-                <div class="w-1/4 rounded-md bg-white p-3 flex flex-col gap-4 items-center">
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <input 
-                            type="text" 
-                            name="email" 
-                            placeholder="email" 
-                            value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>" 
-                            class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-b-red-500' : 'border-black') ?>"
-                        />
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <input 
-                            type="text" 
-                            name="mname" 
-                            placeholder="name" 
-                            value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" 
-                            class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '') ? 'border-red-500' : 'border-black') ?>" 
-                        />
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <input 
-                            type="text" 
-                            name="username" 
-                            placeholder="username" 
-                            value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>" 
-                            class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['username'] === '') ? 'border-red-500' : 'border-black') ?>" 
-                        />
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <select 
-                            name="role" 
-                            class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-black') ?>"
-                        >
-                            <option value="none">What's your role?</option>
-                            <option value="student">Student</option>
-                            <option value="teacher">Teacher</option>
-                        </select>
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <select name="class_id" id="class" class="w-full outline-none">
-                            <option value="">-- Select Class --</option>
-                            <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
-                            <option value="<?= $class['id'] ?>">
-                                <?= htmlspecialchars($class['class_name']) ?>
-                            </option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <select name="sex" class="w-full outline-none">
-                            <option value="">-- Select Sex --</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <input type="date" name="dob" class="w-full outline-none" />
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <input type="password" name="pwd" placeholder="password" class="w-full outline-none" />
-                    </div>
-                    <div class="border-b rounded w-11/12 h-8 p-1">
-                        <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
-                    </div>
+        <div class="w-full border bg-black p-1 lg:p-3 flex items-end justify-end">
+            <div class="w-full lg:w-1/2 p-3 bg-zinc-50 h-full rounded-md flex justify-center items-center">
+                <div class="w-11/12 lg:w-3/4 flex flex-col gap-8">
                     <div>
-                        <button class="block border border-black text-sm font-semibold mt-2 p-1 rounded cursor-pointer mx-auto">REGISTER</button>
-                        <a href="login.php" class="border-b border-dotted border-blue-400 text-sm text-blue-400">I already have an account</a>
+                        <h1 class=" text-4xl font-bold">Get Started!</h1>
+                        <p class=" text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                     </div>
-                </div>            
+                    <div class="w-full flex flex-col gap-4">
+                        <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <input
+                                    type="text" 
+                                    name="email" 
+                                    placeholder="email" 
+                                    value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"
+                                    required
+                                    class="w-full font-semibold outline-none"
+                                />
+                                <?php 
+                                    if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '')) { echo '
+                                        <p class="text-red-500 text-xs self-end">
+                                            This field is empty
+                                        </p>';
+                                    }
+                                ?> 
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <input 
+                                    type="text" 
+                                    name="mname" 
+                                    placeholder="name" 
+                                    value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" 
+                                    class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '') ? 'border-red-500' : 'border-black') ?>" 
+                                />
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <input 
+                                    type="text" 
+                                    name="username" 
+                                    placeholder="username" 
+                                    value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>" 
+                                    class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['username'] === '') ? 'border-red-500' : 'border-black') ?>" 
+                                />
+                            </div>
+                        </div>
+                       <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <select 
+                                    name="role" 
+                                    class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-black') ?>"
+                                >
+                                    <option value="none">What's your role?</option>
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
+                            </div>
+                        </div>
+                       <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <select name="class_id" id="class" class="w-full outline-none">
+                                    <option value="">-- Select Class --</option>
+                                    <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
+                                    <option value="<?= $class['id'] ?>">
+                                        <?= htmlspecialchars($class['class_name']) ?>
+                                    </option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <select name="sex" class="w-full outline-none">
+                                    <option value="">-- Select Sex --</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <input type="date" name="dob" class="w-full outline-none" />
+                            </div>
+                        </div>
+                       <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <input type="password" name="pwd" placeholder="password" class="w-full outline-none" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2 justify-end items-end mt-2">
+                            <button class="bg-black/90 hover:bg-black transition-all duration-300 cursor-pointer w-full text-zinc-50 p-3 font-semibold rounded-full">REGISTER</button>
+                            <a href="login.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I already have an account</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

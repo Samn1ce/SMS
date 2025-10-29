@@ -49,13 +49,6 @@
                                     <option value="teacher">Teacher</option>
                                 </select>
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') || $role === '') { echo '
-                                    <p class="text-red-500 text-xs self-end">
-                                        This field is empty
-                                    </p>'; 
-                                }
-                            ?>
                         </div>
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
