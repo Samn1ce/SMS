@@ -19,6 +19,11 @@
                         <p class=" text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                     </div>
                     <div class="w-full flex flex-col gap-4">
+                        <div class="flex items-center h-10 bg-[#441717] pr-5 gap-2 mx-auto rounded-r <?= (isset($_GET['error']) && $_GET['error'] === 'usernotfound') ? 'block' : 'hidden' ?>">
+                            <div class="w-1 h-full bg-red-700"></div>
+                            <?php renderIcon('exclamation', 'text-red-500') ?>
+                            <p class="text-red-500 font-semibold text-xs ">Invalid Credentials. Check your crendentials and try again</p>
+                        </div>
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
                                 <?php renderIcon('email', 'w-6 h-6') ?>
@@ -73,9 +78,6 @@
                         <a href="register.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
                     </div>
                 </div>
-            </div>
-            <div class="flex gap-4">
-                <p class="text-red-500 <?= (isset($_GET['error']) && $_GET['error'] === 'invalidcredentials') ? 'block' : 'hidden' ?>">Invalid Credentials. Check your crendentials and try again</p>
             </div>
         </div>
     </form>

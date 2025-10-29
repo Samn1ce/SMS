@@ -46,7 +46,7 @@ if ($role === "student") {
 } elseif ($role === "teacher") {
     $sql = "INSERT INTO teachers (teacherName, email, pwd, gender, dob) VALUES (?, ?, ?, ?, ?)";
 } else {
-    redirectWithData("invalidrole", $email, $username, $mname, $role, $class);
+    redirectWithData("emptyfields", $email, $username, $mname, $class);
 }
 
 // Insert user data
