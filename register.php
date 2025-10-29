@@ -16,7 +16,7 @@
 <body>
     <form action="includes/registerFormhandler.inc.php" method="post">
         <div class="w-full border bg-black p-1 lg:p-3 flex items-end justify-end">
-            <div class="w-full lg:w-1/2 p-3 bg-zinc-50 h-full rounded-md flex justify-center items-center">
+            <div class="w-full lg:w-1/2 p-3 pb-5 bg-zinc-50 h-full rounded-md flex justify-center items-center">
                 <div class="w-11/12 lg:w-3/4 flex flex-col gap-8">
                     <div>
                         <h1 class=" text-4xl font-bold">Get Started!</h1>
@@ -30,7 +30,7 @@
                                     name="email" 
                                     placeholder="email" 
                                     value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"    
-                                    class="w-full font-semibold border <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>"
+                                    class="w-full outline-none font-semibold"
                                 />
                             </div>
                             <?php 
@@ -51,23 +51,19 @@
                                     class="w-full outline-none"
                                 />
                             </div>
+                            <?php 
+                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '')) { echo '
+                                    <p class="text-red-500 text-xs self-end">
+                                        This field is empty
+                                    </p>';
+                                }
+                            ?> 
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['username'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
-                                <input 
-                                    type="text" 
-                                    name="username" 
-                                    placeholder="username" 
-                                    value="<?= isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '' ?>" 
-                                    class="w-full outline-none"
-                                />
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields' || 'invalidrole') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-zinc-400') ?>">
                                 <select 
                                     name="role" 
-                                    class="w-full outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['role'] === "none") ? 'border-red-500' : 'border-black') ?>"
+                                    class="w-full outline-none"
                                 >
                                     <option value="none">What's your role?</option>
                                     <option value="student">Student</option>
@@ -75,25 +71,27 @@
                                 </select>
                             </div>
                         </div>
-                       <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                <select name="class_id" id="class" class="w-full outline-none">
-                                    <option value="">-- Select Class --</option>
-                                    <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
-                                    <option value="<?= $class['id'] ?>">
-                                        <?= htmlspecialchars($class['class_name']) ?>
-                                    </option>
-                                    <?php endwhile; ?>
-                                </select>
+                        <div class="w-full flex justify-between gap-4">
+                            <div class="flex flex-col w-full">
+                                <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                                    <select name="class_id" id="class" class="w-full outline-none">
+                                        <option value="">-- Select Class --</option>
+                                        <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
+                                        <option value="<?= $class['id'] ?>">
+                                            <?= htmlspecialchars($class['class_name']) ?>
+                                        </option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                <select name="gender" class="w-full outline-none">
-                                    <option value="">-- Select Sex --</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
+                            <div class="flex flex-col w-full">
+                                <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                                    <select name="gender" class="w-full outline-none">
+                                        <option value="">-- Select Sex --</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="flex flex-col">
@@ -101,14 +99,16 @@
                                 <input type="date" name="dob" class="w-full outline-none" />
                             </div>
                         </div>
-                       <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                <input type="password" name="pwd" placeholder="password" class="w-full outline-none" />
+                        <div class="w-full flex justify-between gap-4">
+                            <div class="flex flex-col w-full">
+                                <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                                    <input type="password" name="pwd" placeholder="password" class="w-full outline-none" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
+                            <div class="flex flex-col w-full">
+                                <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                                    <input type="password" name="confirmPwd" placeholder="confirm password" class="w-full outline-none" />
+                                </div>
                             </div>
                         </div>
                         <div class="flex flex-col gap-2 justify-end items-end mt-2">
