@@ -47,6 +47,6 @@ if ($row = mysqli_fetch_assoc($result)) {
         exit();
     }
 } else {
-    header("Location: ../login.php?error=usernotfound");
+    header("Location: ../login.php?error=invalidcredentials");
     exit();
 }

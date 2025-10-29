@@ -19,7 +19,7 @@
                         <p class=" text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                     </div>
                     <div class="w-full flex flex-col gap-4">
-                        <div class="flex items-center h-10 bg-[#441717] pr-5 gap-2 mx-auto rounded-r <?= (isset($_GET['error']) && $_GET['error'] === 'usernotfound' || $_GET['error'] === 'invalidcredentials') ? 'block' : 'hidden' ?>">
+                        <div class="flex items-center h-10 bg-[#441717] pr-5 gap-2 mx-auto rounded-r <?= (isset($_GET['error']) && $_GET['error'] === 'invalidcredentials') ? 'block' : 'hidden' ?>">
                             <div class="w-1 h-full bg-red-600"></div>
                             <?php renderIcon('exclamation', 'text-red-500') ?>
                             <p class="text-red-500 font-semibold text-xs ">Invalid Credentials. Check your crendentials and try again</p>
