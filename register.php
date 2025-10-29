@@ -50,7 +50,7 @@
                                     placeholder="name"
                                     required
                                     value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" 
-                                    class="w-full outline-none"
+                                    class="w-full outline-none font-semibold"
                                 />
                             </div>
                             <?php 
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
-                                <div class="w-full flex gap-2 items-center border-b-2 p-3">
+                                <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
                                     <select name="class_id" id="class" class="w-full outline-none">
                                         <option value="">-- Select Class --</option>
                                         <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
