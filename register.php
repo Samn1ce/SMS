@@ -1,5 +1,6 @@
 <?php
     include 'includes/dbh.inc.php';
+    include 'components/icons.php';
     $classQuery = "SELECT * FROM classes";
     $classResult = mysqli_query($conn, $classQuery);
 ?>
@@ -25,10 +26,11 @@
                     <div class="w-full flex flex-col gap-4">
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <?php renderIcon('email', 'w-6 h-6') ?>
                                 <input
                                     type="text" 
                                     name="email" 
-                                    placeholder="email"
+                                    placeholder="Enter your e-mail..."
                                     required
                                     value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"    
                                     class="w-full outline-none font-semibold"
@@ -44,10 +46,11 @@
                         </div>
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['mname'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <?php renderIcon('name', 'w-6 h-6') ?>
                                 <input 
                                     type="text" 
                                     name="mname" 
-                                    placeholder="name"
+                                    placeholder="Enter your name..."
                                     required
                                     value="<?= isset($_GET['mname']) ? htmlspecialchars($_GET['mname']) : '' ?>" 
                                     class="w-full outline-none font-semibold"
@@ -107,11 +110,13 @@
                         <div class="w-full flex flex-col md:flex-row justify-between gap-4">
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                                    <?php renderIcon('password', 'w-6 h-6') ?>
                                     <input type="password" name="pwd" placeholder="password" required class="w-full outline-none" />
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
+                                    <?php renderIcon('password', 'w-6 h-6') ?>
                                     <input type="password" name="confirmPwd" placeholder="confirm password" required class="w-full outline-none" />
                                 </div>
                             </div>

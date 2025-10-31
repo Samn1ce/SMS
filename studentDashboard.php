@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'includes/dbh.inc.php';
+include 'components/icons.php';
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -58,7 +59,60 @@ function getSelectedSubjects($conn, $student_id) {
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
     <title>Student Dashboard</title>
 </head>
-<body>
+<body class="bg-zinc-100">
+    <header class="w-full border-b">
+        <div class="mx-auto w-10/12 flex justify-between p-2">
+            <div class="flex justify-center items-center">
+                <img src="public\png-aura.com.png" class="w-10 h-10" />
+                <h1 class="font-bold text-3xl">SCHOOL NAME</h1>
+            </div>
+            <a href="studentProfile.php" class="flex flex-col justify-end items-end cursor-pointer p-1">
+                <h2 class="font-semibold text-xl"><?= htmlspecialchars($_SESSION['student_name']) ?></h2>
+                <p class="text-zinc-400 text-sm -mt-1"><?= htmlspecialchars($_SESSION['role']) ?></p>
+            </a>
+        </div>
+    </header>
+    <main class="w-full h-screen border p-2">
+        <section class="mx-auto w-10/12 flex gap-4">
+            <div class="w-9/12 h-48 bg-blue-500/90 rounded-md pt-3 p-5 flex justify-center items-center">
+                <div class="w-full h-full flex flex-col justify-between">
+                    <div>
+                        <p class="text-2xl font-semibold text-zinc-200">Lorem, ipsum dolor.</p>
+                        <p class="text-sm text-zinc-300 font-semibold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, nisi sequi tenetur possimus veniam beatae.</p>
+                    </div>
+                    <div class="flex gap-28">
+                        <div class="flex justify-center items-center gap-2">
+                            <div class="w-10 h-10 border rounded-full flex justify-center items-center">
+                                <?php renderIcon('person', 'w-6 h-6') ?>
+                            </div>
+                            <div>
+                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
+                                <p class="text-xs text-zinc-300 font-semibold -mt-1">Fullname</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center items-center gap-2">
+                            <div class="w-10 h-10 border rounded-full flex justify-center items-center">
+                                <?php renderIcon('grade', 'w-6 h-6') ?>
+                            </div>
+                            <div>
+                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($className) ?></p>
+                                <p class="text-xs text-zinc-300 font-semibold -mt-1">class</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="public\Graduation.png" class="w-60" />
+            </div>
+            <div class="w-1/4 flex flex-col gap-2">
+                <div class="w-full p-2 flex justify-center items-center bg-blue-400 text-zinc-50 font-semibold text-sm rounded-md">Results Profile</div>
+                <div class="w-full bg-white flex-1 rounded-b-xl shadow-gray-950">
+                    <div class="w-full p-2 flex justify-center items-center bg-zinc-200 text-neutral-900 font-semibold text-sm rounded-b-md shadow-black">Last Attendance</div>
+                    <p class="w-full flex-2 border text-black text-4xl text-center font-semibold">7th Oct</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
    <div>
         <p>
         <?php
