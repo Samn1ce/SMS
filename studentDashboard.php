@@ -59,7 +59,7 @@ function getSelectedSubjects($conn, $student_id) {
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
     <title>Student Dashboard</title>
 </head>
-<body class="bg-zinc-100">
+<body class="bg-zinc-200">
     <header class="w-full border-b">
         <div class="mx-auto w-10/12 flex justify-between p-2">
             <div class="flex justify-center items-center">
@@ -72,7 +72,7 @@ function getSelectedSubjects($conn, $student_id) {
             </a>
         </div>
     </header>
-    <main class="w-full h-screen border p-2">
+    <main class="w-full min-h-[700px] border p-2">
         <section class="mx-auto w-10/12 flex gap-4">
             <div class="w-9/12 h-48 bg-blue-500/90 rounded-md pt-3 p-5 flex justify-center items-center">
                 <div class="w-full h-full flex flex-col justify-between">
@@ -101,13 +101,48 @@ function getSelectedSubjects($conn, $student_id) {
                         </div>
                     </div>
                 </div>
-                <img src="public\Graduation.png" class="w-60" />
+                <img src="public\Graduation.png" class="w-64" />
             </div>
             <div class="w-1/4 flex flex-col gap-2">
-                <div class="w-full p-2 flex justify-center items-center bg-blue-400 text-zinc-50 font-semibold text-sm rounded-md">Results Profile</div>
-                <div class="w-full bg-white flex-1 rounded-b-xl shadow-gray-950">
-                    <div class="w-full p-2 flex justify-center items-center bg-zinc-200 text-neutral-900 font-semibold text-sm rounded-b-md shadow-black">Last Attendance</div>
-                    <p class="w-full flex-2 border text-black text-4xl text-center font-semibold">7th Oct</p>
+                <a href="studentResult.php" class="w-full p-2 flex justify-center items-center bg-blue-400 text-zinc-50 font-semibold text-sm rounded-md">Results Profile</a>
+                <div class="w-full h-18 bg-white flex flex-col rounded-b-xl shadow-gray-950">
+                    <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm rounded-b-md shadow-black">Current Time</div>
+                    <p 
+                        x-data="{ time: '' }" 
+                        x-init="
+                            setInterval(() => {
+                            const now = new Date();
+                            let hours = now.getHours() % 12 || 12;
+                            let minutes = String(now.getMinutes()).padStart(2, '0');
+                            let seconds = String(now.getSeconds()).padStart(2, '0');
+                            let ampm = now.getHours() >= 12 ? 'pm' : 'am';
+                            time = `${hours}:${minutes}:${seconds}${ampm}`;
+                            }, 1000);
+                        " 
+                        x-text="time" 
+                        class="w-full flex-1 text-neutral-900 text-center font-semibold pt-1"></p>
+                </div>
+                <div class="bg-white h-20 w-full rounded shadow-2xl p-2 flex items-center gap-2">
+                    <div class="border w-1 flex-1 rounded"></div>
+                    <div>
+                        <p class="text-xs text-zinc-400 font-semibold">School Mode</p>
+                        <p class="text-sm text-neutral-900 font-semibold">Currently in Session/Holiday</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mx-auto w-10/12 mt-5">
+            <h2 class="font-bold text-xl pl-5 mb-2">Daily Assesment</h2>
+            <div class="w-full flex gap-4">
+                <div class="w-1/2 h-40 bg-white flex flex-col flex-1 rounded-b-xl shadow-gray-950">
+                    <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Assigment</div>
+                    <p class="w-full flex-1 text-neutral-900 text-center font-semibold pt-5">You don't have any assignment at this time.</p>
+                    <a href="" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
+                </div>
+                <div class="w-1/2 h-40 bg-white flex flex-col flex-1 rounded-b-xl shadow-gray-950">
+                    <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Last Attendance</div>
+                    <p class="w-full flex-1 text-neutral-900 text-5xl text-center font-semibold pt-5">7th, Oct</p>
+                    <a href="" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View attendance</a>
                 </div>
             </div>
         </section>

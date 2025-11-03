@@ -80,6 +80,19 @@ function renderIcon($name, $class = '') {
                     <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46z"/>
                 </svg>
             ';
+            break;
+            case 'sessionStatus':
+                echo '
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        width="16" height="16" 
+                        fill="currentColor" 
+                        class="bi bi-bookmark-fill '. htmlspecialchars($class) . '" 
+                        viewBox="0 0 16 16"
+                    >
+                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2"/>
+                    </svg>
+                ';
+            break;
         default:
             echo "<!-- Unknown icon: " . htmlspecialchars($name) . " -->";
 
