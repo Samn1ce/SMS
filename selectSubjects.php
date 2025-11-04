@@ -3,6 +3,11 @@ session_start();
 include 'includes/dbh.inc.php';
 include 'components/header.php';
 
+if (!isset($_SESSION["user_id"])) {
+    header("Location: login.php");
+    exit();
+}
+
 $subjectsQuery = "SELECT * FROM subjects";
 $subjectsResult = mysqli_query($conn, $subjectsQuery);
 
@@ -34,10 +39,12 @@ function getSelectedSubjects($conn, $student_id) {
     <?php renderHeader('student_name', 'role') ?>
     <main class="w-full">
         <div class="mx-auto w-10/12 border-zinc-200/65 border mt-3 rounded-md bg-white flex p-3">
-            <div class="w-1/2"></div>
+            <div class="w-1/2">
+                <img src="public/BookLover.png" class="" />
+            </div>
             <div class="w-1/2 flex flex-col justify-center gap-6 p-3">
                 <div>
-                    <h2 class="text-neutral-900 text-4xl font-semibold">Welcome 'student name'!</h2>
+                    <h2 class="text-neutral-900 text-4xl font-semibold">Welcome <?= htmlspecialchars($_SESSION['student_name']) ?></h2>
                     <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
                 </div>
                 <div class="">

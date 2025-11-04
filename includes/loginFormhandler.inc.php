@@ -37,7 +37,16 @@ if ($row = mysqli_fetch_assoc($result)) {
 
         // Redirect to correct dashboard
         if ($role === "student") {
-            header("Location: ../studentDashboard.php");
+            $loginStmt = mysqli_prepare($conn, "SELECT login_count FROM students WHERE id = ?");
+            mysqli_stmt_bind_param($loginStmt, "i", $row['id']);
+            mysqli_stmt_execute($loginStmt);
+            $result = mysqli_stmt_get_result($loginStmt);
+            $row = mysqli_fetch_assoc($result);
+            if ($row["login_count"] < 1) {
+                header("Location: ../selectSubjects.php");
+            } else {
+                header("Location: ../studentDashboard.php");
+            }
         } else {
             header("Location: ../teacherDashboard.php");
         }

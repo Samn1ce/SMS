@@ -32,6 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     mysqli_stmt_bind_param($stmt, "i", $student_id);
     mysqli_stmt_execute($stmt);
 
-    header("Location: ../studentDashboard.php?subjects=saved");
+    header("Location: ../studentDashboard.php");
     exit();
 }
