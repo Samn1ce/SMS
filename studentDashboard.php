@@ -2,6 +2,7 @@
 session_start();
 include 'includes/dbh.inc.php';
 include 'components/icons.php';
+include 'components/header.php';
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -60,7 +61,7 @@ function getSelectedSubjects($conn, $student_id) {
     <title>Student Dashboard</title>
 </head>
 <body class="bg-neutral-50">
-    <header class="w-full border-b">
+    <!-- <header class="w-full border-b">
         <div class="w-full mx-auto">
             <div class="mx-auto w-11/12 lg:w-10/12 flex justify-between p-2">
                 <div class="flex justify-center items-center">
@@ -73,7 +74,8 @@ function getSelectedSubjects($conn, $student_id) {
                 </a>
             </div>
         </div>
-    </header>
+    </header> -->
+    <?php renderHeader('student_name', 'role') ?>
     <main class="w-full min-h-[700px] p-2 mx-auto">
         <section class="mx-auto w-11/12 lg:w-10/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
