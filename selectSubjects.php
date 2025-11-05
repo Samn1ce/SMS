@@ -70,7 +70,7 @@ function getSelectedSubjects($conn, $student_id) {
                     </form>
                 </div>
             </div>
-            <?php renderLogoutDialogue('Not Sure about subjects? ', 'mx-auto text-sm 2xl:-mt-5', 'Log Out', 'cursor-pointer font-semibold text-blue-400 border-dotted border-b-blue-400 border-b', ', while you confirm.') ?>
+            <?php renderLogoutDialogue('Log Out', 'cursor-pointer font-semibold text-blue-400 border-dotted border-b-blue-400 border-b', 'Not Sure about subjects? ', 'mx-auto text-sm 2xl:-mt-5', ', while you confirm.') ?>
         </div>
     </main>
 </body>

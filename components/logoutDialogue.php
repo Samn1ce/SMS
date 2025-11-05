@@ -1,5 +1,11 @@
 <?php
-function renderLogoutDialogue($pText, $pClass, $aText, $aClass, $spanText) {
+function renderLogoutDialogue(
+    $aText, 
+    $aClass, 
+    $pText = '', 
+    $pClass = '', 
+    $spanText = ''
+) {
     echo '
         <div 
             x-data="{ open: false }" 
