@@ -3,6 +3,7 @@ session_start();
 include 'includes/dbh.inc.php';
 include 'components/icons.php';
 include 'components/header.php';
+include 'components/logoutDialogue.php';
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -61,8 +62,8 @@ function getSelectedSubjects($conn, $student_id) {
     <title>Student Dashboard</title>
 </head>
 <body class="bg-neutral-50">
-    <?php renderHeader('student_name', 'role') ?>
-    <main class="w-full min-h-[700px] p-2 mx-auto">
+    <?php renderHeader('student_name', 'role', $id) ?>
+    <main class="w-full min-h-[700px] p-2 mx-auto relative">
         <section class="mx-auto w-11/12 lg:w-10/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
                 <div class="w-full h-full flex flex-col justify-between gap-4 lg:gap-0">
@@ -156,9 +157,26 @@ function getSelectedSubjects($conn, $student_id) {
                             <div class="h-full w-20 rounded-md flex justify-center items-center bg-fuchsia-500">
                                 <?php renderIcon('subjects', 'w-8 h-8 text-white') ?>
                             </div>
-                            <div>
+                            <div x-data="{ open: false }" x-transition>
                                 <p class="text-sm text-zinc-400 font-semibold">Offered Subjects</p>
-                                <p class="text-neutral-900 font-semibold">You are Offering 12 subjects. <span><a href="" class="text-blue-400 border-dotted border-b-blue-400 border-b cursor-pointer">View Offered subjects</a></span></p>
+                                <p class="text-neutral-900 font-semibold">You are Offering 12 subjects. <span x-on:click=" open = !open " class="text-blue-400 border-dotted border-b-blue-400 border-b cursor-pointer">View Offered subjects</span></p>
+
+                                <div x-show="open">
+                                    <div x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
+                                        <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
+                                            <div class="flex flex-col w-full rounded-3xl p-2 md:p-5 bg-neutral-50 border border-neutral-100 gap-4">
+                                                <p class="font-bold text-center text-3xl text-neutral-800">Your Subjects are:</p>
+                                                <ul class="list-disc pl-6 mt-2">
+                                                    <?php foreach (getSelectedSubjects($conn, $id) as $subject): ?>
+                                                        <li><?= htmlspecialchars($subject) ?></li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                                <p class="text-center text-sm text-neutral-800">A subject is missing? <span><a href="#" class="font-semibold text-blue-400 border-b border-dotted border-b-blue-400">Check Here</a></span>, to see which one you omitted.</p>
+                                                <button x-on:click="open = false" class="p-2 cursor-pointer rounded-xl bg-red-500 hover:bg-red-600/90 transition-all duration-300 text-neutral-100 font-semibold">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
@@ -207,69 +225,8 @@ function getSelectedSubjects($conn, $student_id) {
             </div>
         </section>
     </main>
-
-   <div>
-        <p>
-        <?php
-            echo "Hello <b>" . htmlspecialchars($_SESSION["student_name"]) . "</b>(" . htmlspecialchars($className) . "), you're a " . $_SESSION["role"];
-        ?>
-        </p>
-   </div>
-   <div>
-    <a href="studentResult.php?id=<?= $id ?>" class="text-blue-800 underline">Check Result</a>
-    <a href="" class="text-blue-800 underline">Check Attendance</a>
-   </div>
-
-    <div x-data="{ showModal: <?= $showModal ? 'true' : 'false' ?> }" class="w-full flex flex-col items-center absolute">
-  <!-- SUBJECT SELECTION MODAL -->
-        <div x-show="showModal">
-            <div class="bg-zinc-300 p-6 rounded-xl w-96 shadow-lg">
-                <h2 class="text-xl font-semibold mb-4 text-center">Select Your Subjects</h2>
-
-                <form action="includes/saveSubjects.php" method="POST" class="space-y-3">
-                    <input type="hidden" name="student_id" value="<?= $id ?>">
-
-                    <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : ?>
-                        <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="subjects[]" value="<?= htmlspecialchars($subject['id']) ?>"> 
-                        <span><?= htmlspecialchars($subject['subject_name']) ?></span>
-                        </label>
-                    <?php endwhile; ?>
-
-                    <button 
-                        type="submit"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-md w-full mt-3 hover:bg-blue-700"
-                        x-on:click="showModal = ! showModal"
-                    >
-                        Save Subjects
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <br/>
-    <div>
-        <p class="font-bold">Your Subjects are:</p>
-        <ul class="list-disc pl-6">
-            <?php foreach (getSelectedSubjects($conn, $id) as $subject): ?>
-                <li><?= htmlspecialchars($subject) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-    <br/>
-
-    <a href="studentProfile.php?id=<?= $id ?>" class="px-2 py-1 border bg-zinc-200 rounded">View Profile</a>
-    <br/>
-   <div x-data="{ open: false }">
-        <button  class="border-2 border-black cursor-pointer p-3 mt-2" x-on:click="open = ! open">Log out</button>
-
-        <div x-show="open">
-            <div>
-                <p>Are you sure you want to log out</p>
-                <a href="logout.php" class="text-blue-400 underline">Yes</a> / <a x-on:click="open = ! open" href="#" class="text-blue-400 underline" >No</a>
-            </div>
-        </div>
-    </div>
+    
+   <?php renderLogoutDialogue('Log out', 'bg-blue-600 text-neutral-100 font-semibold rounded-xl p-3 cursor-pointer') ?>
 </div>
 </body>
 </html>
