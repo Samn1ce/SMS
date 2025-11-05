@@ -39,7 +39,7 @@ function getSelectedSubjects($conn, $student_id) {
     <title>Select Subjects</title>
 </head>
 <body class="bg-neutral-50">
-    <?php renderHeader('student_name', 'role') ?>
+    <?php renderHeader('student_name', 'role', $id) ?>
     <main class="w-full relative">
         <div class="mx-auto w-11/12 md:w-10/12 border-zinc-200/65 border mt-3 rounded-md bg-white flex flex-col lg:flex-row lg:flex-wrap gap-4 lg:gap-0 p-3 lg:p-2">
             <div class="w-1/2">
