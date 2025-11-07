@@ -59,7 +59,7 @@ function getSelectedSubjects($conn, $student_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
-    <title>Student Dashboard</title>
+    <title><?= $_SESSION['student_name'] ?> Dashboard</title>
 </head>
 <body class="bg-neutral-50">
     <?php renderHeader('student_name', 'role', $id) ?>

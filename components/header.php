@@ -1,5 +1,11 @@
 <?php
-    function renderHeader($student_name, $role, $id) {
+    function renderHeader($id) {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $student_name = $_SESSION['student_name'] ?? 'Unknown';
+        $role = $_SESSION['role'] ?? 'Guest';
+
         echo '
             <header class="w-full border-b">
                 <div class="w-full mx-auto">
@@ -9,8 +15,8 @@
                             <h1 class="font-bold text-3xl">SCHOOL NAME</h1>
                         </div>
                         <a href="studentProfile.php?id='. urlencode($id) .'" class="hidden md:flex flex-col justify-end items-end cursor-pointer p-2 hover:bg-zinc-300 duration-300 transition-all">
-                            <h2 class="font-semibold text-xl">' . htmlspecialchars($_SESSION[$student_name]) . '</h2>
-                            <p class="text-zinc-400 text-sm -mt-1">' . htmlspecialchars($_SESSION[$role]) . '</p>
+                            <h2 class="font-semibold text-xl">' . htmlspecialchars($student_name) . '</h2>
+                            <p class="text-zinc-400 text-sm -mt-1">' . htmlspecialchars($role) . '</p>
                         </a>
                     </div>
                 </div>

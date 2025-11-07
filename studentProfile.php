@@ -1,5 +1,6 @@
 <?php
     include 'includes/dbh.inc.php';
+    include 'components/header.php';
     session_start();
 
     // ✅ Check that an ID is provided in the URL
@@ -19,7 +20,10 @@
     mysqli_stmt_bind_param($stmt, "i", $student_id);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-    $student = mysqli_fetch_assoc($result);
+    if ($student = mysqli_fetch_assoc($result)) {
+        $_SESSION['student_name'] = $student['studentName'];
+
+    }
 
     if (!$student) {
         die("Student not found");
@@ -48,12 +52,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Document</title>
+    <title><?= htmlspecialchars($_SESSION['student_name']) ?> Profile</title>
 </head>
 <body>
-    <h1>Student Summary</h1>
+    <?php renderHeader($student_id) ?>
+
+    <!-- <h1>Student Summary</h1>
    <div>
-     <p class="font-semibold"><?= htmlspecialchars($student['studentName']) ?></p>
+     <p class="font-semibold"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
      <p>Class: <?= htmlspecialchars($student['class_name']) ?></p>
      <p>Gender: M</p>
      <p>DOB: 12-02-02</p>
@@ -68,6 +74,6 @@
         </ul>
     <?php else: ?>
         <p class="text-gray-500 mt-2">No subjects found for this student.</p>
-    <?php endif; ?>
+    <?php endif; ?> -->
 </body>
 </html>
