@@ -4,6 +4,7 @@ include 'includes/dbh.inc.php';
 include 'components/icons.php';
 include 'components/header.php';
 include 'components/logoutDialogue.php';
+include 'includes/cards.php';
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -144,84 +145,14 @@ function getSelectedSubjects($conn, $student_id) {
                 <div class="w-full lg:w-1/2">
                     <h3 class="font-bold text-xl pl-5 mb-2">Term Assesment</h3>
                     <div class="w-full">
-                        <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
-                            <div class="h-full w-20 rounded-md flex justify-center items-center bg-indigo-600">
-                                <?php renderIcon('term', 'w-8 h-8 text-white') ?>
-                            </div>
-                            <div>
-                                <p class="text-sm text-zinc-400 font-semibold">Current Term</p>
-                                <p class="text-neutral-900 font-semibold">First Term</p>
-                            </div>
-                        </div>
-                        <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
-                            <div class="h-full w-20 rounded-md flex justify-center items-center bg-fuchsia-500">
-                                <?php renderIcon('subjects', 'w-8 h-8 text-white') ?>
-                            </div>
-                            <div x-data="{ open: false }" x-transition>
-                                <p class="text-sm text-zinc-400 font-semibold">Offered Subjects</p>
-                                <p class="text-neutral-900 font-semibold">You are Offering 12 subjects. <span x-on:click=" open = !open " class="text-blue-400 border-dotted border-b-blue-400 border-b cursor-pointer">View Offered subjects</span></p>
-
-                                <div x-show="open">
-                                    <div x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
-                                        <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
-                                            <div class="flex flex-col w-full rounded-3xl p-2 md:p-5 bg-neutral-50 border border-neutral-100 gap-4">
-                                                <p class="font-bold text-center text-3xl text-neutral-800">Your Subjects are:</p>
-                                                <ul class="list-disc pl-6 mt-2">
-                                                    <?php foreach (getSelectedSubjects($conn, $id) as $subject): ?>
-                                                        <li><?= htmlspecialchars($subject) ?></li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                                <p class="text-center text-sm text-neutral-800">A subject is missing? <span><a href="#" class="font-semibold text-blue-400 border-b border-dotted border-b-blue-400">Check Here</a></span>, to see which one you omitted.</p>
-                                                <button x-on:click="open = false" class="p-2 cursor-pointer rounded-xl bg-red-500 hover:bg-red-600/90 transition-all duration-300 text-neutral-100 font-semibold">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
-                            <div class="h-full w-20 rounded-md flex justify-center items-center bg-sky-600">
-                                <?php renderIcon('fees', 'w-8 h-8 text-white') ?>
-                            </div>
-                            <div>
-                                <p class="text-sm text-zinc-400 font-semibold">School Fees</p>
-                                <p class="text-neutral-900 font-semibold">Paid. <span><a href="" class="text-blue-400 border-dotted border-b-blue-400 border-b cursor-pointer">View details</a></span></p>
-                            </div>
-                        </div>
+                        <?php renderCards($cards, 'term', $conn, $id, $className); ?>
                     </div>
                 </div>
                 <div class="w-full lg:w-1/2">
                     <h3 class="font-bold text-xl pl-5 mb-2">Session Assesment</h3>
                     <div class="w-full">
-                        <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
-                            <div class="h-full w-20 rounded-md flex justify-center items-center bg-teal-600">
-                                <?php renderIcon('session', 'w-8 h-8 text-white') ?>
-                            </div>
-                            <div>
-                                <p class="text-sm text-zinc-400 font-semibold">Current Session</p>
-                                <p class="text-neutral-900 font-semibold">2025/2026 Session</p>
-                            </div>
-                        </div>
-                        <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
-                            <div class="h-full w-20 rounded-md flex justify-center items-center bg-sky-400">
-                                <?php renderIcon('grade', 'w-8 h-8 text-white') ?>
-                            </div>
-                            <div>
-                                <p class="text-sm text-zinc-400 font-semibold">Current class</p>
-                                <p class="text-neutral-900 font-semibold"><?= htmlspecialchars($className) ?></p>
-                            </div>
-                        </div>
-                        <div class="w-full h-24 bg-white rounded-md p-3 flex items-center gap-4 hover:shadow-2xl duration-300 transition-all mb-4 border-zinc-200/65 border">
-                            <div class="h-full w-20 rounded-md flex justify-center items-center bg-emerald-600">
-                                <?php renderIcon('termsCompleted', 'w-8 h-8 text-white') ?>
-                            </div>
-                            <div>
-                                <p class="text-sm text-zinc-400 font-semibold">Terms Completed in 2025/26 Session</p>
-                                <p class="text-neutral-900 font-semibold">First, Second Term</p>
-                            </div>
-                        </div>
+                        <?php renderCards($cards, 'session', $conn, $id, $className); ?>
                     </div>
-                </div>
             </div>
         </section>
     </main>
