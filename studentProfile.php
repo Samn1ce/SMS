@@ -10,6 +10,10 @@
         header("Location: ../teacherResult.php");
         die("Student ID not provided");
     }
+    if ($_GET['id'] != $_SESSION['user_id']) {
+        header("Location: ./studentDashboard.php");
+        exit();
+    }
 
     $student_id = $_GET['id'];
 
@@ -58,21 +62,35 @@
 </head>
 <body class="bg-neutral-50">
     <?php renderHeader($student_id) ?>
-    <div class="mx-auto w-10/12 h-screen flex gap-4 mt-3 text-neutral-900">
-        <div class="w-1/2 flex flex-col items-center flex-1 rounded-md bg-white border-zinc-100 border">
+    <div class="mx-auto w-10/12 min-h-[70vh] flex gap-4 mt-3 text-neutral-900">
+        <div class="w-1/2 flex flex-col justify-center items-center gap-6 flex-1 rounded-md bg-white border">
             <div class="border w-40 h-40 rounded-full"></div>
-            <div class="w-full">
-                <div class="flex gap-2">
+            <div class="mx-auto flex flex-col gap-2">
+                <div class="flex gap-2 items-center">
                     <?php renderIcon('personProfile', 'w-6 h-6') ?>
-                    <p><?= htmlspecialchars($_SESSION['student_name']) ?></p>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
                 </div>
-                <div class="flex gap-2">
+                <div class="flex gap-2 items-center">
                     <?php renderIcon('grade', 'w-6 h-6') ?>
-                    <p><?= htmlspecialchars($student['class_name']) ?></p>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <?php renderIcon('personProfile', 'w-6 h-6') ?>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <?php renderIcon('grade', 'w-6 h-6') ?>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <?php renderIcon('grade', 'w-6 h-6') ?>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
                 </div>
             </div>
         </div>
-        <div class="w-1/2 flex-1 border rounded-md"></div>
+        <div class="w-1/2 flex-1 border rounded-md">
+            
+        </div>
 
     </div>
 
