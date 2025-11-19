@@ -1,6 +1,8 @@
 <?php
     include 'includes/dbh.inc.php';
     include 'components/header.php';
+    include 'components/icons.php';
+
     session_start();
 
     // ✅ Check that an ID is provided in the URL
@@ -54,8 +56,25 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title><?= htmlspecialchars($_SESSION['student_name']) ?> Profile</title>
 </head>
-<body>
+<body class="bg-neutral-50">
     <?php renderHeader($student_id) ?>
+    <div class="mx-auto w-10/12 h-screen flex gap-4 mt-3 text-neutral-900">
+        <div class="w-1/2 flex flex-col items-center flex-1 rounded-md bg-white border-zinc-100 border">
+            <div class="border w-40 h-40 rounded-full"></div>
+            <div class="w-full">
+                <div class="flex gap-2">
+                    <?php renderIcon('personProfile', 'w-6 h-6') ?>
+                    <p><?= htmlspecialchars($_SESSION['student_name']) ?></p>
+                </div>
+                <div class="flex gap-2">
+                    <?php renderIcon('grade', 'w-6 h-6') ?>
+                    <p><?= htmlspecialchars($student['class_name']) ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="w-1/2 flex-1 border rounded-md"></div>
+
+    </div>
 
     <!-- <h1>Student Summary</h1>
    <div>

@@ -1,5 +1,11 @@
 <?php 
-    include 'components/icons.php'
+    include 'components/icons.php';
+    session_start();
+
+    if (isset($_SESSION['user_id'])) {
+        header("Location: ./studentDashboard.php");
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
