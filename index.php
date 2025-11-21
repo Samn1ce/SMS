@@ -20,6 +20,10 @@
 <body>
     <a href="login.php" class="text-blue-400 underline text-xl hover:text-red-500">LOGIN</a>
     <a href="register.php" class="text-blue-400 underline text-xl hover:text-red-500">REGISTER</a>
- 
+
+    <?php
+        
+    ?>
+    
 </body>
 </html>
