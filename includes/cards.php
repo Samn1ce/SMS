@@ -71,7 +71,21 @@ $cards = [
         "detail" => "No",
         "icon" => "hammer",
         "color" => "bg-amber-600"
-    ]
+    ],
+    [
+        "category" => "profile",
+        "title" => "Graduated",
+        "detail" => "No",
+        "icon" => "grade",
+        "color" => "bg-blue-600"
+    ],
+    [
+        "category" => "profile",
+        "title" => "Total terms completed",
+        "detail" => "15",
+        "icon" => "date",
+        "color" => "bg-cyan-400"
+    ],
 ];
 
 function renderCards($cards, $category, $conn, $id, $className) {

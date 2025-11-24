@@ -39,18 +39,18 @@
     }
 
     // ✅ Fetch subjects offered by this student
-    $subjectQuery = "SELECT sub.subject_name
-                    FROM student_subjects ss
-                    JOIN subjects sub ON ss.subject_id = sub.id
-                    WHERE ss.id = ?";
-    $subjectStmt = mysqli_prepare($conn, $subjectQuery);
-    mysqli_stmt_bind_param($subjectStmt, "i", $id);
-    mysqli_stmt_execute($subjectStmt);
-    $subjectResult = mysqli_stmt_get_result($subjectStmt);
+    function getSelectedSubjects($conn, $id) {
+        $subjectQuery = "SELECT subject_name FROM student_subjects WHERE student_id = ?";
+        $subjectStmt = mysqli_prepare($conn, $subjectQuery);
+        mysqli_stmt_bind_param($subjectStmt, "i", $id);
+        mysqli_stmt_execute($subjectStmt);
+        $subjectResult = mysqli_stmt_get_result($subjectStmt);
 
-    $subjects = [];
-    while ($row = mysqli_fetch_assoc($subjectResult)) {
-        $subjects[] = $row['subject_name'];
+        $subjects = [];
+        while ($row = mysqli_fetch_assoc($subjectResult)) {
+            $subjects[] = $row['subject_name'];
+        };
+        return $subjects;
     }
 ?>
 
@@ -102,6 +102,7 @@
         <div class="w-1/2 rounded-md overflow-y-scroll scrollbar-hide">
             <?php renderCards($cards, 'profile', $conn, $id, $className); ?>
             <?php renderCards($cards, 'session', $conn, $id, $className); ?>
+            <?php renderCards($cards, 'term', $conn, $id, $className); ?>
         </div>
     </div>
 
