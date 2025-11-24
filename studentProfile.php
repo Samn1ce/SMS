@@ -28,7 +28,7 @@
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     if ($student = mysqli_fetch_assoc($result)) {
-        $_SESSION['student_name'] = $student['studentName'];
+        $studentName = $student['studentName'];
         $className = $student['class_name'];
         $gender = $_SESSION['gender'];
         $dob = $_SESSION['dob'];
@@ -79,11 +79,11 @@
             <div class="mx-auto flex flex-col gap-2">
                 <div class="flex gap-2 items-center">
                     <?php renderIcon('personProfile', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($studentName) ?></p>
                 </div>
                 <div class="flex gap-2 items-center">
                     <?php renderIcon('grade', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($className) ?></p>
                 </div>
                 <div class="flex gap-2 items-center">
                     <?php renderIcon('gender', 'w-6 h-6') ?>
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="w-1/2 rounded-md overflow-y-scroll scrollbar-hide">
-            <?php renderCards($cards, 'session', $conn, $id, $className); ?>
+            <?php renderCards($cards, 'profile', $conn, $id, $className); ?>
             <?php renderCards($cards, 'session', $conn, $id, $className); ?>
         </div>
     </div>

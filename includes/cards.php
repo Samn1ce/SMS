@@ -64,6 +64,13 @@ $cards = [
         "detail" => "First, Second Term",
         "icon" => "termsCompleted",
         "color" => "bg-emerald-600"
+    ],
+    [
+        "category" => "profile",
+        "title" => "Noted Misconduct",
+        "detail" => "No",
+        "icon" => "hammer",
+        "color" => "bg-amber-600"
     ]
 ];
 
