@@ -71,58 +71,41 @@
         }
     </style>
 </head>
-<body class="bg-neutral-50 h-screen">
-    <?php renderHeader($id) ?>
-    <div class="mx-auto w-10/12 h-[85vh] flex gap-4 mt-3 text-neutral-900 relative">
-        <div class="w-1/2 flex flex-col justify-center items-center gap-6 rounded-md bg-white border border-zinc-200/65">
-            <div class="border border-zinc-200/65 w-40 h-40 rounded-full"></div>
-            <div class="mx-auto flex flex-col gap-2">
-                <div class="flex gap-2 items-center">
-                    <?php renderIcon('personProfile', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($studentName) ?></p>
-                </div>
-                <div class="flex gap-2 items-center">
-                    <?php renderIcon('grade', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($className) ?></p>
-                </div>
-                <div class="flex gap-2 items-center">
-                    <?php renderIcon('gender', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($gender) ?></p>
-                </div>
-                <div class="flex gap-2 items-center">
-                    <?php renderIcon('date', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($dob) ?></p>
-                </div>
-                <div class="flex gap-2 items-center">
-                    <?php renderIcon('grade', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+<body>
+    <div class="bg-neutral-50 lg:h-screen">
+        <?php renderHeader($id) ?>
+        <div class="max-w-7xl mx-auto w-11/12 lg:w-10/12 lg:h-[85vh] flex flex-col lg:flex-row gap-4 mt-3 text-neutral-900 relative">
+            <div class="w-full lg:w-1/2 flex flex-col md:flex-row lg:flex-col justify-center items-center gap-6 rounded-md bg-white border border-zinc-200/65 p-5 md:p-10 lg:p-2">
+                <div class="border border-zinc-200/65 w-40 h-40 rounded-full"></div>
+                <div class="mx-auto md:mx-0 lg:mx-auto flex flex-col gap-2">
+                    <div class="flex gap-2 items-center">
+                        <?php renderIcon('personProfile', 'w-6 h-6') ?>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($studentName) ?></p>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <?php renderIcon('grade', 'w-6 h-6') ?>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($className) ?></p>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <?php renderIcon('gender', 'w-6 h-6') ?>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($gender) ?></p>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <?php renderIcon('date', 'w-6 h-6') ?>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($dob) ?></p>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <?php renderIcon('grade', 'w-6 h-6') ?>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="w-1/2 rounded-md overflow-y-scroll scrollbar-hide">
-            <?php renderCards($cards, 'profile', $conn, $id, $className); ?>
-            <?php renderCards($cards, 'session', $conn, $id, $className); ?>
-            <?php renderCards($cards, 'term', $conn, $id, $className); ?>
+            <div class="mx-auto w-full lg:w-1/2 rounded-md lg:overflow-y-scroll scrollbar-hide">
+                <?php renderCards($cards, 'profile', $conn, $id, $className); ?>
+                <?php renderCards($cards, 'session', $conn, $id, $className); ?>
+                <?php renderCards($cards, 'term', $conn, $id, $className); ?>
+            </div>
         </div>
     </div>
-
-    <!-- <h1>Student Summary</h1>
-   <div>
-     <p class="font-semibold"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
-     <p>Class: <?= htmlspecialchars($student['class_name']) ?></p>
-     <p>Gender: M</p>
-     <p>DOB: 12-02-02</p>
-   </div>
-   <br/>
-   <h3 class="text-xl font-semibold">Offered Subjects</h3>
-    <?php if (count($subjects) > 0): ?>
-        <ul class="list-disc pl-6 space-y-1 mt-2">
-            <?php foreach ($subjects as $subject): ?>
-                <li><?= htmlspecialchars($subject) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p class="text-gray-500 mt-2">No subjects found for this student.</p>
-    <?php endif; ?> -->
 </body>
 </html>
