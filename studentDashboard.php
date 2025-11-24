@@ -64,7 +64,7 @@ function getSelectedSubjects($conn, $student_id) {
 </head>
 <body class="bg-neutral-50">
     <?php renderHeader($id) ?>
-    <main class="w-full min-h-[700px] p-2 mx-auto relative">
+    <main class="max-w-7xl w-full min-h-[700px] p-2 mx-auto relative">
         <section class="mx-auto w-11/12 lg:w-10/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
                 <div class="w-full h-full flex flex-col justify-between gap-4 lg:gap-0">

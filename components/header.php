@@ -8,7 +8,7 @@
 
         echo '
             <header class="w-full border-b">
-                <div class="w-full mx-auto">
+                <div class="w-full mx-auto max-w-7xl">
                     <div class="mx-auto w-11/12 lg:w-10/12 flex justify-between p-2">
                         <div class="flex justify-center items-center">
                             <img src="public\png-aura.com.png" class="w-10 h-10" />
