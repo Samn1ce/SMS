@@ -41,7 +41,7 @@ $cards = [
         "color" => "bg-sky-600",
         "modal" => [
             "trigger_text" => "View Details",
-            "modalDetail" => "diolsi"
+            "modalDetail" => "Lorem"
         ]
     ],
     [
