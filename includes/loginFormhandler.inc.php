@@ -34,6 +34,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION["username"] = $row["username"];
         $_SESSION["student_name"] = $row["studentName"];
         $_SESSION["role"] = $role;
+        $_SESSION["gender"] = $row['gender'];
+        $_SESSION['dob'] = $row['dob'];
 
         // Redirect to correct dashboard
         if ($role === "student") {

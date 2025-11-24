@@ -19,7 +19,7 @@
     $id = $_GET['id'];
 
     // ✅ Fetch student basic details and class
-    $sql = "SELECT s.id, s.studentName, c.class_name
+    $sql = "SELECT s.id, s.studentName, c.class_name, s.gender, s.dob
             FROM students s
             JOIN classes c ON s.class_id = c.id
             WHERE s.id = ?";
@@ -30,6 +30,8 @@
     if ($student = mysqli_fetch_assoc($result)) {
         $_SESSION['student_name'] = $student['studentName'];
         $className = $student['class_name'];
+        $gender = $_SESSION['gender'];
+        $dob = $_SESSION['dob'];
     }
 
     if (!$student) {
@@ -57,7 +59,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+     <!-- <link href="./src/output.css" rel="stylesheet"> -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title><?= htmlspecialchars($_SESSION['student_name']) ?> Profile</title>
     <style>
@@ -71,8 +74,8 @@
 <body class="bg-neutral-50 h-screen">
     <?php renderHeader($id) ?>
     <div class="mx-auto w-10/12 h-[85vh] flex gap-4 mt-3 text-neutral-900 relative">
-        <div class="w-1/2 flex flex-col justify-center items-center gap-6 rounded-md bg-white border">
-            <div class="border w-40 h-40 rounded-full"></div>
+        <div class="w-1/2 flex flex-col justify-center items-center gap-6 rounded-md bg-white border border-zinc-200/65">
+            <div class="border border-zinc-200/65 w-40 h-40 rounded-full"></div>
             <div class="mx-auto flex flex-col gap-2">
                 <div class="flex gap-2 items-center">
                     <?php renderIcon('personProfile', 'w-6 h-6') ?>
@@ -83,12 +86,12 @@
                     <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
                 </div>
                 <div class="flex gap-2 items-center">
-                    <?php renderIcon('personProfile', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($_SESSION['student_name']) ?></p>
+                    <?php renderIcon('gender', 'w-6 h-6') ?>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($gender) ?></p>
                 </div>
                 <div class="flex gap-2 items-center">
-                    <?php renderIcon('grade', 'w-6 h-6') ?>
-                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+                    <?php renderIcon('date', 'w-6 h-6') ?>
+                    <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($dob) ?></p>
                 </div>
                 <div class="flex gap-2 items-center">
                     <?php renderIcon('grade', 'w-6 h-6') ?>
