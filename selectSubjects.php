@@ -15,7 +15,7 @@ $subjectsQuery = "SELECT * FROM subjects";
 $subjectsResult = mysqli_query($conn, $subjectsQuery);
 
 function getSelectedSubjects($conn, $student_id) {
-    $subjectsSql = "SELECT subject_name FROM student_subjects WHERE student_id = ?";
+    $subjectsSql = "SELECT subject_id FROM student_subjects WHERE student_id = ?";
     $stmt = mysqli_prepare($conn, $subjectsSql);
     mysqli_stmt_bind_param($stmt, "i", $student_id);
     mysqli_stmt_execute($stmt);
@@ -23,10 +23,11 @@ function getSelectedSubjects($conn, $student_id) {
 
     $subjects = [];
     while ($row = mysqli_fetch_assoc($result)) {
-        $subjects[] = $row['subject_name'];
+        $subjects[] = $row['subject_id'];
     }
     return $subjects;
 }
+$selectedSubjects = getSelectedSubjects($conn, $id);
 ?>
 
 <!DOCTYPE html>
@@ -50,14 +51,21 @@ function getSelectedSubjects($conn, $student_id) {
                     <h2 class="text-neutral-900 text-3xl lg:text-4xl">Welcome <span class="font-semibold"><?= htmlspecialchars($_SESSION['student_name']) ?></span>!</h2>
                     <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
                 </div>
-                <div class="">
+                <div>
                     <form action="includes/saveSubjects.php" method="POST" class="space-y-3">
                         <input type="hidden" name="student_id" value="<?= $id ?>">
 
-                        <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : ?>
+                        <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : 
+                            $isChecked = in_array($subject['id'], $selectedSubjects) ? 'checked' : '';
+                        ?>
                             <label class="flex items-center space-x-2">
-                            <input type="checkbox" name="subjects[]" value="<?= htmlspecialchars($subject['id']) ?>"> 
-                            <span><?= htmlspecialchars($subject['subject_name']) ?></span>
+                                <input 
+                                    type="checkbox" 
+                                    name="subjects[]" 
+                                    value="<?= htmlspecialchars($subject['id']) ?>"
+                                    <?= $isChecked ?>
+                                > 
+                                <span><?= htmlspecialchars($subject['subject_name']) ?></span>
                             </label>
                         <?php endwhile; ?>
 

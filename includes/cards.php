@@ -26,7 +26,7 @@ $cards = [
                             <li><?= htmlspecialchars($subject) ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <p class="text-center text-sm text-neutral-800">A subject is missing? <span><a href="#" class="font-semibold text-blue-400 border-b border-dotted border-b-blue-400">Check Here</a></span>, to see which one you omitted.</p>
+                    <p class="text-center text-sm text-neutral-800">A subject is missing? <span><a href="selectSubjects.php" class="font-semibold text-blue-400 border-b border-dotted border-b-blue-400">Check Here</a></span>, to see which one you omitted.</p>
                 </div>
                 <?php
                 return ob_get_clean(); // Return captured output as string
