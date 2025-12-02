@@ -5,6 +5,9 @@
 
     $id = $_SESSION['user_id'];
     $student_name = $_SESSION['student_name'];
+    $class_name = $_SESSION['class_name'];
+    $gender = $_SESSION['gender'];
+    $dob = $_SESSION['dob'];
 ?>
 
 <!DOCTYPE html>
@@ -23,38 +26,38 @@
             <h3 class="font-semibold text-blue-400">Student Details</h3>
             <div class="px-5 flex-1 flex gap-4">
                 <div class="rounded-full h-28 w-28 border"></div>
-                <div class="flex flex-1 items-center">
+                <div class="flex flex-1 items-center text-neutral-800">
                     <div class="flex flex-col gap-2 pr-3 mr-3 border-r border-zinc-200">
                         <div class="flex">
-                            <p>Student Name:&nbsp;</p>
-                            <p><?= $_SESSION['student_name'] ?></p>
+                            <p class="italic">Student Name:&nbsp;</p>
+                            <p class="font-semibold"><?= htmlspecialchars($student_name) ?></p>
                         </div>
                         <hr class="border border-zinc-200 w-11/12 mx-auto" />
                         <div class="flex">
-                            <p>Class:&nbsp;</p>
-                            <p><?= $_SESSION['class_name'] ?></p>
+                            <p class="italic">Class:&nbsp;</p>
+                            <p class="font-semibold"><?= htmlspecialchars($class_name) ?></p>
                         </div>
                     </div>
                     <div class="flex flex-col gap-2 pr-3 mr-3 border-r border-zinc-200">
                         <div class="flex">
-                            <p>Student Name:&nbsp;</p>
-                            <p><?= $_SESSION['student_name'] ?></p>
+                            <p class="italic">Gender:&nbsp;</p>
+                            <p class="font-semibold"><?= htmlspecialchars($gender) ?></p>
                         </div>
                         <hr class="border border-zinc-200 w-11/12 mx-auto" />
                         <div class="flex">
-                            <p>Student Name:&nbsp;</p>
-                            <p><?= $_SESSION['student_name'] ?></p>
+                            <p class="italic">D-O-B:&nbsp;</p>
+                            <p class="font-semibold"><?= htmlspecialchars($dob) ?></p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-2 pr-3 mr-3 border-r border-zinc-200">
+                    <div class="flex flex-col gap-2 pr-3 mr-3">
                         <div class="flex">
-                            <p>Student Name:&nbsp;</p>
-                            <p><?= $_SESSION['student_name'] ?></p>
+                            <p class="italic">Year:&nbsp;</p>
+                            <p class="font-semibold"><?= date("y") ?></p>
                         </div>
                         <hr class="border border-zinc-200 w-11/12 mx-auto" />
                         <div class="flex">
-                            <p>Student Name:&nbsp;</p>
-                            <p><?= $_SESSION['student_name'] ?></p>
+                            <p class="italic">Position:&nbsp;</p>
+                            <p class="font-semibold">N/A</p>
                         </div>
                     </div>
                 </div>
