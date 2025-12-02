@@ -74,7 +74,7 @@
 <body>
     <div class="bg-neutral-50 lg:h-screen">
         <?php renderHeader($id) ?>
-        <div class="max-w-7xl mx-auto w-11/12 lg:w-10/12 lg:h-[85vh] flex flex-col lg:flex-row gap-4 mt-3 text-neutral-900 relative">
+        <div class="max-w-7xl mx-auto w-11/12 lg:w-10/12 lg:h-[85vh] 2xl:h-auto flex flex-col lg:flex-row gap-4 mt-3 text-neutral-900 relative">
             <div class="w-full lg:w-1/2 flex flex-col md:flex-row lg:flex-col justify-center items-center gap-6 rounded-md bg-white border border-zinc-200/65 p-5 md:p-10 lg:p-2">
                 <div class="border border-zinc-200/65 w-40 h-40 rounded-full"></div>
                 <div class="mx-auto md:mx-0 lg:mx-auto flex flex-col gap-2">

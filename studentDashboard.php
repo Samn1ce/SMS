@@ -126,13 +126,13 @@ function getSelectedSubjects($conn, $student_id) {
                 <div class="w-full lg:w-1/2">
                     <h3 class="font-bold text-xl pl-5 mb-2">Term Assesment</h3>
                     <div class="w-full">
-                        <?php renderCards($cards, 'term', $conn, $id, $className); ?>
+                        <?php renderCards($cards, 'term', $conn, $id, $class_name); ?>
                     </div>
                 </div>
                 <div class="w-full lg:w-1/2">
                     <h3 class="font-bold text-xl pl-5 mb-2">Session Assesment</h3>
                     <div class="w-full">
-                        <?php renderCards($cards, 'session', $conn, $id, $className); ?>
+                        <?php renderCards($cards, 'session', $conn, $id, $class_name); ?>
                     </div>
             </div>
         </section>

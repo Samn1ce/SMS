@@ -21,13 +21,13 @@
 </head>
 <body class="bg-neutral-50">
     <?php renderHeader($id) ?>
-    <main class="max-w-7xl w-full p-2 mx-auto flex flex-col gap-4">
-        <section class="bg-white h-40 w-10/12 shadow-2xl rounded-md mx-auto px-3 py-2 flex flex-col gap-2">
+    <main class="max-w-7xl w-full p-2 mx-auto flex flex-col gap-2 md:gap-4">
+        <section class="bg-white lg:h-40 border border-zinc-200/65 w-11/12 lg:w-10/12 shadow-lg md:shadow-2xl rounded-md mx-auto px-3 py-2 flex flex-col gap-2">
             <h3 class="font-semibold text-blue-400">Student Details</h3>
             <div class="px-5 flex-1 flex gap-4">
-                <div class="rounded-full h-28 w-28 border"></div>
-                <div class="flex flex-1 items-center text-neutral-800">
-                    <div class="flex flex-col gap-2 pr-3 mr-3 border-r border-zinc-200">
+                <div class="rounded-full h-28 w-28 border hidden md:block"></div>
+                <div class="flex flex-wrap flex-1 items-center text-neutral-800 text-xs md:text-sm lg:text-base">
+                    <div class="flex flex-col gap-2 pr-3 mr-3 md:border-r border-zinc-200">
                         <div class="flex">
                             <p class="italic">Student Name:&nbsp;</p>
                             <p class="font-semibold"><?= htmlspecialchars($student_name) ?></p>
@@ -38,7 +38,7 @@
                             <p class="font-semibold"><?= htmlspecialchars($class_name) ?></p>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-2 pr-3 mr-3 border-r border-zinc-200">
+                    <div class="flex flex-col gap-2 pr-3 mr-3 md:border-r border-zinc-200">
                         <div class="flex">
                             <p class="italic">Gender:&nbsp;</p>
                             <p class="font-semibold"><?= htmlspecialchars($gender) ?></p>
@@ -63,12 +63,12 @@
                 </div>
             </div>
         </section>
-        <section class="bg-white max-w-7xl w-10/12 p-3 mx-auto rounded-md shadow-2xl overflow-hidden">
+        <section class="bg-white max-w-7xl w-11/12 lg:w-10/12 p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65">
             <!-- Title -->
-            <div class="w-full px-4 flex justify-between items-center">
+            <div class="w-full px-4 flex gap-2 md:gap-0 flex-col md:flex-row justify-between md:items-center">
                 <h3 class="font-semibold text-lg text-blue-400">Marks</h3>
-                <div class="text-sm">
-                    <p class="italic text-center">Choose Result to Preview:&nbsp;</p>
+                <div class="text-xs md:text-sm">
+                    <p class="italic md:text-center">Choose Result to Preview:&nbsp;</p>
                     <label class="font-semibold">Class:</label>
                     <select>
                         <option>JSS 1</option>
@@ -148,9 +148,9 @@
             </table>
         </section>
         <section>
-            <div class="w-10/12 h-20 bg-blue-400 rounded-md mx-auto shadow px-3 py-2">
+            <div class="w-11/12 lg:w-10/12 lg:h-20 bg-blue-400 rounded-md mx-auto px-3 py-2 shadow-lg md:shadow-2xl">
                 <h3 class="font-semibold text-neutral-100/95">Grading Scale:</h3>
-                <div class="text-neutral-100 ml-5 flex gap-8">
+                <div class="text-neutral-100 ml-5 flex flex-wrap gap-2 md:gap-8">
                     <div class="flex">
                         <p class="italic">A1:&nbsp;</p>
                         <p class="font-semibold">75 - 100</p>
