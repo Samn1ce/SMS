@@ -14,7 +14,10 @@ if (empty($email) || empty($pwd) || empty($role)) {
 
 // Choose correct table based on role
 if ($role === "student") {
-    $sql = "SELECT * FROM students WHERE email = ?";
+    $sql = "SELECT students.*, classes.class_name 
+            FROM students 
+            LEFT JOIN classes ON students.class_id = classes.id 
+            WHERE students.email = ?";
 } elseif ($role === "teacher") {
     $sql = "SELECT * FROM teachers WHERE email = ?";
 } else {
@@ -36,6 +39,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION["role"] = $role;
         $_SESSION["gender"] = $row['gender'];
         $_SESSION['dob'] = $row['dob'];
+        $_SESSION['class_name'] = $row['class_name'] ?? 'Not Assigned';
+
 
         // Redirect to correct dashboard
         if ($role === "student") {
