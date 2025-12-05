@@ -3,6 +3,7 @@
     include 'includes/cards.php';
     include 'components/header.php';
     include 'components/icons.php';
+    include 'components/logoutDialogue.php';
 
     session_start();
 
@@ -28,8 +29,8 @@
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     if ($student = mysqli_fetch_assoc($result)) {
-        $studentName = $student['studentName'];
-        $className = $student['class_name'];
+        $student_name = $student['studentName'];
+        $class_name = $student['class_name'];
         $gender = $_SESSION['gender'];
         $dob = $_SESSION['dob'];
     }
@@ -59,16 +60,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-     <!-- <link href="./src/output.css" rel="stylesheet"> -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title><?= htmlspecialchars($_SESSION['student_name']) ?> Profile</title>
     <style>
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        }
     </style>
 </head>
 <body>
@@ -80,11 +76,11 @@
                 <div class="mx-auto md:mx-0 lg:mx-auto flex flex-col gap-2">
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('personProfile', 'w-6 h-6') ?>
-                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($studentName) ?></p>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student_name) ?></p>
                     </div>
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('grade', 'w-6 h-6') ?>
-                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($className) ?></p>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($class_name) ?></p>
                     </div>
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('gender', 'w-6 h-6') ?>
@@ -96,14 +92,20 @@
                     </div>
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('grade', 'w-6 h-6') ?>
-                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student['class_name']) ?></p>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student_name) ?></p>
+                    </div>
+                </div>
+                <div class="w-1/2 mx-auto flex gap-4 mt-2">
+                    <a href="studentDashboard.php" class="w-1/2 bg-blue-600 hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 hover:border hover:border-neutral-300 font-semibold rounded-full py-3 px-5 cursor-pointer text-center transition-all">Dashboard</a>
+                    <div class="w-1/2 rounded-full bg-blue-600 flex justify-center items-center hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 transition-all hover:border hover:border-neutral-300">
+                        <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold w-full py-4 px-5 cursor-pointer", '', 'w-full h-fit justify-center items-center flex') ?>
                     </div>
                 </div>
             </div>
             <div class="mx-auto w-full lg:w-1/2 rounded-md lg:overflow-y-scroll scrollbar-hide">
-                <?php renderCards($cards, 'profile', $conn, $id, $className); ?>
-                <?php renderCards($cards, 'session', $conn, $id, $className); ?>
-                <?php renderCards($cards, 'term', $conn, $id, $className); ?>
+                <?php renderCards($cards, 'profile', $conn, $id, $class_name); ?>
+                <?php renderCards($cards, 'session', $conn, $id, $class_name); ?>
+                <?php renderCards($cards, 'term', $conn, $id, $class_name); ?>
             </div>
         </div>
     </div>

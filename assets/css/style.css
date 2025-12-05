@@ -1,0 +1,17 @@
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (min-width: 1024px) {
+  .result-scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .result-scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

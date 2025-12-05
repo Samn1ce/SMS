@@ -15,6 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
     <title><?= $_SESSION['student_name'] ?> Results</title>
@@ -63,7 +64,7 @@
                 </div>
             </div>
         </section>
-        <section class="bg-white max-w-7xl w-11/12 lg:w-10/12 p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65">
+        <section class="bg-white max-w-7xl w-11/12 lg:w-10/12 p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65 result-scrollbar-hide">
             <!-- Title -->
             <div class="w-full px-4 flex gap-2 md:gap-0 flex-col md:flex-row justify-between md:items-center">
                 <h3 class="font-semibold text-lg text-blue-400">Marks</h3>

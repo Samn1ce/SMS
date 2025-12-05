@@ -1,7 +1,8 @@
 <?php
 function renderLogoutDialogue(
+    $containerDivClass,
     $aText, 
-    $aClass, 
+    $aClass,
     $pText = '', 
     $pClass = '', 
     $spanText = ''
@@ -10,7 +11,7 @@ function renderLogoutDialogue(
         <div 
             x-data="{ open: false }" 
             x-transition 
-            class="mx-auto"
+            class="'. htmlspecialchars($containerDivClass) .'"
         >
             <p class="'. htmlspecialchars($pClass) .'">'. htmlspecialchars($pText) .'
                 <span>

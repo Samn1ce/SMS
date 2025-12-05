@@ -137,7 +137,6 @@ function getSelectedSubjects($conn, $student_id) {
             </div>
         </section>
     </main>
-    <?php renderLogoutDialogue('Log out', 'bg-blue-600 text-neutral-100 font-semibold rounded-xl p-3 cursor-pointer') ?>
 </div>
 </body>
 </html>
