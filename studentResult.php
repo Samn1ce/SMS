@@ -4,7 +4,8 @@
     include 'components/header.php';
 
     $id = $_SESSION['user_id'];
-    $student_name = $_SESSION['student_name'];
+    $surname = $_SESSION['surname'];
+    $firstname = $_SESSION['firstname'];
     $class_name = $_SESSION['class_name'];
     $gender = $_SESSION['gender'];
     $dob = $_SESSION['dob'];
@@ -31,7 +32,7 @@
                     <div class="flex flex-col gap-2 pr-3 mr-3 md:border-r border-zinc-200">
                         <div class="flex">
                             <p class="italic">Student Name:&nbsp;</p>
-                            <p class="font-semibold"><?= htmlspecialchars($student_name) ?></p>
+                            <p class="font-semibold"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></p>
                         </div>
                         <hr class="border border-zinc-200 w-11/12 mx-auto" />
                         <div class="flex">
