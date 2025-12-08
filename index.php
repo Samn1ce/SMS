@@ -2,10 +2,9 @@
     include 'components/icons.php';
     session_start();
 
-    if (isset($_SESSION['user_id'])) {
-        header("Location: ./studentDashboard.php");
-        exit();
-    }
+    if(!$_SESSION['id']) {
+        header("Location: login.php");
+    };
 ?>
 
 <!DOCTYPE html>

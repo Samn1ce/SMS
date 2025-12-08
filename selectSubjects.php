@@ -28,6 +28,13 @@ function getSelectedSubjects($conn, $student_id) {
     return $subjects;
 }
 $selectedSubjects = getSelectedSubjects($conn, $id);
+
+$coreSubjectIds = [];
+$coreQuery = "SELECT id FROM subjects WHERE subject_name IN ('Mathematics', 'English')";
+$coreResult = mysqli_query($conn, $coreQuery);
+while ($coreRow = mysqli_fetch_assoc($coreResult)) {
+    $coreSubjectIds[] = (int)$coreRow['id'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +63,11 @@ $selectedSubjects = getSelectedSubjects($conn, $id);
                         <input type="hidden" name="student_id" value="<?= $id ?>">
 
                         <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : 
-                            $isChecked = in_array($subject['id'], $selectedSubjects) ? 'checked' : '';
+                            // $isChecked = in_array($subject['id'], $selectedSubjects) ? 'checked' : '';
+                            $isCore = in_array($subject['id'], $coreSubjectIds);
+                            $isSelected = in_array($subject['id'], $selectedSubjects);
+                            $isChecked = ($isCore || $isSelected) ? 'checked' : '';
+                            $isDisabled = $isCore ? 'disabled' : '';
                         ?>
                             <label class="flex items-center space-x-2">
                                 <input 
@@ -64,6 +75,8 @@ $selectedSubjects = getSelectedSubjects($conn, $id);
                                     name="subjects[]" 
                                     value="<?= htmlspecialchars($subject['id']) ?>"
                                     <?= $isChecked ?>
+                                    <?= $isDisabled ?>
+                                    class="<?= $isCore ? 'cursor-not-allowed' : 'cursor-pointer' ?>"
                                 > 
                                 <span><?= htmlspecialchars($subject['subject_name']) ?></span>
                             </label>
@@ -71,7 +84,7 @@ $selectedSubjects = getSelectedSubjects($conn, $id);
 
                         <button 
                             type="submit"
-                            class="bg-blue-600 text-white px-4 py-2 rounded-md w-full mt-3 hover:bg-blue-700"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md w-full mt-3 hover:bg-blue-700 cursor-pointer"
                         >
                             Save Subjects
                         </button>

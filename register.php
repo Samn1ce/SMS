@@ -16,7 +16,7 @@
 </head>
 <body>
     <form action="includes/registerFormhandler.inc.php" method="post">
-        <div class="w-full min-h-[700px] bg-black p-1 lg:p-3 flex justify-end">
+        <div class="w-full min-h-screen bg-black p-1 lg:p-3 flex justify-end">
             <div class="w-full lg:w-1/2 pb-5 bg-zinc-50 rounded-md flex justify-center items-center">
                 <div class="w-11/12 lg:w-3/4 flex flex-col gap-8">
                     <div>

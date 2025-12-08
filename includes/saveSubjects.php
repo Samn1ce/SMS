@@ -6,6 +6,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $student_id = $_POST["student_id"];
     $subjects = $_POST["subjects"] ?? [];
 
+     // Get core subject IDs (Mathematics and English)
+    $coreQuery = "SELECT id FROM subjects WHERE subject_name IN ('Mathematics', 'English')";
+    $coreResult = mysqli_query($conn, $coreQuery);
+    $coreSubjects = [];
+    while ($row = mysqli_fetch_assoc($coreResult)) {
+        $coreSubjects[] = $row['id'];
+    }
+    
+    // Force-add core subjects to ensure they're always included
+    // This protects against form tampering or accidental removal
+    $subjects = array_unique(array_merge($subjects, $coreSubjects));
+
     mysqli_begin_transaction($conn);
 
     try {

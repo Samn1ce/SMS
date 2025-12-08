@@ -30,7 +30,7 @@ function renderLogoutDialogue(
                         <div class="flex flex-col justify-center items-center w-full md:w-10/12">
                             <p class="text-2xl font-semibold mt-3 text-neutral-800">Are You Sure?</p>
                             <div class="flex gap-4 mt-3 w-11/12">
-                                <a href="logout.php" class="w-1/2 text-center px-4 py-1 rounded-xl bg-blue-600 hover:bg-blue-400 transition-all duration-300 text-neutral-100 font-semibold">Yes</a>
+                                <a href="includes/logout.php" class="w-1/2 text-center px-4 py-1 rounded-xl bg-blue-600 hover:bg-blue-400 transition-all duration-300 text-neutral-100 font-semibold">Yes</a>
                                 <a x-on:click="open = false" href="#" class="font-semibold w-1/2 border-zinc-400 border-2 px-4 rounded-xl text-center text-neutral-800">No</a>
                             </div>
                         </div>
