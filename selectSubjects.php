@@ -5,6 +5,8 @@ include 'components/header.php';
 include 'components/logoutDialogue.php';
 
 $id = $_SESSION["user_id"];
+$surname = $_SESSION['surname'];
+$firstname = $_SESSION['firstname'];
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -55,7 +57,7 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
             </div>
             <div class="w-full lg:w-1/2 flex flex-col justify-center gap-6 p-3">
                 <div>
-                    <h2 class="text-neutral-900 text-3xl lg:text-4xl">Welcome <span class="font-semibold"><?= htmlspecialchars($_SESSION['student_name']) ?></span>!</h2>
+                    <h2 class="text-neutral-900 text-3xl lg:text-4xl">Welcome <span class="font-semibold"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></span>!</h2>
                     <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
                 </div>
                 <div>

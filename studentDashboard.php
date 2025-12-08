@@ -12,7 +12,8 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 $id = $_SESSION["user_id"];
-$student_name = $_SESSION['student_name'];
+$surname = $_SESSION['surname'];
+$firstname = $_SESSION['firstname'];
 $class_name = $_SESSION['class_name'];
 
 // Fetch available subjects
@@ -41,7 +42,7 @@ function getSelectedSubjects($conn, $student_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
-    <title><?= htmlspecialchars($student_name) ?> Dashboard</title>
+    <title><?= htmlspecialchars($firstname) ?>'s Dashboard</title>
 </head>
 <body class="bg-neutral-50">
     <?php renderHeader($id) ?>
@@ -59,7 +60,7 @@ function getSelectedSubjects($conn, $student_id) {
                                 <?php renderIcon('person', 'w-6 h-6') ?>
                             </div>
                             <div>
-                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($student_name) ?></p>
+                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></p>
                                 <p class="text-xs text-zinc-300 font-semibold -mt-1">Fullname</p>
                             </div>
                         </div>

@@ -34,8 +34,6 @@ if ($row = mysqli_fetch_assoc($result)) {
     // Verify password
     if (password_verify($pwd, $row["pwd"])) {
         $_SESSION["user_id"] = $row["id"];
-        $_SESSION["username"] = $row["username"];
-        $_SESSION["student_name"] = $row["studentName"];
         $_SESSION["role"] = $role;
         $_SESSION["gender"] = $row['gender'];
         $_SESSION['dob'] = $row['dob'];
@@ -44,6 +42,10 @@ if ($row = mysqli_fetch_assoc($result)) {
 
         // Redirect to correct dashboard
         if ($role === "student") {
+        $_SESSION["surname"] = $row["student_surname"];
+        $_SESSION["firstname"] = $row["student_firstname"];
+        $_SESSION["othername"] = $row["student_othername"];
+
             $loginStmt = mysqli_prepare($conn, "SELECT login_count FROM students WHERE id = ?");
             mysqli_stmt_bind_param($loginStmt, "i", $row['id']);
             mysqli_stmt_execute($loginStmt);
@@ -55,6 +57,9 @@ if ($row = mysqli_fetch_assoc($result)) {
                 header("Location: ../studentDashboard.php");
             }
         } else {
+            $_SESSION["surname"] = $row["teacher_surname"];
+            $_SESSION["firstname"] = $row["teacher_firstname"];
+            $_SESSION["othername"] = $row["teacher_othername"];
             header("Location: ../teacherDashboard.php");
         }
         exit();

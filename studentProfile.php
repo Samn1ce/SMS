@@ -18,26 +18,12 @@
     }
 
     $id = $_GET['id'];
-
-    // ✅ Fetch student basic details and class
-    $sql = "SELECT s.id, s.studentName, c.class_name, s.gender, s.dob
-            FROM students s
-            JOIN classes c ON s.class_id = c.id
-            WHERE s.id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    if ($student = mysqli_fetch_assoc($result)) {
-        $student_name = $student['studentName'];
-        $class_name = $student['class_name'];
-        $gender = $_SESSION['gender'];
-        $dob = $_SESSION['dob'];
-    }
-
-    if (!$student) {
-        die("Student not found");
-    }
+    $surname = $_SESSION['surname'];
+    $firstname = $_SESSION['firstname'];
+    $othername = $_SESSION['othername'];
+    $class_name = $_SESSION['class_name'];
+    $gender = $_SESSION['gender'];
+    $dob = $_SESSION['dob'];
 
     // ✅ Fetch subjects offered by this student
     function getSelectedSubjects($conn, $id) {
@@ -63,7 +49,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title><?= htmlspecialchars($_SESSION['student_name']) ?> Profile</title>
+    <title><?= htmlspecialchars($firstname) ?>'s Profile</title>
     <style>
     </style>
 </head>
@@ -76,7 +62,7 @@
                 <div class="mx-auto md:mx-0 lg:mx-auto flex flex-col gap-2">
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('personProfile', 'w-6 h-6') ?>
-                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student_name) ?></p>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?>&nbsp;<?= htmlspecialchars($othername) ?></p>
                     </div>
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('grade', 'w-6 h-6') ?>
@@ -92,7 +78,7 @@
                     </div>
                     <div class="flex gap-2 items-center">
                         <?php renderIcon('grade', 'w-6 h-6') ?>
-                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($student_name) ?></p>
+                        <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($firstname) ?></p>
                     </div>
                 </div>
                 <div class="w-1/2 mx-auto flex gap-4 mt-2">

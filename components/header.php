@@ -3,7 +3,8 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        $student_name = $_SESSION['student_name'] ?? 'Unknown';
+        $surname = $_SESSION['surname'] ?? 'Unknown';
+        $firstname = $_SESSION['firstname'] ?? 'Unknown';
         $role = $_SESSION['role'] ?? 'Guest';
 
         echo '
@@ -15,7 +16,7 @@
                             <h1 class="font-bold text-3xl">SCHOOL NAME</h1>
                         </div>
                         <a href="studentProfile.php?id='. urlencode($id) .'" class="hidden md:flex flex-col justify-end items-end cursor-pointer p-2 hover:bg-zinc-300 duration-300 transition-all">
-                            <h2 class="font-semibold text-xl">' . htmlspecialchars($student_name) . '</h2>
+                            <h2 class="font-semibold text-xl">' . htmlspecialchars($surname) . '&nbsp;'. htmlspecialchars($firstname) .'</h2>
                             <p class="text-zinc-400 text-sm -mt-1">' . htmlspecialchars($role) . '</p>
                         </a>
                     </div>
