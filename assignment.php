@@ -9,6 +9,12 @@
     $firstname = $_SESSION['firstname'];
     $class_name = $_SESSION['class_name'];
     $role = $_SESSION['role'];
+
+    $classQuery = "SELECT * FROM classes";
+    $classResult = mysqli_query($conn, $classQuery);
+
+    $class_armQuery = "SELECT * FROM class_arms";
+    $class_armResult = mysqli_query($conn, $class_armQuery);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +38,56 @@
                         <option>Submission Date</option>
                         <option>Date Given</option>
                     </select>
-                    <button class="font-semibold border p-2 rounded-md flex gap-2 bg-white border-zinc-200/65 hover:border-zinc-800/60 transition-all duration-300 cursor-pointer"><span><?php renderIcon('new', 'w-6 h-6') ?></span> New</button>
+                    <div x-data="{ open: false }">
+                        <button 
+                            @click="open = ! open"
+                            class="font-semibold border p-2 rounded-md flex gap-2 bg-white border-zinc-200/65 hover:border-zinc-800/60 transition-all duration-300 cursor-pointer"
+                        >
+                            <span><?php renderIcon('new', 'w-6 h-6') ?></span> 
+                            New
+                        </button>
+
+                        <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
+                            <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
+                                <div class="flex flex-col w-full rounded-3xl p-3 md:p-5 bg-neutral-50 border border-neutral-100">
+                                    <h3 class="font-semibold text-xl">New Assigment</h3>
+                                    <form method="POST" action="includes/sendAssignments.php">
+                                        <div class="flex flex-col md:flex-row justify-between gap-4 w-full mt-3">
+                                            <div class="flex flex-col w-full">
+                                                <label id="class" for="class" class="italic text-xs md:text-sm font-semibold">Class:</label>
+                                                <select name="class_id" id="class" class="border rounded-md p-1 text-xs md:text-sm">
+                                                    <option value="">-- Select Class --</option>
+                                                    <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
+                                                    <option value="<?= $class['id'] ?>">
+                                                        <?= htmlspecialchars($class['class_name']) ?>
+                                                    </option>
+                                                    <?php endwhile; ?>
+                                                </select>
+                                            </div>
+                                            <div class="flex flex-col w-full">
+                                                <label id="class" for="class" class="italic text-xs md:text-sm font-semibold">Class Arm:</label>
+                                                <select name="class" class="border rounded-md p-1 text-xs md:text-sm">
+                                                    <option>-- Select Arm --</option>
+                                                    <?php while ($class_arm = mysqli_fetch_assoc($class_armResult)) : ?>
+                                                    <option value="<?= $class_arm['id'] ?>">
+                                                        <?= htmlspecialchars($class_arm['class_arm']) ?>
+                                                    </option>
+                                                    <?php endwhile; ?>
+                                                </select>
+                                            </div>
+                                            <div class="flex flex-col w-full">
+                                                <label id="class" for="class" class="italic text-xs md:text-sm font-semibold">To be submitted:</label>
+                                                <input type="date" name="submitDate" class="border rounded-md p-0.5">
+                                            </div>
+                                        </div>
+                                        <textarea class="border rounded-md w-full min-h-40 mt-3 p-3" placeholder="Type Assignments here..."></textarea>
+                                        <button x-on:click="open = false" class="w-full mt-3 p-2 cursor-pointer rounded-xl bg-blue-500 hover:bg-blue-600/90 transition-all duration-300 text-neutral-100 font-semibold">Send Out</button>
+                                    </form>
+                                    <button x-on:click="open = false" class="w-full mt-3 p-2 cursor-pointer rounded-xl bg-red-500 hover:bg-red-600/90 transition-all duration-300 text-neutral-100 font-semibold">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="w-full">
