@@ -72,7 +72,7 @@
                                             </div>
                                             <div required class="flex flex-col w-full">
                                                 <label id="class" for="class" class="italic text-xs md:text-sm font-semibold">Class Arm:</label>
-                                                <select name="class" class="border rounded-md p-1 text-xs md:text-sm">
+                                                <select name="arm_id" class="border rounded-md p-1 text-xs md:text-sm">
                                                     <option>-- Select Arm --</option>
                                                     <?php while ($class_arm = mysqli_fetch_assoc($class_armResult)) : ?>
                                                     <option value="<?= $class_arm['id'] ?>">
@@ -86,7 +86,7 @@
                                                 <input type="date" name="due_date" class="border rounded-md p-0.5">
                                             </div>
                                         </div>
-                                        <select required name="subject" id="subject" class="border rounded-md p-1 text-xs md:text-sm w-full mt-3">
+                                        <select required name="subject_id" id="subject" class="border rounded-md p-1 text-xs md:text-sm w-full mt-3">
                                             <option value="">-- Select Subject --</option>
                                             <?php while ($subjects = mysqli_fetch_assoc($subjectsResult)) : ?>
                                                 <option value="<?= $subjects['id'] ?>">
