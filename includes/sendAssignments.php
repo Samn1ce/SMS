@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $due_date = $_POST['due_date'];
     $description = $_POST['description'];
     $subject_id = $_POST['subject_id'];
-    $id = $_SESSION['id'];
+    $id = $_SESSION['user_id'];
     $role = $_SESSION['role'];
 
     if (!empty($class) || !empty($class_arm) || !empty($due_date) || !empty($description) || !empty($subject)) {
