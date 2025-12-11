@@ -139,7 +139,7 @@ function getSelectedSubjects($conn, $student_id) {
                 } else {
                     ?>
                         <div class="w-full">
-                            <div class="border w-1/4 p-3 rounded-md bg-white border-zinc-200/65 border shadow-xl">
+                            <div class="w-1/4 p-3 rounded-md bg-white border-zinc-200/65 border shadow-xl">
                                 <div class="w-full flex justify-center items-center">
                                     <?php renderIcon('book', 'w-14 h-14') ?>
                                 </div>
