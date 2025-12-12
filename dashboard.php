@@ -15,6 +15,7 @@ $id = $_SESSION["user_id"];
 $surname = $_SESSION['surname'];
 $firstname = $_SESSION['firstname'];
 $class_name = $_SESSION['class_name'];
+$class_arm = $_SESSION['arm'];
 $role = $_SESSION['role'];
 
 // Fetch available subjects

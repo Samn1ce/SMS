@@ -16,6 +16,9 @@ if (!isset($_SESSION["user_id"])) {
 $subjectsQuery = "SELECT * FROM subjects";
 $subjectsResult = mysqli_query($conn, $subjectsQuery);
 
+$class_armQuery = "SELECT * FROM class_arms";
+$class_armResult = mysqli_query($conn, $class_armQuery);
+
 function getSelectedSubjects($conn, $student_id) {
     $subjectsSql = "SELECT subject_id FROM student_subjects WHERE student_id = ?";
     $stmt = mysqli_prepare($conn, $subjectsSql);
@@ -58,14 +61,31 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
             <div class="w-full lg:w-1/2 flex flex-col justify-center gap-6 p-3">
                 <div>
                     <h2 class="text-neutral-900 text-3xl lg:text-4xl">Welcome <span class="font-semibold"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></span>!</h2>
-                    <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
                 </div>
                 <div>
-                    <form action="includes/saveSubjects.php" method="POST" class="space-y-3">
+                    <form action="includes/saveStudentData.php" method="POST" class="space-y-3">
+                        <p class="text-zinc-400 font-semibold">Select your Class Arm...</p>
+                        <div class="flex gap-2">
+                            <input type="hidden" name="student_id" value="<?= $id ?>">
+                            <?php while($class_arm = mysqli_fetch_assoc($class_armResult)) : 
+                                $selectedArm = $_SESSION['arm'];
+                            ?>
+                                <label class="flex gap-1">
+                                    <input 
+                                        type="radio" 
+                                        name="arm_id" 
+                                        value="<?= htmlspecialchars($class_arm['id']) ?>" 
+                                        class="cursor-pointer"
+                                        required
+                                        <?php if ($selectedArm !== '') selected ?>
+                                    />
+                                    <span><?= htmlspecialchars($class_arm['class_arm']) ?></span>
+                                </label>
+                            <?php endwhile; ?>
+                        </div>
+                        <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
                         <input type="hidden" name="student_id" value="<?= $id ?>">
-
                         <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : 
-                            // $isChecked = in_array($subject['id'], $selectedSubjects) ? 'checked' : '';
                             $isCore = in_array($subject['id'], $coreSubjectIds);
                             $isSelected = in_array($subject['id'], $selectedSubjects);
                             $isChecked = ($isCore || $isSelected) ? 'checked' : '';
