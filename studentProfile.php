@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="w-1/2 mx-auto flex gap-4 mt-2">
-                    <a href="studentDashboard.php" class="w-1/2 bg-blue-600 hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 hover:border hover:border-neutral-300 font-semibold rounded-full py-3 px-5 cursor-pointer text-center transition-all">Dashboard</a>
+                    <a href="dashboard.php" class="w-1/2 bg-blue-600 hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 hover:border hover:border-neutral-300 font-semibold rounded-full py-3 px-5 cursor-pointer text-center transition-all">Dashboard</a>
                     <div class="w-1/2 rounded-full bg-blue-600 flex justify-center items-center hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 transition-all hover:border hover:border-neutral-300">
                         <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold w-full py-4 px-5 cursor-pointer", '', 'w-full h-fit justify-center items-center flex') ?>
                     </div>

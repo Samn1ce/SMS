@@ -54,13 +54,13 @@ if ($row = mysqli_fetch_assoc($result)) {
             if ($row["login_count"] < 1) {
                 header("Location: ../selectSubjects.php");
             } else {
-                header("Location: ../studentDashboard.php");
+                header("Location: ../dashboard.php");
             }
         } else {
             $_SESSION["surname"] = $row["teacher_surname"];
             $_SESSION["firstname"] = $row["teacher_firstname"];
             $_SESSION["othername"] = $row["teacher_othername"];
-            header("Location: ../teacherDashboard.php");
+            header("Location: ../dashboard.php");
         }
         exit();
     } else {

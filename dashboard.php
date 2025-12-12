@@ -47,7 +47,7 @@ function getSelectedSubjects($conn, $student_id) {
 </head>
 <body class="bg-neutral-50">
     <?php renderHeader($id) ?>
-    <main class="max-w-7xl w-full p-2 mx-auto border relative">
+    <main class="max-w-7xl w-full p-2 mx-auto relative">
         <section class="mx-auto w-11/12 lg:w-10/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
                 <div class="w-full h-full flex flex-col justify-between gap-4 lg:gap-0">
@@ -127,7 +127,7 @@ function getSelectedSubjects($conn, $student_id) {
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
                                 <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Assigment</div>
                                 <p class="w-full flex-1 text-neutral-900 text-center font-semibold pt-5">You don't have any assignment at this time.</p>
-                                <a href="" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
+                                <a href="assignment.php" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
                             </div>
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
                                 <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Last Attendance</div>
@@ -157,7 +157,6 @@ function getSelectedSubjects($conn, $student_id) {
             <div class="w-full flex flex-col md:flex-row gap-4">
                 <?php
                     if ($role === 'student') {
-                        ob_start()
                     ?>
                         <div class="w-full lg:w-1/2">
                             <h3 class="font-bold text-xl pl-5 mb-2">Term Assesment</h3>
@@ -172,7 +171,6 @@ function getSelectedSubjects($conn, $student_id) {
                             </div>
                         </div>
                     <?php
-                        ob_get_clean();
                     } else {
                         echo '';
                     }

@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         mysqli_commit($conn);
 
-        header("Location: ../studentDashboard.php");
+        header("Location: ../dashboard.php");
         exit();
     } catch (Exception $e) {
        // Rollback on error
