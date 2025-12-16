@@ -68,7 +68,8 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                         <div class="flex gap-2">
                             <input type="hidden" name="student_id" value="<?= $id ?>">
                             <?php while($class_arm = mysqli_fetch_assoc($class_armResult)) : 
-                                $selectedArm = $_SESSION['arm'];
+                                $selectedArm = $_SESSION['class_arm'] ?? null;
+                                $isChecked = ($selectedArm == $class_arm['id']) ? 'checked' : '';
                             ?>
                                 <label class="flex gap-1">
                                     <input 
@@ -77,14 +78,14 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                                         value="<?= htmlspecialchars($class_arm['id']) ?>" 
                                         class="cursor-pointer"
                                         required
-                                        <?php if ($selectedArm !== '') selected ?>
+                                        <?= $isChecked ?>
                                     />
                                     <span><?= htmlspecialchars($class_arm['class_arm']) ?></span>
                                 </label>
                             <?php endwhile; ?>
                         </div>
                         <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
-                        <input type="hidden" name="student_id" value="<?= $id ?>">
+                        <!-- <input type="hidden" name="student_id" value="<?= $id ?>"> -->
                         <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : 
                             $isCore = in_array($subject['id'], $coreSubjectIds);
                             $isSelected = in_array($subject['id'], $selectedSubjects);

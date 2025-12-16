@@ -15,7 +15,7 @@ $id = $_SESSION["user_id"];
 $surname = $_SESSION['surname'];
 $firstname = $_SESSION['firstname'];
 $class_name = $_SESSION['class_name'];
-$class_arm = $_SESSION['arm'];
+$class_arm = $_SESSION['class_arm'];
 $role = $_SESSION['role'];
 
 // Fetch available subjects
@@ -71,7 +71,7 @@ function getSelectedSubjects($conn, $student_id) {
                                 <?php renderIcon('grade', 'w-6 h-6') ?>
                             </div>
                             <div>
-                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($class_name) ?></p>
+                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($class_name) ?>&#40;<?= htmlspecialchars($class_arm) ?>&#41;</p>
                                 <p class="text-xs text-zinc-300 font-semibold -mt-1">class</p>
                             </div>
                         </div>

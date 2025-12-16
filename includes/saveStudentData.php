@@ -6,16 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $arm_id = $_POST['arm_id'];
     $subjects = $_POST["subjects"] ?? [];
     $student_id = $_POST['student_id'];
+    if ($student_id != $_SESSION['user_id']) {
+        exit("Unauthorized");
+    }
 
     if (empty($arm_id) || empty($student_id)) {
         header("Location: ../selectSubjects.php?error=empty");
         exit();
     }
-
-    $sql = "UPDATE students SET arm_id = ? WHERE id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ii", $arm_id, $student_id);
-    mysqli_stmt_execute($stmt);
 
      // Get core subject IDs (Mathematics and English)
     $coreQuery = "SELECT id FROM subjects WHERE subject_name IN ('Mathematics', 'English')";
@@ -29,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // This protects against form tampering or accidental removal
     $subjects = array_unique(array_merge($subjects, $coreSubjects));
 
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     mysqli_begin_transaction($conn);
 
     try {
@@ -37,6 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_stmt_bind_param($deleteStmt, "i", $student_id);
         mysqli_stmt_execute($deleteStmt);
         mysqli_stmt_close($deleteStmt);
+
+        $sql = "UPDATE students SET arm_id = ? WHERE id = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $arm_id, $student_id);
+        mysqli_stmt_execute($stmt);
+
 
         if (!empty($subjects)) {
             foreach ($subjects as $subject_id) {
@@ -71,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } catch (Exception $e) {
        // Rollback on error
         mysqli_rollback($conn);
-        header("Location: ../selectSubject.php?error=1");
+        error_log($e->getMessage());
+        header("Location: ../selectSubjects.php?error=1");
         exit();
     }
 }

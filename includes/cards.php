@@ -54,7 +54,7 @@ $cards = [
     [
         "category" => "session",
         "title" => "Current Class",
-        "detail" => "{className}",
+        "detail" => "{class_name}",
         "icon" => "grade",
         "color" => "bg-sky-400"
     ],
@@ -88,7 +88,7 @@ $cards = [
     ],
 ];
 
-function renderCards($cards, $category, $conn, $id, $className) {
+function renderCards($cards, $category, $conn, $id, $class_name, $class_arm = '') {
     foreach ($cards as $card) {
 
         if ($card["category"] !== $category) continue;
@@ -99,8 +99,8 @@ function renderCards($cards, $category, $conn, $id, $className) {
         }
 
         // Dynamic replacements
-        if (strpos($detail, '{className}') !== false) {
-            $detail = str_replace('{className}', htmlspecialchars($className), $detail);
+        if (strpos($detail, '{class_name}') !== false) {
+            $detail = str_replace('{class_name}', htmlspecialchars($class_name), $detail);
         }
 
         if (strpos($detail, '{subject_count}') !== false) {

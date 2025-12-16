@@ -17,7 +17,7 @@ if ($role === "student") {
     $sql = "SELECT students.*, classes.class_name, class_arms.class_arm
             FROM students 
             LEFT JOIN classes ON students.class_id = classes.id 
-            AND class_arm ON students.arm_id = class_arms.id
+            LEFT JOIN class_arms ON students.arm_id = class_arms.id
             WHERE students.email = ?";
 } elseif ($role === "teacher") {
     $sql = "SELECT * FROM teachers WHERE email = ?";
@@ -39,7 +39,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION["gender"] = $row['gender'];
         $_SESSION['dob'] = $row['dob'];
         $_SESSION['class_name'] = $row['class_name'] ?? 'Not Assigned';
-        $_SESSION['arm'] = $row['arm_id'];
+        $_SESSION['class_arm'] = $row['class_arm'];
 
 
         // Redirect to correct dashboard
