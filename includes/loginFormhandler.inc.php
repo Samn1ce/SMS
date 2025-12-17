@@ -39,7 +39,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION["gender"] = $row['gender'];
         $_SESSION['dob'] = $row['dob'];
         $_SESSION['class_name'] = $row['class_name'] ?? 'Not Assigned';
-        $_SESSION['class_arm'] = $row['class_arm'];
+        $_SESSION['class_arm'] = $row['arm_id'];
 
 
         // Redirect to correct dashboard

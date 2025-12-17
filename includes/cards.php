@@ -88,7 +88,7 @@ $cards = [
     ],
 ];
 
-function renderCards($cards, $category, $conn, $id, $class_name, $class_arm = '') {
+function renderCards($cards, $category, $conn, $id, $class_name) {
     foreach ($cards as $card) {
 
         if ($card["category"] !== $category) continue;
@@ -126,14 +126,14 @@ function renderCards($cards, $category, $conn, $id, $class_name, $class_arm = ''
                     <div x-show="open">
                         <div x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
                             <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
-                                    <div class="w-full bg-neutral-50 border border-neutral-100 rounded-3xl p-2 md:p-5">';
-                                        if (is_callable($card["modal"]["modalDetail"])) {
-                                            echo $card["modal"]["modalDetail"]($conn, $id);
-                                        } else {
-                                            echo $card["modal"]["modalDetail"];
-                                        }
-                                        echo '<button x-on:click="open = false" class="w-full mt-2 p-2 cursor-pointer rounded-xl bg-red-500 hover:bg-red-600/90 transition-all duration-300 text-neutral-100 font-semibold">Close</button>
-                                    </div>
+                                <div class="w-full bg-neutral-50 border border-neutral-100 rounded-3xl p-2 md:p-5">';
+                                    if (is_callable($card["modal"]["modalDetail"])) {
+                                        echo $card["modal"]["modalDetail"]($conn, $id);
+                                    } else {
+                                        echo $card["modal"]["modalDetail"];
+                                    }
+                                    echo '<button x-on:click="open = false" class="w-full mt-2 p-2 cursor-pointer rounded-xl bg-red-500 hover:bg-red-600/90 transition-all duration-300 text-neutral-100 font-semibold">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>

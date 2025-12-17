@@ -18,6 +18,54 @@
 
     $subjects = "SELECT * FROM subjects";
     $subjectsResult = mysqli_query($conn, $subjects);
+
+    if ($role === 'teacher') {
+        // Teachers see only assignments they created
+        $assignmentsQuery = "
+            SELECT 
+                a.*,
+                c.class_name,
+                ca.class_arm,
+                s.subject_name,
+                CONCAT(t.teacher_firstname, ' ', t.teacher_surname) as teacher_name
+            FROM assignments a
+            LEFT JOIN classes c ON a.class_id = c.id
+            LEFT JOIN class_arms ca ON a.arm_id = ca.id
+            LEFT JOIN subjects s ON a.subject_id = s.id
+            LEFT JOIN teachers t ON a.teacher_id = t.id
+            WHERE a.teacher_id = ?
+            ORDER BY a.created_at DESC
+        ";
+        $stmt = mysqli_prepare($conn, $assignmentsQuery);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
+        $assignmentsResult = mysqli_stmt_get_result($stmt);
+        
+    } elseif ($role === 'student') {
+        // Students see assignments for their class
+        // If arm_id is NULL in assignment = for all arms
+        // If arm_id matches student's arm = for specific arm
+        $assignmentsQuery = "
+            SELECT 
+                a.*,
+                c.class_name,
+                ca.class_arm,
+                s.subject_name,
+                CONCAT(t.teacher_firstname, ' ', t.teacher_surname) as teacher_name
+            FROM assignments a
+            LEFT JOIN classes c ON a.class_id = c.id
+            LEFT JOIN class_arms ca ON a.arm_id = ca.id
+            LEFT JOIN subjects s ON a.subject_id = s.id
+            LEFT JOIN teachers t ON a.teacher_id = t.id
+            WHERE a.class_id = ?
+            AND (a.arm_id IS NULL OR a.arm_id = ?)
+            ORDER BY a.created_at DESC
+        ";
+        $stmt = mysqli_prepare($conn, $assignmentsQuery);
+        mysqli_stmt_bind_param($stmt, "ii", $user_class_id, $user_arm_id);
+        mysqli_stmt_execute($stmt);
+        $assignmentsResult = mysqli_stmt_get_result($stmt);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -109,28 +157,41 @@
             </div>
             <div class="w-full">
                 <div class="w-full flex flex-col lg:flex-row gap-4 p-5">
-                    <div class="w-full rounded-xl p-2 bg-white border border-zinc-200/65 hover:border-zinc-700/30 hover:shadow-md duration-300 transition-all">
-                        <p class="font-semibold text-xl">Mathematics Assignment</p>
-                        <div class="pl-2 flex justify-between">
-                            <p class="italic text-xs md:text-sm">From: <span class="font-semibold">John Doe</span></p>
-                            <div>
-                                <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold">Monday, 20 August.</span></p>
-                                <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold">Thursday, 24 August. 12:00pm</span></p>
+                    <?php 
+                    if (isset($assignmentsResult) && mysqli_num_rows($assignmentsResult) > 0) {
+                        while ($assignment = mysqli_fetch_assoc($assignmentsResult)) {
+                            // Format dates
+                            $dueDate = date('l, d F Y', strtotime($assignment['due_date']));
+                            $createdDate = date('l, d F Y', strtotime($assignment['created_at']));
+                            
+                            // Display arm info
+                            $armDisplay = $assignment['class_arm'] 
+                                ? ' - ' . htmlspecialchars($assignment['class_arm']) 
+                                : ' (All Arms)';
+                    ?>
+                            <div class="w-full rounded-xl p-2 bg-white border border-zinc-200/65 hover:border-zinc-700/30 hover:shadow-md duration-300 transition-all">
+                                <p class="font-semibold text-xl"><?= htmlspecialchars($assignment['subject_name']) ?> Assignment</p>
+                                <div class="pl-2 flex justify-between">
+                                    <p class="italic text-xs md:text-sm">From: <span class="font-semibold"><?= htmlspecialchars($assignment['teacher_name']) ?></span></p>
+                                    <div>
+                                        <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold"><?= htmlspecialchars($createdDate) ?></span></p>
+                                        <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold"><?= htmlspecialchars($dueDate) ?>. 12:00pm</span></p>
+                                    </div>
+                                </div>
+                                <p class="mt-4"><?= nl2br(htmlspecialchars($assignment['description'])) ?></p>
                             </div>
+                    <?php
+                        }
+                    } else {
+                    ?>
+                        <div class="w-full text-center py-10">
+                            <p class="text-gray-500 text-lg">
+                                <?= $role === 'teacher' ? 'You haven\'t sent out any assignments yet' : 'No assignments available' ?>
+                            </p>
                         </div>
-                        <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia veritatis quas ipsam consequatur ipsum facere quaerat obcaecati facilis itaque repellat cum, totam sequi? Ea qui ipsa veniam, facilis deleniti velit.</p>
-                    </div>
-                    <div class="w-full rounded-xl p-2 bg-white border border-zinc-200/65 hover:border-zinc-700/30 hover:shadow-md duration-300 transition-all">
-                        <p class="font-semibold text-xl">Mathematics Assignment</p>
-                        <div class="pl-2 flex justify-between">
-                            <p class="italic text-xs md:text-sm">From: <span class="font-semibold">John Doe</span></p>
-                            <div>
-                                <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold">Monday, 20 August.</span></p>
-                                <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold">Thursday, 24 August. 12:00pm</span></p>
-                            </div>
-                        </div>
-                        <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia veritatis quas ipsam consequatur ipsum facere quaerat obcaecati facilis itaque repellat cum, totam sequi? Ea qui ipsa veniam, facilis deleniti velit.</p>
-                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
