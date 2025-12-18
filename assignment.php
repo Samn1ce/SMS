@@ -8,6 +8,8 @@
     $surname = $_SESSION['surname'];
     $firstname = $_SESSION['firstname'];
     $class_name = $_SESSION['class_name'];
+    $class_id = $_SESSION['class_id'];
+    $arm_id = $_SESSION['arm_id'];
     $role = $_SESSION['role'];
 
     $classQuery = "SELECT * FROM classes";
@@ -40,7 +42,6 @@
         mysqli_stmt_bind_param($stmt, "i", $id);
         mysqli_stmt_execute($stmt);
         $assignmentsResult = mysqli_stmt_get_result($stmt);
-        
     } elseif ($role === 'student') {
         // Students see assignments for their class
         // If arm_id is NULL in assignment = for all arms
@@ -62,7 +63,7 @@
             ORDER BY a.created_at DESC
         ";
         $stmt = mysqli_prepare($conn, $assignmentsQuery);
-        mysqli_stmt_bind_param($stmt, "ii", $user_class_id, $user_arm_id);
+        mysqli_stmt_bind_param($stmt, "ii", $class_id, $arm_id);
         mysqli_stmt_execute($stmt);
         $assignmentsResult = mysqli_stmt_get_result($stmt);
     }
@@ -156,14 +157,13 @@
                 </div>
             </div>
             <div class="w-full">
-                <div class="w-full flex flex-col lg:flex-row gap-4 p-5">
+                <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <?php 
                     if (isset($assignmentsResult) && mysqli_num_rows($assignmentsResult) > 0) {
                         while ($assignment = mysqli_fetch_assoc($assignmentsResult)) {
                             // Format dates
                             $dueDate = date('l, d F Y', strtotime($assignment['due_date']));
-                            $createdDate = date('l, d F Y', strtotime($assignment['created_at']));
-                            
+                            $createdDate = date('l, d F Y', strtotime($assignment['created_at']));                    
                             // Display arm info
                             $armDisplay = $assignment['class_arm'] 
                                 ? ' - ' . htmlspecialchars($assignment['class_arm']) 
@@ -174,18 +174,18 @@
                                 <div class="pl-2 flex justify-between">
                                     <p class="italic text-xs md:text-sm">From: <span class="font-semibold"><?= htmlspecialchars($assignment['teacher_name']) ?></span></p>
                                     <div>
-                                        <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold"><?= htmlspecialchars($createdDate) ?></span></p>
+                                        <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold"><?htmlspecialchars($createdDate) ?></span></p>
                                         <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold"><?= htmlspecialchars($dueDate) ?>. 12:00pm</span></p>
                                     </div>
                                 </div>
                                 <p class="mt-4"><?= nl2br(htmlspecialchars($assignment['description'])) ?></p>
                             </div>
-                    <?php
+                    <?php 
                         }
                     } else {
                     ?>
                         <div class="w-full text-center py-10">
-                            <p class="text-gray-500 text-lg">
+                            <p class="text-gray-500 text-lg font-semibold">
                                 <?= $role === 'teacher' ? 'You haven\'t sent out any assignments yet' : 'No assignments available' ?>
                             </p>
                         </div>

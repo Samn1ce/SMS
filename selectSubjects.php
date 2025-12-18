@@ -7,6 +7,7 @@ include 'components/logoutDialogue.php';
 $id = $_SESSION["user_id"];
 $surname = $_SESSION['surname'];
 $firstname = $_SESSION['firstname'];
+$arm_id = $_SESSION['arm_id'];
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -68,7 +69,7 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                         <div class="flex gap-2">
                             <input type="hidden" name="student_id" value="<?= $id ?>">
                             <?php while($class_arm = mysqli_fetch_assoc($class_armResult)) : 
-                                $selectedArm = $_SESSION['class_arm'] ?? null;
+                                $selectedArm = $arm_id ?? null;
                                 $isChecked = ($selectedArm == $class_arm['id']) ? 'checked' : '';
                             ?>
                                 <label class="flex gap-1">

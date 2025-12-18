@@ -14,8 +14,10 @@ if (!isset($_SESSION["user_id"])) {
 $id = $_SESSION["user_id"];
 $surname = $_SESSION['surname'];
 $firstname = $_SESSION['firstname'];
+$class_id = $_SESSION['class_id'];
 $class_name = $_SESSION['class_name'];
 $class_arm = $_SESSION['class_arm'];
+$arm_id = $_SESSION['arm_id'];
 $role = $_SESSION['role'];
 
 // Fetch available subjects
@@ -35,6 +37,16 @@ function getSelectedSubjects($conn, $student_id) {
     }
     return $subjects;
 }
+
+$assignmentQuery = "SELECT * FROM assignments 
+                       WHERE class_id = ? 
+                       AND (arm_id IS NULL OR arm_id = ?)";
+    
+$assignmentStmt = mysqli_prepare($conn, $assignmentQuery);
+mysqli_stmt_bind_param($assignmentStmt, "ii", $class_id, $arm_id);
+mysqli_stmt_execute($assignmentStmt);
+$assignmentResult = mysqli_stmt_get_result($assignmentStmt);
+$assignmentCount = mysqli_num_rows($assignmentResult);
 ?>
 
 <!DOCTYPE html>
@@ -127,7 +139,15 @@ function getSelectedSubjects($conn, $student_id) {
                         <div class="w-full flex flex-col md:flex-row gap-4">
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
                                 <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Assigment</div>
-                                <p class="w-full flex-1 text-neutral-900 text-center font-semibold pt-5">You don't have any assignment at this time.</p>
+                                <p class="w-full flex-1 text-neutral-900 text-center font-semibold pt-5">
+                                    <?php 
+                                        if ($assignmentCount > 0) {
+                                            echo "You have $assignmentCount assignment(s).";
+                                        } else {
+                                            echo 'You don\'t have any assignment at this time.';
+                                        }
+                                    ?>
+                                </p>
                                 <a href="assignment.php" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
                             </div>
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
