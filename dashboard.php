@@ -98,7 +98,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                             Result Profile  
                         </a>';
                     } else {
-                        echo '<a href="teacherResult.php" class="w-full p-2 flex justify-center items-center bg-blue-400 hover:bg-blue-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md">
+                        echo '<a href="viewStudents.php" class="w-full p-2 flex justify-center items-center bg-blue-400 hover:bg-blue-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md">
                             View Student  
                         </a>';
                     }
