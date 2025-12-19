@@ -10,10 +10,20 @@ if (!$class_id) {
     exit;
 }
 
-$sql = "SELECT s.id, s.studentName AS name, c.class_name
-        FROM students s
-        JOIN classes c ON s.class_id = c.id
-        WHERE s.class_id = ? AND s.studentName LIKE ?";
+$sql = "SELECT s.id, CONCAT(
+            s.student_firstname, ' ',
+            s.student_surname, ' ',
+            COALESCE(s.student_othername, '')
+        ) AS full_name, c.class_name, ca.class_arm
+            FROM students s
+            JOIN classes c ON s.class_id = c.id
+            JOIN class_arms ca ON s.arm_id = ca.id
+            WHERE s.class_id = ?
+            AND CONCAT(
+                s.student_firstname, ' ',
+                s.student_surname, ' ',
+                COALESCE(s.student_othername, '')
+            ) LIKE ?";
 $stmt = mysqli_prepare($conn, $sql);
 $searchTerm = "%$search%";
 mysqli_stmt_bind_param($stmt, "is", $class_id, $searchTerm);
