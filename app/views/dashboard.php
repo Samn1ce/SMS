@@ -1,15 +1,14 @@
 <?php
-session_start();
-include 'includes/dbh.inc.php';
-include 'components/icons.php';
-include 'components/header.php';
-include 'components/logoutDialogue.php';
-include 'includes/cards.php';
+// session_start();
+// include 'includes/dbh.inc.php';
+// include 'components/icons.php';
+// // include 'components/header.php';
+// // include 'components/logoutDialogue.php';
+// include 'includes/cards.php';
 
-if (!isset($_SESSION["user_id"])) {
-    header("Location: login.php");
-    exit();
-}
+include APP_ROOT . '/includes/dbh.inc.php';
+include APP_ROOT . '/components/icons.php';
+include APP_ROOT . '/includes/cards.php';
 
 $id = $_SESSION["user_id"];
 $surname = $_SESSION['surname'];
@@ -49,17 +48,6 @@ $assignmentResult = mysqli_stmt_get_result($assignmentStmt);
 $assignmentCount = mysqli_num_rows($assignmentResult);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
-    <title><?= htmlspecialchars($firstname) ?>'s Dashboard</title>
-</head>
-<body class="bg-neutral-50">
-    <?php renderHeader($id) ?>
     <main class="max-w-7xl w-full p-2 mx-auto relative">
         <section class="mx-auto w-11/12 lg:w-10/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
@@ -199,6 +187,3 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
             </div>
         </section>
     </main>
-</div>
-</body>
-</html>
