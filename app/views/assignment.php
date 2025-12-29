@@ -1,8 +1,8 @@
 <?php 
-    session_start();
-    include 'includes/dbh.inc.php';
-    include 'components/header.php';
-    include 'components/icons.php';
+    // session_start();
+    include APP_ROOT . '/includes/dbh.inc.php';
+    include APP_ROOT . '/components/header.php';
+    include APP_ROOT . '/components/icons.php';
 
     $id = $_SESSION["user_id"];
     $surname = $_SESSION['surname'];
@@ -69,17 +69,6 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
-    <title>Assignments</title>
-</head>
-<body class="bg-neutral-50">
-    <?php renderHeader($id) ?>
     <main class="w-full text-neutral-800">
         <div class="max-w-7xl w-11/12 lg:w-10/12 mx-auto">
             <div class="w-full flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0 p-2">
@@ -196,5 +185,3 @@
             </div>
         </div>
     </main>
-</body>
-</html>

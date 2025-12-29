@@ -49,7 +49,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
 ?>
 
     <main class="max-w-7xl w-full p-2 mx-auto relative">
-        <section class="mx-auto w-11/12 lg:w-10/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
+        <section class="mx-auto w-11/12 lg:w-full flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
                 <div class="w-full h-full flex flex-col justify-between gap-4 lg:gap-0">
                     <div>
@@ -119,7 +119,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                 </div>
             </div>
         </section>
-        <section class="mx-auto w-11/12 lg:w-10/12 mt-5">
+        <section class="mx-auto w-11/12 lg:w-full mt-5">
             <?php 
                 if ($role === 'student') {
                     ?>
@@ -162,7 +162,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                 }
             ?>
         </section>
-        <section class="mx-auto w-11/12 lg:w-10/12 mt-5">
+        <section class="mx-auto w-11/12 lg:w-full mt-5">
             <div class="w-full flex flex-col md:flex-row gap-4">
                 <?php
                     if ($role === 'student') {

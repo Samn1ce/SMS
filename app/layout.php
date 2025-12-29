@@ -6,30 +6,31 @@
     include 'components/logoutDialogue.php';
 
     $BASE_PATH = '/schoolManagementSystem';
-    $id = $_SESSION['user_id'] ?? null;
-    $firstname = $_SESSION['firstname'] ?? 'Guest';
-    $role = $_SESSION['role'] ?? 'guest';
+    $id = $_SESSION['user_id'];
+    $firstname = $_SESSION['firstname'];
+    $surname = $_SESSION['surname'];
+    $role = $_SESSION['role'];
 
     $navItems = [
         [
             'id' => 'dashboard',
             'label' => 'Dashboard',
-            'icon' => 'dashboard' // Icon name for your renderIcon function
+            'icon' => 'dashboard'
         ],
         [
             'id' => 'assignment',
             'label' => 'Assignment',
-            'icon' => 'assignment' // Icon name
+            'icon' => 'assignment'
         ],
         [
             'id' => 'result',
             'label' => 'Result Profile',
-            'icon' => 'result' // Icon name
+            'icon' => 'result'
         ],
         [
-            'id' => 'student',
+            'id' => 'profile',
             'label' => 'Student Profile',
-            'icon' => 'person' // Icon name
+            'icon' => 'person'
         ]
     ];
 
@@ -43,8 +44,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
+    <?php if ($currentView === 'results') : ?>
+        <script defer src="/assets/js/results.js"></script>
+    <?php endif; ?>
     <link rel="stylesheet" href="assets/css/style.css"/>
-    <title>Document</title>
+    <title>SchoolY - <?= $surname ?>&nbsp;<?= $firstname ?></title>
 </head>
 <body>
     <div 
@@ -69,7 +73,7 @@
             // Function to load content via AJAX
             async loadContent(view) {
                 try {
-                    const response = await fetch(this.basePath + '/app/view-router.php?view=' + view);;
+                    const response = await fetch(this.basePath + '/app/view-router.php?view=' + view);
                     this.content = await response.text();
                 } catch (error) {
                     this.content = '<div>Error loading content</div>';
@@ -105,7 +109,7 @@
                         :class="currentView === '<?= $item['id'] ?>' ? 
                                'bg-purple-500 text-white border-purple-500' : 
                                'text-neutral-400 hover:bg-gray-100 border-transparent'"
-                        class="w-full p-3 flex gap-4 items-center rounded-lg font-semibold transition-all border"
+                        class="w-full p-3 flex gap-4 items-center rounded-lg font-semibold transition-all border cursor-pointer"
                     >
                         <div :class="currentView === '<?= $item['id'] ?>' ? 'text-neutral-100' : 'text-neutral-400'">
                             <?php renderIcon($item['icon'], 'w-5 h-5') ?>
@@ -119,7 +123,7 @@
             </div>
             <div class="w-full border border-zinc-200 flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover cursor-pointer">
                 <?php renderIcon('logout', 'w-6 h-6 text-neutral-800') ?>
-                <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg w-24 py-4 cursor-pointer", '', 'w-full h-fit flex text-neutral-800 py-3') ?>
+                <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg py-4 w-full border", '', 'w-full h-fit flex text-neutral-800 py-3') ?>
             </div>
         </div>
         <div class="bg-neutral-100 w-4/5 rounded-r-md h-full overflow-auto">

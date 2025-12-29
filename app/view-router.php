@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $view = $_GET['view'] ?? 'dashboard';
 
-$allowed = ['dashboard', 'assignment', 'result', 'student'];
+$allowed = ['dashboard', 'assignment', 'result', 'profile'];
 
 if (!in_array($view, $allowed)) {
     http_response_code(404);

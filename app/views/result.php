@@ -1,7 +1,6 @@
 <?php 
-    session_start();
-    include 'includes/dbh.inc.php';
-    include 'components/header.php';
+    // session_start();
+    include APP_ROOT . '/includes/dbh.inc.php';
 
     $id = $_SESSION['user_id'];
     $surname = $_SESSION['surname'];
@@ -109,22 +108,20 @@
     // Reset class result for dropdown
     mysqli_data_seek($classResult, 0);
     mysqli_data_seek($termResult, 0);
+
+    $resultData = [
+        'classId'   => $selectedClass,
+        'termId'    => $selectedTerm,
+        'studentId' => $id,
+        'results'   => $resultsArray,
+        'hasResults'=> $hasResults,
+        'className' => $selectedClassName,
+        'termName'  => $selectedTermName,
+    ];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
-    <title><?= htmlspecialchars($firstname) ?>'s Results</title>
-</head>
-<body class="bg-neutral-50">
-    <?php renderHeader($id) ?>
     <main class="max-w-7xl w-full p-2 mx-auto flex flex-col gap-2 md:gap-4">
-        <section class="bg-white lg:h-40 border border-zinc-200/65 w-11/12 lg:w-10/12 shadow-lg md:shadow-2xl rounded-md mx-auto px-3 py-2 flex flex-col gap-2">
+        <section class="bg-white lg:h-40 border border-zinc-200/65 w-11/12 lg:w-full shadow-lg md:shadow-2xl rounded-md mx-auto px-3 py-2 flex flex-col gap-2">
             <h3 class="font-semibold text-blue-400">Student Details</h3>
             <div class="px-5 flex-1 flex gap-4">
                 <div class="rounded-full h-28 w-28 border hidden md:block"></div>
@@ -167,8 +164,8 @@
         </section>
         
         <section 
-            class="bg-white max-w-7xl w-11/12 lg:w-10/12 p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65 result-scrollbar-hide"
-            x-data="resultComponent"
+            class="bg-white max-w-7xl w-11/12 lg:w-full p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65 result-scrollbar-hide"
+            x-data='resultComponent(<?= json_encode($resultData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>)'
         >
             <!-- Title -->
             <div class="w-full px-4 flex gap-2 md:gap-0 flex-col md:flex-row justify-between md:items-center">
@@ -248,7 +245,7 @@
         </section>
         
         <section>
-            <div class="w-11/12 lg:w-10/12 lg:h-20 bg-blue-400 rounded-md mx-auto px-3 py-2 shadow-lg md:shadow-2xl">
+            <div class="w-11/12 lg:w-full lg:h-20 bg-blue-400 rounded-md mx-auto px-3 py-2 shadow-lg md:shadow-2xl">
                 <h3 class="font-semibold text-neutral-100/95">Grading Scale:</h3>
                 <div class="text-neutral-100 ml-5 flex flex-wrap gap-2 md:gap-8">
                     <div class="flex">
@@ -275,51 +272,3 @@
             </div>
         </section>
     </main>
-
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('resultComponent', () => ({
-                classId: <?= $selectedClass ?? 'null' ?>,
-                termId: <?= $selectedTerm ?? 'null' ?>,
-                studentId: <?= $id ?>,
-                results: <?= json_encode($resultsArray) ?>,
-                hasResults: <?= json_encode($hasResults) ?>,
-                className: <?= json_encode($selectedClassName) ?>,
-                termName: <?= json_encode($selectedTermName) ?>,
-                loading: false,
-                
-                async updateResults() {
-                    if (!this.classId || !this.termId) return;
-                    
-                    this.loading = true;
-                    
-                    try {
-                        const response = await fetch(`?ajax=1&class_id=${this.classId}&term_id=${this.termId}&student_id=${this.studentId}`);
-                        const data = await response.json();
-                        
-                        if (data.success) {
-                            this.results = data.results;
-                            this.hasResults = data.hasResults;
-                            this.className = data.className;
-                            this.termName = data.termName;
-                        }
-                    } catch (error) {
-                        console.error('Error fetching results:', error);
-                    } finally {
-                        this.loading = false;
-                    }
-                },
-                
-                getGrade(total) {
-                    if (total >= 75) return 'A1';
-                    if (total >= 65) return 'B2';
-                    if (total >= 60) return 'B3';
-                    if (total >= 55) return 'C4';
-                    if (total >= 50) return 'C5';
-                    return 'F9';
-                }
-            }));
-        });
-</script>
-</body>
-</html>

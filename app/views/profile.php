@@ -1,23 +1,22 @@
 <?php
-    include 'includes/dbh.inc.php';
-    include 'includes/cards.php';
-    include 'components/header.php';
-    include 'components/icons.php';
-    include 'components/logoutDialogue.php';
+    include APP_ROOT . '/includes/dbh.inc.php';
+    include APP_ROOT . '/includes/cards.php';
+    include APP_ROOT . '/components/icons.php';
 
-    session_start();
+    // session_start();
 
     // ✅ Check that an ID is provided in the URL
-    if (!isset($_GET['id'])) {
-        header("Location: ../teacherResult.php");
-        die("Student ID not provided");
-    }
-    if ($_GET['id'] != $_SESSION['user_id']) {
-        header("Location: ./studentDashboard.php");
-        exit();
-    }
+    // if (!isset($_GET['id'])) {
+    //     header("Location: ../teacherResult.php");
+    //     die("Student ID not provided");
+    // }
+    // if ($_GET['id'] != $_SESSION['user_id']) {
+    //     header("Location: ./studentDashboard.php");
+    //     exit();
+    // }
 
-    $id = $_GET['id'];
+    // $id = $_GET['id'];
+    $id = $_SESSION['user_id'];
     $surname = $_SESSION['surname'];
     $firstname = $_SESSION['firstname'];
     $othername = $_SESSION['othername'];
@@ -42,21 +41,6 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title><?= htmlspecialchars($firstname) ?>'s Profile</title>
-    <style>
-    </style>
-</head>
-<body>
-    <div class="bg-neutral-50 lg:h-screen">
-        <?php renderHeader($id) ?>
         <div class="max-w-7xl mx-auto w-11/12 lg:w-10/12 lg:h-[85vh] flex flex-col lg:flex-row gap-4 mt-3 text-neutral-900 relative">
             <div class="w-full lg:w-1/2 flex flex-col md:flex-row lg:flex-col justify-center items-center gap-6 rounded-md bg-white border border-zinc-200/65 p-5 md:p-10 lg:p-2">
                 <div class="border border-zinc-200/65 w-40 h-40 rounded-full"></div>
@@ -82,12 +66,12 @@
                         <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($firstname) ?></p>
                     </div>
                 </div>
-                <div class="w-1/2 mx-auto flex gap-4 mt-2">
+                <!-- <div class="w-1/2 mx-auto flex gap-4 mt-2">
                     <a href="dashboard.php" class="w-1/2 bg-blue-600 hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 hover:border hover:border-neutral-300 font-semibold rounded-full py-3 px-5 cursor-pointer text-center transition-all">Dashboard</a>
                     <div class="w-1/2 rounded-full bg-blue-600 flex justify-center items-center hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 transition-all hover:border hover:border-neutral-300">
                         <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold w-full py-4 px-5 cursor-pointer", '', 'w-full h-fit justify-center items-center flex') ?>
                     </div>
-                </div>
+                </div> -->
             </div>
             <?php if ($role === 'student') { ?>
                 <div class="mx-auto w-full lg:w-1/2 rounded-md lg:overflow-y-scroll scrollbar-hide">
@@ -102,5 +86,3 @@
             <?php } ?>
         </div>
     </div>
-</body>
-</html>
