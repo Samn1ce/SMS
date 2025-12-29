@@ -34,7 +34,7 @@
         ]
     ];
 
-    $currentView = htmlspecialchars($_GET['path'] ?? 'dashboard', ENT_QUOTES);
+    $currentView = htmlspecialchars($_GET['view'] ?? 'dashboard', ENT_QUOTES);
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +45,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> 
     <?php if ($currentView === 'results') : ?>
-        <script defer src="/assets/js/results.js"></script>
+        <script defer src="../assets/js/results.js"></script>
     <?php endif; ?>
     <link rel="stylesheet" href="assets/css/style.css"/>
     <title>SchoolY - <?= $surname ?>&nbsp;<?= $firstname ?></title>
