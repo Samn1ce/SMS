@@ -69,8 +69,8 @@
     }
 ?>
 
-    <main class="w-full text-neutral-800">
-        <div class="max-w-7xl w-11/12 lg:w-10/12 mx-auto">
+    <main class="w-full text-neutral-800 p-2">
+        <div class="max-w-7xl w-full lg:w-11/12 mx-auto">
             <div class="w-full flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0 p-2">
                 <h2 class="text-2xl font-semibold">Assignments</h2>
                 <div class="flex gap-4">

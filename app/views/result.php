@@ -121,7 +121,7 @@
 ?>
 
     <main class="max-w-7xl w-full p-2 mx-auto flex flex-col gap-2 md:gap-4">
-        <section class="bg-white lg:h-40 border border-zinc-200/65 w-11/12 lg:w-full shadow-lg md:shadow-2xl rounded-md mx-auto px-3 py-2 flex flex-col gap-2">
+        <section class="bg-white lg:h-40 border border-zinc-200/65 shadow-lg md:shadow-2xl rounded-md mx-auto px-3 py-2 flex flex-col gap-2 w-full lg:w-11/12">
             <h3 class="font-semibold text-blue-400">Student Details</h3>
             <div class="px-5 flex-1 flex gap-4">
                 <div class="rounded-full h-28 w-28 border hidden md:block"></div>
@@ -164,7 +164,7 @@
         </section>
         
         <section 
-            class="bg-white max-w-7xl w-11/12 lg:w-full p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65 result-scrollbar-hide"
+            class="bg-white max-w-7xl w-full lg:w-11/12 p-3 mx-auto rounded-md shadow-lg md:shadow-2xl overflow-scroll border border-zinc-200/65 result-scrollbar-hide"
             x-data='resultComponent(<?= json_encode($resultData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>)'
         >
             <!-- Title -->
@@ -200,38 +200,41 @@
                     </select>
                 </div>
             </div>
-            <div x-show="loading" class="mt-4 p-4 text-center">
-                <p class="text-gray-600">Loading results...</p>
+            <div x-show="loading" class="h-full flex items-center justify-center">
+                <div class="text-center">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+                    <p class="mt-2 text-gray-600">Loading Results...</p>
+                </div>
             </div>
-            <div x-show="!loading && hasResults">
-                <table class="w-full mt-2">
-                    <thead>
-                        <tr class="bg-gray-50 text-sm text-gray-600">
-                            <th class="border px-3 py-2 text-left" rowspan="2">Subjects</th>
-                            <th class="border px-3 py-2 text-center" rowspan="2">Exam Score</th>
-                            <th class="border px-3 py-2 text-center" colspan="2">Continuous Assessments</th>
-                            <th class="border px-3 py-2 text-center" rowspan="2">Total</th>
-                            <th class="border px-3 py-2 text-center" rowspan="2">Grade</th>
-                        </tr>
-                        <tr class="bg-gray-50 text-sm text-gray-600">
-                            <th class="border px-3 py-1 text-center">C.A 1</th>
-                            <th class="border px-3 py-1 text-center">C.A 2</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm text-gray-700">
-                        <template x-for="(result, index) in results" :key="result.id">
-                            <tr :class="result.subject_id % 2 === 0 ? 'bg-gray-50' : ''">
-                                <td class="border px-3 py-2" x-text="result.subject_name"></td>
-                                <td class="border px-3 py-2 text-center" x-text="result.exam"></td>
-                                <td class="border px-3 py-2 text-center" x-text="result.ca1"></td>
-                                <td class="border px-3 py-2 text-center" x-text="result.ca2"></td>
-                                <td class="border px-3 py-2 text-center" x-text="result.total || '-'"></td>
-                                <td class="border px-3 py-2 text-center" x-text="getGrade(result.total)"></td>
+                <div x-show="!loading && hasResults">
+                    <table class="w-full mt-2">
+                        <thead>
+                            <tr class="bg-gray-50 text-sm text-gray-600">
+                                <th class="border px-3 py-2 text-left" rowspan="2">Subjects</th>
+                                <th class="border px-3 py-2 text-center" rowspan="2">Exam Score</th>
+                                <th class="border px-3 py-2 text-center" colspan="2">Continuous Assessments</th>
+                                <th class="border px-3 py-2 text-center" rowspan="2">Total</th>
+                                <th class="border px-3 py-2 text-center" rowspan="2">Grade</th>
                             </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </div>
+                            <tr class="bg-gray-50 text-sm text-gray-600">
+                                <th class="border px-3 py-1 text-center">C.A 1</th>
+                                <th class="border px-3 py-1 text-center">C.A 2</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-gray-700">
+                            <template x-for="(result, index) in results" :key="result.id">
+                                <tr :class="result.subject_id % 2 === 0 ? 'bg-gray-50' : ''">
+                                    <td class="border px-3 py-2" x-text="result.subject_name"></td>
+                                    <td class="border px-3 py-2 text-center" x-text="result.exam"></td>
+                                    <td class="border px-3 py-2 text-center" x-text="result.ca1"></td>
+                                    <td class="border px-3 py-2 text-center" x-text="result.ca2"></td>
+                                    <td class="border px-3 py-2 text-center" x-text="result.total || '-'"></td>
+                                    <td class="border px-3 py-2 text-center" x-text="getGrade(result.total)"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
 
             <!-- No Results Message -->
             <div x-show="!loading && !hasResults" class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md text-center">
@@ -245,7 +248,7 @@
         </section>
         
         <section>
-            <div class="w-11/12 lg:w-full lg:h-20 bg-blue-400 rounded-md mx-auto px-3 py-2 shadow-lg md:shadow-2xl">
+            <div class="w-full lg:w-11/12 lg:h-20 bg-blue-400 rounded-md mx-auto px-3 py-2 shadow-lg md:shadow-2xl">
                 <h3 class="font-semibold text-neutral-100/95">Grading Scale:</h3>
                 <div class="text-neutral-100 ml-5 flex flex-wrap gap-2 md:gap-8">
                     <div class="flex">
@@ -267,6 +270,18 @@
                     <div class="flex">
                         <p class="italic">C5:&nbsp;</p>
                         <p class="font-semibold">50 - 54</p>
+                    </div>
+                    <div class="flex">
+                        <p class="italic">D7:&nbsp;</p>
+                        <p class="font-semibold">53 - 45</p>
+                    </div>
+                    <div class="flex">
+                        <p class="italic">E8:&nbsp;</p>
+                        <p class="font-semibold">45 - 40</p>
+                    </div>
+                    <div class="flex">
+                        <p class="italic">F9:&nbsp;</p>
+                        <p class="font-semibold">39 - 00</p>
                     </div>
                 </div>
             </div>

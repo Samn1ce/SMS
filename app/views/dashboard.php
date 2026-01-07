@@ -1,11 +1,4 @@
 <?php
-// session_start();
-// include 'includes/dbh.inc.php';
-// include 'components/icons.php';
-// // include 'components/header.php';
-// // include 'components/logoutDialogue.php';
-// include 'includes/cards.php';
-
 include APP_ROOT . '/includes/dbh.inc.php';
 include APP_ROOT . '/components/icons.php';
 include APP_ROOT . '/includes/cards.php';
@@ -18,10 +11,6 @@ $class_name = $_SESSION['class_name'];
 $class_arm = $_SESSION['class_arm'];
 $arm_id = $_SESSION['arm_id'];
 $role = $_SESSION['role'];
-
-// Fetch available subjects
-$subjectsQuery = "SELECT * FROM subjects";
-$subjectsResult = mysqli_query($conn, $subjectsQuery);
 
 function getSelectedSubjects($conn, $student_id) {
     $subjectsSql = "SELECT subject_name FROM student_subjects WHERE student_id = ?";
@@ -49,21 +38,21 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
 ?>
 
     <main class="max-w-7xl w-full p-2 mx-auto relative">
-        <section class="mx-auto w-11/12 lg:w-full flex flex-col lg:flex-row lg:gap-4 gap-2">
-            <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-blue-500/90 rounded-md p-3 lg:pt-3 lg:p-5 flex justify-center items-center">
-                <div class="w-full h-full flex flex-col justify-between gap-4 lg:gap-0">
+        <section class="mx-auto w-full lg:w-11/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
+            <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-purple-500/90 rounded-md p-3 lg:pt-3 lg:pl-5 flex justify-center items-center">
+                <div class="w-full h-full flex flex-wrap flex-col justify-between gap-4 lg:gap-0">
                     <div>
-                        <p class="text-xl lg:text-2xl font-semibold text-zinc-200">Lorem, ipsum dolor.</p>
-                        <p class="text-xs lg:text-sm text-zinc-300 font-semibold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, nisi sequi tenetur possimus veniam beatae.</p>
+                        <p class="text-xl lg:text-2xl font-semibold text-neutral-50">Lorem, ipsum dolor.</p>
+                        <p class="text-xs lg:text-sm text-neutral-200 font-semibold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, nisi sequi tenetur possimus veniam beatae.</p>
                     </div>
-                    <div class="flex flex-col md:flex-row gap-2 md:gap-x-14 lg:gap-28">
+                    <div class="flex flex-col md:flex-row gap-2 md:gap-x-14 lg:gap-20">
                         <div class="flex lg:justify-center lg:items-center gap-2">
                             <div class="w-10 h-10 border rounded-full flex justify-center items-center">
                                 <?php renderIcon('person', 'w-6 h-6') ?>
                             </div>
                             <div>
-                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></p>
-                                <p class="text-xs text-zinc-300 font-semibold -mt-1">Fullname</p>
+                                <p class="text-xl font-semibold text-neutral-50"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></p>
+                                <p class="text-xs text-neutral-200 font-semibold -mt-1">Fullname</p>
                             </div>
                         </div>
                         <div class="flex lg:justify-center lg:items-center gap-2">
@@ -71,8 +60,8 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                                 <?php renderIcon('grade', 'w-6 h-6') ?>
                             </div>
                             <div>
-                                <p class="text-xl font-semibold text-zinc-50"><?= htmlspecialchars($class_name) ?>&#40;<?= htmlspecialchars($class_arm) ?>&#41;</p>
-                                <p class="text-xs text-zinc-300 font-semibold -mt-1">class</p>
+                                <p class="text-xl font-semibold text-neutral-50"><?= htmlspecialchars($class_name) ?>&#40;<?= htmlspecialchars($class_arm) ?>&#41;</p>
+                                <p class="text-xs text-neutral-200 font-semibold -mt-1">class</p>
                             </div>
                         </div>
                     </div>
@@ -119,7 +108,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                 </div>
             </div>
         </section>
-        <section class="mx-auto w-11/12 lg:w-full mt-5">
+        <section class="mx-auto w-full lg:w-11/12 mt-5">
             <?php 
                 if ($role === 'student') {
                     ?>
@@ -136,7 +125,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                                         }
                                     ?>
                                 </p>
-                                <a href="assignment.php" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
+                                <a href="#" @click.prevent="navigate('assignment')" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
                             </div>
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
                                 <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Last Attendance</div>
@@ -162,7 +151,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                 }
             ?>
         </section>
-        <section class="mx-auto w-11/12 lg:w-full mt-5">
+        <section class="mx-auto w-full lg:w-11/12 mt-5">
             <div class="w-full flex flex-col md:flex-row gap-4">
                 <?php
                     if ($role === 'student') {

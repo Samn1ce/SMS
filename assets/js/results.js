@@ -1,5 +1,5 @@
 document.addEventListener("alpine:init", () => {
-  Alpine.data("resultComponent", (resultData) => ({
+  +Alpine.data("resultComponent", (resultData) => ({
     classId: resultData.classId,
     termId: resultData.termId,
     studentId: resultData.studentId,
