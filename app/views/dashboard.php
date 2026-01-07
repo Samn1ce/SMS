@@ -69,21 +69,23 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                 <img src="public\Graduation.png" class="w-64 hidden lg:block" />
             </div>
             <div class="w-full lg:w-1/4 flex flex-col gap-2">
-                <?php
-                    if ($role === 'student') {
-                        echo '<a 
-                                href="#" 
-                                @click.prevent="navigate()"
-                                class="w-full p-2 flex justify-center items-center bg-purple-400 hover:bg-purple-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md"
-                            >
-                            Result Profile  
-                        </a>';
-                    } else {
-                        echo '<a href="viewStudents.php" class="w-full p-2 flex justify-center items-center bg-purple-400 hover:bg-purple-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md">
-                            View Student  
-                        </a>';
-                    }
-                ?>
+                <?php if ($role === 'student'): ?>
+                    <a
+                        href="#"
+                        @click.prevent="navigate('result')"
+                        class="w-full p-2 flex justify-center items-center bg-purple-400 hover:bg-purple-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md"
+                    >
+                        Result Profile
+                    </a>
+                <?php else: ?>
+                    <a
+                        href="#"
+                        @click.prevent="navigate('viewStudents')"
+                        class="w-full p-2 flex justify-center items-center bg-purple-400 hover:bg-purple-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md"
+                    >
+                        View Student
+                    </a>
+                <?php endif; ?>
                 <div class="w-full h-18 bg-white flex flex-col rounded-b-xl shadow-gray-950">
                     <div class="w-full p-2 flex justify-center items-center bg-purple-300/30 text-purple-500/80 font-semibold text-sm shadow-black">Current Time</div>
                     <p 

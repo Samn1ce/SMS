@@ -3,12 +3,14 @@
     include 'includes/dbh.inc.php';
     include 'components/icons.php';
     include 'components/logoutDialogue.php';
+    include 'includes/nameFormat.php';
 
     $BASE_PATH = '/schoolManagementSystem';
     $id = $_SESSION['user_id'];
     $firstname = $_SESSION['firstname'];
     $surname = $_SESSION['surname'];
     $role = $_SESSION['role'];
+    $logoutIcon = renderIcon('logout', 'w-6 h-6 text-neutral-800');
 
     $navItems = [
         [
@@ -21,21 +23,24 @@
             'label' => 'Assignment',
             'icon' => 'assignment'
         ],
-        [
+    ];
+    if ($role === 'teacher') {
+        $navItems[] = [
+            'id' => 'viewStudents',
+            'label' => 'View Students',
+            'icon' => 'result'
+        ];
+    } else {
+        $navItems[] = [
             'id' => 'result',
             'label' => 'Result Profile',
             'icon' => 'result'
-        ],
-        [
-            'id' => 'viewStudents',
-            'label' => 'View Student',
-            'icon' => 'result'
-        ],
-        [
-            'id' => 'profile',
-            'label' => 'Student Profile',
-            'icon' => 'person'
-        ]
+        ];
+    };
+    $navItems[] =  [
+        'id' => 'profile',
+        'label' => 'Student Profile',
+        'icon' => 'person'
     ];
 
     $currentView = htmlspecialchars($_GET['view'] ?? 'dashboard', ENT_QUOTES);
@@ -91,12 +96,19 @@
                     <?php endforeach; ?>
                 </nav>
             </div>
-            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover cursor-pointer">
+            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover cursor-pointer px-2">
                 <?php renderIcon('logout', 'w-6 h-6 text-neutral-800') ?>
-                <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg py-4 w-full border", '', 'w-full h-fit flex text-neutral-800 py-3') ?>
+                <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg py-4 pr-28", '', 'w-full h-fit flex text-neutral-800 py-3 pl-2') ?>
             </div>
         </div>
         <div class="bg-neutral-100 w-full lg:w-4/5 rounded-r-md h-full overflow-auto">
+            <div class="text-neutral-800 flex justify-between items-center px-12 py-2 border border-b border-zinc-200">
+                <h1 class="font-bold">School Name</h1>
+                <div>
+                    <p class="font-semibold hidden lg:block"><?= formatName($surname) ?> <?= formatName($firstname) ?></p>
+                </div>
+            </div>
+
             <div x-show="isLoading" class="h-full flex items-center justify-center">
                 <div class="text-center">
                     <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
@@ -104,7 +116,6 @@
                 </div>
             </div>
             
-            <!-- Content -->
             <div x-show="!isLoading" x-html="content" class="w-full px-1 pb-18 lg:p-4"></div>
         </div>
     </div>

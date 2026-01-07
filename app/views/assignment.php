@@ -90,7 +90,7 @@
                                 New
                             </button>
 
-                            <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
+                            <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed z-10 h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
                                 <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
                                     <div class="flex flex-col w-full rounded-3xl p-3 md:p-5 bg-neutral-50 border border-neutral-100">
                                         <h3 class="font-semibold text-xl">New Assigment</h3>
@@ -161,7 +161,12 @@
                             <div class="w-full rounded-xl p-2 bg-white border border-zinc-200/65 hover:border-zinc-700/30 hover:shadow-md duration-300 transition-all">
                                 <p class="font-semibold text-xl"><?= htmlspecialchars($assignment['subject_name']) ?> Assignment</p>
                                 <div class="pl-2 flex justify-between">
-                                    <p class="italic text-xs md:text-sm">From: <span class="font-semibold"><?= htmlspecialchars($assignment['teacher_name']) ?></span></p>
+                                    <div>
+                                        <p class="italic text-xs md:text-sm">From: <span class="font-semibold"><?= htmlspecialchars($assignment['teacher_name']) ?></span></p>
+                                        <p class="italic text-xs md:text-sm">To: <span>
+                                            <?= htmlspecialchars($assignment['class_name']) ?> <?php if ($assignment['class_arm']): ?>&#40;<?= htmlspecialchars($assignment['class_arm']) ?>&#41; <?php endif; ?>
+                                        </span></p>
+                                    </div>
                                     <div>
                                         <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold"><?htmlspecialchars($createdDate) ?></span></p>
                                         <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold"><?= htmlspecialchars($dueDate) ?>. 12:00pm</span></p>
