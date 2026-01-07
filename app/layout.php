@@ -1,5 +1,4 @@
 <?php
-    // session_start();
     define('APP_ROOT', __DIR__);
     include 'includes/dbh.inc.php';
     include 'components/icons.php';
@@ -28,6 +27,11 @@
             'icon' => 'result'
         ],
         [
+            'id' => 'viewStudents',
+            'label' => 'View Student',
+            'icon' => 'result'
+        ],
+        [
             'id' => 'profile',
             'label' => 'Student Profile',
             'icon' => 'person'
@@ -35,6 +39,11 @@
     ];
 
     $currentView = htmlspecialchars($_GET['view'] ?? 'dashboard', ENT_QUOTES);
+
+    $layoutData = [
+        'basePath' => $BASE_PATH,
+        'currentView' => $currentView,
+    ];
 ?>
 
 <!DOCTYPE html>
@@ -42,62 +51,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="/assets/js/results.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- <?php if ($currentView === 'result') : ?>
-        <script defer src="../assets/js/results.js"></script>
-    <?php endif; ?> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="assets/js/renderLayout.js"></script>
+    <script src="assets/js/results.js"></script>
+    <?php if($role === 'teacher') { ?>
+        <script src="assets/js/studentManager.js"></script>
+    <?php } ?>
     <link rel="stylesheet" href="assets/css/style.css"/>
     <title>SchoolY - <?= $surname ?>&nbsp;<?= $firstname ?></title>
 </head>
 <body>
     <div 
         class="w-full h-screen flex" 
-        x-data="{
-            basePath: '<?= $BASE_PATH ?>',
-            currentView: '<?= $currentView ?>',
-            isLoading: false,
-            content: '',
-            
-            // Function to change views
-            navigate(view) {
-                if (this.currentView === view) return;
-
-                this.currentView = view;
-                this.isLoading = true;
-
-                history.pushState({}, '', this.basePath + '/' + view);
-                this.loadContent(view);
-            },
-         
-            // Function to load content via AJAX
-            async loadContent(view) {
-                try {
-                    const response = await fetch(this.basePath + '/app/view-router.php?view=' + view);
-                    this.content = await response.text();
-                } catch (error) {
-                    this.content = '<div>Error loading content</div>';
-                }
-                this.isLoading = false;
-            },
-         
-         // Initialize
-        init() {
-            // Load initial content
-            this.loadContent('<?= $currentView ?>');
-             
-            // Handle browser back/forward buttons
-            window.addEventListener('popstate', () => {
-                const path = window.location.pathname
-                            .replace(this.basePath, '')
-                            .replace('/', '') || 'dashboard';
-                this.currentView = path;
-                this.loadContent(path);
-            });
-        }
-    }"
-    x-init="init()"
+        x-data="layoutRender(<?= htmlspecialchars(json_encode($layoutData)) ?>)"
+        x-init="init()"
     >
         <!-- Sidebar -->
         <div class="w-full lg:w-1/5 absolute lg:relative z-10 bottom-3 lg:bottom-0 rounded-full lg:rounded-none lg:rounded-r-md lg:h-full px-6 py-2 lg:p-4 flex flex-col justify-between border border-purple-300 lg:border-neutral-200/70 bg-purple-500 lg:bg-white">
@@ -117,6 +85,7 @@
                         </div>
                         <p class="lg:block hidden" :class="currentView === '<?= $item['id'] ?>' ? 'text-neutral-100' : 'text-neutral-400'">
                             <?= htmlspecialchars($item['label']) ?>
+                            <?php  ?>
                         </p>
                     </div>
                     <?php endforeach; ?>

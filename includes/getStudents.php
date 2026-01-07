@@ -1,5 +1,4 @@
 <?php
-//getStudents.php
 include "dbh.inc.php";
 
 $class_id = $_GET['class_id'];

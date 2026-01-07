@@ -3,7 +3,7 @@
 
     $request_path = $_GET['path'] ?? 'dashboard';
 
-    $allowed_paths = ['dashboard', 'assignment', 'result', 'profile', 'login', 'logout'];
+    $allowed_paths = ['dashboard', 'assignment', 'result', 'profile', 'viewStudents', 'login', 'logout'];
 
     if (!in_array($request_path, $allowed_paths)) {
         $request_path = 'dashboard';

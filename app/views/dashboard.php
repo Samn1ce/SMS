@@ -71,17 +71,21 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
             <div class="w-full lg:w-1/4 flex flex-col gap-2">
                 <?php
                     if ($role === 'student') {
-                        echo '<a href="studentResult.php" class="w-full p-2 flex justify-center items-center bg-blue-400 hover:bg-blue-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md">
+                        echo '<a 
+                                href="#" 
+                                @click.prevent="navigate()"
+                                class="w-full p-2 flex justify-center items-center bg-purple-400 hover:bg-purple-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md"
+                            >
                             Result Profile  
                         </a>';
                     } else {
-                        echo '<a href="viewStudents.php" class="w-full p-2 flex justify-center items-center bg-blue-400 hover:bg-blue-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md">
+                        echo '<a href="viewStudents.php" class="w-full p-2 flex justify-center items-center bg-purple-400 hover:bg-purple-500 duration-300 transition-all text-zinc-50 font-semibold text-sm rounded-md">
                             View Student  
                         </a>';
                     }
                 ?>
                 <div class="w-full h-18 bg-white flex flex-col rounded-b-xl shadow-gray-950">
-                    <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm rounded-b-md shadow-black">Current Time</div>
+                    <div class="w-full p-2 flex justify-center items-center bg-purple-300/30 text-purple-500/80 font-semibold text-sm shadow-black">Current Time</div>
                     <p 
                         x-data="{ time: '' }" 
                         x-init="
@@ -115,7 +119,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                         <h2 class="font-bold text-xl pl-5 mb-2">Daily Assesment</h2>
                         <div class="w-full flex flex-col md:flex-row gap-4">
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
-                                <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Assigment</div>
+                                <div class="w-full p-2 flex justify-center items-center bg-purple-300/30 text-purple-500/80 font-semibold text-sm shadow-black">Assigment</div>
                                 <p class="w-full flex-1 text-neutral-900 text-center font-semibold pt-5">
                                     <?php 
                                         if ($assignmentCount > 0) {
@@ -125,25 +129,25 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                                         }
                                     ?>
                                 </p>
-                                <a href="#" @click.prevent="navigate('assignment')" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
+                                <a href="#" @click.prevent="navigate('assignment')" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-purple-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View assignments</a>
                             </div>
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
-                                <div class="w-full p-2 flex justify-center items-center bg-blue-300/30 text-blue-500/80 font-semibold text-sm shadow-black">Last Attendance</div>
+                                <div class="w-full p-2 flex justify-center items-center bg-purple-300/30 text-purple-500/80 font-semibold text-sm shadow-black">Last Attendance</div>
                                 <p class="w-full flex-1 text-neutral-900 text-3xl lg:text-5xl text-center font-semibold pt-5">7th, Oct</p>
-                                <a href="" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-blue-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View attendance</a>
+                                <a href="" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-purple-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View attendance</a>
                             </div>
                         </div>
                     <?php
                 } else {
                     ?>
                         <div class="w-full">
-                            <div class="w-1/4 p-3 rounded-md bg-white border-zinc-200/65 border shadow-xl">
+                            <div class="w-full md:w-1/2 lg:w-1/4 p-3 rounded-md bg-white border-zinc-200/65 border shadow-xl">
                                 <div class="w-full flex justify-center items-center">
                                     <?php renderIcon('book', 'w-14 h-14') ?>
                                 </div>
                                 <p class="text-sm text-neutral-900 font-semibold">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus dolorum quis nihil debitis inventore illo!</p>
-                                <button class="w-full py-2 font-semibold text-center rounded-full bg-blue-500 text-neutral-900 mt-2 text-xs hover:bg-blue-600 transition duration-300">
-                                    <a href="assignment.php" class="py-2 px-16 text-neutral-100 font-semibold">Give Assignments</a>
+                                <button @click.prevent="navigate('assignment')" class="w-full py-2 text-center rounded-full bg-purple-500 text-xs hover:bg-purple-600 transition duration-300 mt-2 cursor-pointer text-neutral-50 font-semibold">
+                                    Give Assignments
                                 </button>
                             </div>
                         </div>

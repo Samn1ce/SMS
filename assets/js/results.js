@@ -1,5 +1,5 @@
 document.addEventListener("alpine:init", () => {
-  +Alpine.data("resultComponent", (resultData) => ({
+  Alpine.data("resultComponent", (resultData) => ({
     classId: resultData.classId,
     termId: resultData.termId,
     studentId: resultData.studentId,
@@ -15,8 +15,10 @@ document.addEventListener("alpine:init", () => {
       this.loading = true;
 
       try {
+        console.log(window.location.pathname);
+        const baseUrl = "/schoolManagementSystem/app/views/result.php";
         const response = await fetch(
-          `?ajax=1&class_id=${this.classId}&term_id=${this.termId}&student_id=${this.studentId}`
+          `${baseUrl}?ajax=1&class_id=${this.classId}&term_id=${this.termId}&student_id=${this.studentId}`
         );
         const data = await response.json();
 

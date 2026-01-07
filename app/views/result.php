@@ -17,12 +17,18 @@
 
         // Get class and term names
         $classNameQuery = "SELECT class_name FROM classes WHERE id = $classId";
-        $classNameResult = mysqli_query($conn, $classNameQuery);
+        $classNameStmt = mysqli_prepare($conn, $classNameQuery);
+        mysqli_stmt_bind_param($classNameStmt, 'i', $classId);
+        mysqli_stmt_execute($classNameStmt);
+        $classNameResult = mysqli_stmt_get_result($classNameStmt);
         $classNameRow = mysqli_fetch_assoc($classNameResult);
         $className = $classNameRow['class_name'] ?? '';
 
         $termNameQuery = "SELECT term_name FROM terms WHERE id = $termId";
-        $termNameResult = mysqli_query($conn, $termNameQuery);
+        $termNameStmt = mysqli_prepare($conn, $termNameQuery);
+        mysqli_stmt_bind_param($termNameStmt, 'i', $termId);
+        mysqli_stmt_execute($termNameStmt);
+        $termNameResult = mysqli_stmt_get_result($termNameStmt);
         $termNameRow = mysqli_fetch_assoc($termNameResult);
         $termName = $termNameRow['term_name'] ?? '';
 
