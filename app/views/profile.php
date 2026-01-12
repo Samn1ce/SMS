@@ -3,19 +3,6 @@
     include APP_ROOT . '/includes/cards.php';
     include APP_ROOT . '/components/icons.php';
 
-    // session_start();
-
-    // ✅ Check that an ID is provided in the URL
-    // if (!isset($_GET['id'])) {
-    //     header("Location: ../teacherResult.php");
-    //     die("Student ID not provided");
-    // }
-    // if ($_GET['id'] != $_SESSION['user_id']) {
-    //     header("Location: ./studentDashboard.php");
-    //     exit();
-    // }
-
-    // $id = $_GET['id'];
     $id = $_SESSION['id'];
     $surname = $_SESSION['surname'];
     $firstname = $_SESSION['firstname'];
@@ -66,12 +53,6 @@
                         <p class="text-xl font-semibold text-neutral-900"><?= htmlspecialchars($firstname) ?></p>
                     </div>
                 </div>
-                <!-- <div class="w-1/2 mx-auto flex gap-4 mt-2">
-                    <a href="dashboard.php" class="w-1/2 bg-blue-600 hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 hover:border hover:border-neutral-300 font-semibold rounded-full py-3 px-5 cursor-pointer text-center transition-all">Dashboard</a>
-                    <div class="w-1/2 rounded-full bg-blue-600 flex justify-center items-center hover:bg-neutral-200 text-neutral-100 hover:text-neutral-900 transition-all hover:border hover:border-neutral-300">
-                        <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold w-full py-4 px-5 cursor-pointer", '', 'w-full h-fit justify-center items-center flex') ?>
-                    </div>
-                </div> -->
             </div>
             <?php if ($role === 'student') { ?>
                 <div class="mx-auto w-full lg:w-1/2 rounded-md lg:overflow-y-scroll scrollbar-hide">

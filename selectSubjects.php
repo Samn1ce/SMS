@@ -22,7 +22,7 @@ $class_armQuery = "SELECT * FROM class_arms";
 $class_armResult = mysqli_query($conn, $class_armQuery);
 
 function getSelectedSubjects($conn, $user_id) {
-    $subjectsSql = "SELECT user_id FROM student_subjects WHERE user_id = ?";
+    $subjectsSql = "SELECT subject_id FROM student_subjects WHERE user_id = ?";
     $stmt = mysqli_prepare($conn, $subjectsSql);
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
@@ -87,8 +87,8 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                             <?php endwhile; ?>
                         </div>
                         <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
-                        <!-- <input type="hidden" name="user_id" value="<?= $id ?>"> -->
-                        <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : 
+                       
+                        <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) :
                             $isCore = in_array($subject['id'], $coreSubjectIds);
                             $isSelected = in_array($subject['id'], $selectedSubjects);
                             $isChecked = ($isCore || $isSelected) ? 'checked' : '';
