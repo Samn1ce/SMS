@@ -9,7 +9,7 @@
         $request_path = 'dashboard';
     }
 
-    if (!isset($_SESSION['user_id']) && $request_path !== 'login') {
+    if (!isset($_SESSION['id']) && $request_path !== 'login') {
         header('Location: login.php');
         exit();
     }

@@ -4,12 +4,13 @@ include 'includes/dbh.inc.php';
 include 'components/header.php';
 include 'components/logoutDialogue.php';
 
-$id = $_SESSION["user_id"];
+$id = $_SESSION["id"];
 $surname = $_SESSION['surname'];
 $firstname = $_SESSION['firstname'];
 $arm_id = $_SESSION['arm_id'];
+$role = $_SESSION['role'];
 
-if (!isset($_SESSION["user_id"])) {
+if (!isset($_SESSION["id"])) {
     header("Location: login.php");
     exit();
 }
@@ -20,10 +21,10 @@ $subjectsResult = mysqli_query($conn, $subjectsQuery);
 $class_armQuery = "SELECT * FROM class_arms";
 $class_armResult = mysqli_query($conn, $class_armQuery);
 
-function getSelectedSubjects($conn, $student_id) {
-    $subjectsSql = "SELECT subject_id FROM student_subjects WHERE student_id = ?";
+function getSelectedSubjects($conn, $user_id) {
+    $subjectsSql = "SELECT user_id FROM student_subjects WHERE user_id = ?";
     $stmt = mysqli_prepare($conn, $subjectsSql);
-    mysqli_stmt_bind_param($stmt, "i", $student_id);
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -67,7 +68,7 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                     <form action="includes/saveStudentData.php" method="POST" class="space-y-3">
                         <p class="text-zinc-400 font-semibold">Select your Class Arm...</p>
                         <div class="flex gap-2">
-                            <input type="hidden" name="student_id" value="<?= $id ?>">
+                            <input type="hidden" name="user_id" value="<?= $id ?>">
                             <?php while($class_arm = mysqli_fetch_assoc($class_armResult)) : 
                                 $selectedArm = $arm_id ?? null;
                                 $isChecked = ($selectedArm == $class_arm['id']) ? 'checked' : '';
@@ -86,7 +87,7 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                             <?php endwhile; ?>
                         </div>
                         <p class="text-zinc-400 font-semibold">Select your Offered Subjects...</p>
-                        <!-- <input type="hidden" name="student_id" value="<?= $id ?>"> -->
+                        <!-- <input type="hidden" name="user_id" value="<?= $id ?>"> -->
                         <?php while ($subject = mysqli_fetch_assoc($subjectsResult)) : 
                             $isCore = in_array($subject['id'], $coreSubjectIds);
                             $isSelected = in_array($subject['id'], $selectedSubjects);

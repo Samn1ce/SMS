@@ -6,11 +6,11 @@
     include 'includes/nameFormat.php';
 
     $BASE_PATH = '/schoolManagementSystem';
-    $id = $_SESSION['user_id'];
+    $id = $_SESSION['id'];
     $firstname = $_SESSION['firstname'];
     $surname = $_SESSION['surname'];
     $role = $_SESSION['role'];
-    $logoutIcon = renderIcon('logout', 'w-6 h-6 text-neutral-800');
+    // $logoutIcon = renderIcon('logout', 'w-6 h-6 text-neutral-800');
 
     $navItems = [
         [

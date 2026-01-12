@@ -16,7 +16,7 @@
     // }
 
     // $id = $_GET['id'];
-    $id = $_SESSION['user_id'];
+    $id = $_SESSION['id'];
     $surname = $_SESSION['surname'];
     $firstname = $_SESSION['firstname'];
     $othername = $_SESSION['othername'];
@@ -27,7 +27,7 @@
 
     // ✅ Fetch subjects offered by this student
     function getSelectedSubjects($conn, $id) {
-        $subjectQuery = "SELECT subject_name FROM student_subjects WHERE student_id = ?";
+        $subjectQuery = "SELECT subject_name FROM student_subjects WHERE user_id = ?";
         $subjectStmt = mysqli_prepare($conn, $subjectQuery);
         mysqli_stmt_bind_param($subjectStmt, "i", $id);
         mysqli_stmt_execute($subjectStmt);

@@ -4,7 +4,7 @@
     include APP_ROOT . '/components/header.php';
     include APP_ROOT . '/components/icons.php';
 
-    $id = $_SESSION["user_id"];
+    $id = $_SESSION["id"];
     $surname = $_SESSION['surname'];
     $firstname = $_SESSION['firstname'];
     $class_name = $_SESSION['class_name'];
@@ -52,12 +52,12 @@
                 c.class_name,
                 ca.class_arm,
                 s.subject_name,
-                CONCAT(t.teacher_firstname, ' ', t.teacher_surname) as teacher_name
+                CONCAT(u.firstname, ' ', u.surname) as teacher_name
             FROM assignments a
             LEFT JOIN classes c ON a.class_id = c.id
             LEFT JOIN class_arms ca ON a.arm_id = ca.id
             LEFT JOIN subjects s ON a.subject_id = s.id
-            LEFT JOIN teachers t ON a.teacher_id = t.id
+            LEFT JOIN users u ON a.user_id = u.id
             WHERE a.class_id = ?
             AND (a.arm_id IS NULL OR a.arm_id = ?)
             ORDER BY a.created_at DESC

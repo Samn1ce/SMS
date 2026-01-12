@@ -110,7 +110,7 @@
                                         class="w-full outline-none"
                                         required
                                     >
-                                        <option value="none">-- Select role --</option>
+                                        <option value="">-- Select role --</option>
                                         <option value="student">Student</option>
                                         <option value="teacher">Teacher</option>
                                     </select>

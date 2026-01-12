@@ -45,9 +45,9 @@ $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
 // Choose table based on role
 if ($role === "student") {
-    $sql = "INSERT INTO students (student_surname, student_firstname, student_othername, email, pwd, class_id, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (email, pwd, surname, firstname, othername, class_id, roles, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 } elseif ($role === "teacher") {
-    $sql = "INSERT INTO teachers (teacher_surname, teacher_firstname, teacher_othername, email, pwd, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO teachers (email, pwd, surname, firstname, othername, roles, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 } else {
     redirectWithData("emptyfields", $email, $email, $surname, $firstname, $othername, $class);
 }
@@ -55,9 +55,9 @@ if ($role === "student") {
 // Insert user data
 $stmt = mysqli_prepare($conn, $sql);
 if ($role === "student") {
-    mysqli_stmt_bind_param($stmt, "sssssiss", $surname, $firstname, $othername, $email, $hashedPwd, $class, $gender, $dob);
+    mysqli_stmt_bind_param($stmt, "sssssisss", $email, $hashedPwd, $surname, $firstname, $othername, $class, $role, $gender, $dob);
 } else {
-    mysqli_stmt_bind_param($stmt, "sssssss", $surname, $firstname, $othername, $email, $hashedPwd, $gender, $dob);
+    mysqli_stmt_bind_param($stmt, "ssssssss", $email, $hashedPwd, $surname, $firstname, $othername, $role, $gender, $dob);
 
 }
 

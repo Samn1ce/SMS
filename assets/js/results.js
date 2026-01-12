@@ -18,7 +18,7 @@ document.addEventListener("alpine:init", () => {
         console.log(window.location.pathname);
         const baseUrl = "/schoolManagementSystem/app/views/result.php";
         const response = await fetch(
-          `${baseUrl}?ajax=1&class_id=${this.classId}&term_id=${this.termId}&student_id=${this.studentId}`
+          `${baseUrl}?ajax=1&class_id=${this.classId}&term_id=${this.termId}&user_id=${this.studentId}`
         );
         const data = await response.json();
 

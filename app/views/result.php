@@ -2,7 +2,7 @@
     // session_start();
     include APP_ROOT . '/includes/dbh.inc.php';
 
-    $id = $_SESSION['user_id'];
+    $id = $_SESSION['id'];
     $surname = $_SESSION['surname'];
     $firstname = $_SESSION['firstname'];
     $class_name = $_SESSION['class_name'];
@@ -13,7 +13,7 @@
     if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
         $classId = (int)$_GET['class_id'];
         $termId = (int)$_GET['term_id'];
-        $studentId = (int)$_GET['student_id'];
+        $studentId = (int)$_GET['user_id'];
 
         // Get class and term names
         $classNameQuery = "SELECT class_name FROM classes WHERE id = $classId";
@@ -36,7 +36,7 @@
         $resultDataQuery = "SELECT r.*, s.subject_name
                             FROM results r
                             JOIN subjects s ON r.subject_id = s.id
-                            WHERE r.student_id = $studentId
+                            WHERE r.user_id = $studentId
                             AND r.class_id = $classId
                             AND r.term_id = $termId";
         $resultData = mysqli_query($conn, $resultDataQuery);
@@ -66,7 +66,7 @@
     // Get the latest result for initial load
     $reportCardQuery = "SELECT r.class_id, r.term_id, r.session_id
                         FROM results r
-                        WHERE r.student_id = $id
+                        WHERE r.user_id = $id
                         ORDER BY r.session_id DESC, r.term_id DESC
                         LIMIT 1";
     $reportCardResult = mysqli_query($conn, $reportCardQuery);
@@ -100,7 +100,7 @@
         $resultDataQuery = "SELECT r.*, s.subject_name
                             FROM results r
                             JOIN subjects s ON r.subject_id = s.id
-                            WHERE r.student_id = $id
+                            WHERE r.user_id = $id
                             AND r.class_id = $selectedClass
                             AND r.term_id = $selectedTerm";
         $resultData = mysqli_query($conn, $resultDataQuery);

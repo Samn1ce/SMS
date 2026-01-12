@@ -1,76 +1,50 @@
 <?php
 session_start();
-include 'dbh.inc.php';
+require 'dbh.inc.php';
 
-$email = $_POST["email"];
-$pwd = $_POST["pwd"];
-$role = $_POST["role"];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $pwd = $_POST['pwd'];
 
-// Check for empty fields
-if (empty($email) || empty($pwd) || empty($role)) {
-    header("Location: ../login.php?error=emptyfields");
-    exit();
-}
+    $sql = "SELECT users.*, classes.class_name, class_arms.class_arm
+            FROM users
+            LEFT JOIN classes ON users.class_id = classes.id 
+            LEFT JOIN class_arms ON users.arm_id = class_arms.id
+            WHERE users.email = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
 
-// Choose correct table based on role
-if ($role === "student") {
-    $sql = "SELECT students.*, classes.class_name, class_arms.class_arm
-            FROM students 
-            LEFT JOIN classes ON students.class_id = classes.id 
-            LEFT JOIN class_arms ON students.arm_id = class_arms.id
-            WHERE students.email = ?";
-} elseif ($role === "teacher") {
-    $sql = "SELECT * FROM teachers WHERE email = ?";
-} else {
-    header("Location: ../login.php?error=invalidrole");
-    exit();
-}
+    $result = mysqli_stmt_get_result($stmt);
 
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "s", $email); 
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-
-if ($row = mysqli_fetch_assoc($result)) {
-    // Verify password
-    if (password_verify($pwd, $row["pwd"])) {
-        $_SESSION["user_id"] = $row["id"];
-        $_SESSION["role"] = $role;
-        $_SESSION["gender"] = $row['gender'];
-        $_SESSION['dob'] = $row['dob'];
-        $_SESSION['class_name'] = $row['class_name'] ?? 'Not Assigned';
-        $_SESSION['class_id'] = $row['class_id'];
-        $_SESSION['class_arm'] = $row['class_arm'];
-        $_SESSION['arm_id'] = $row['arm_id'];
-
-        // Redirect to correct dashboard
-        if ($role === "student") {
-        $_SESSION["surname"] = $row["student_surname"];
-        $_SESSION["firstname"] = $row["student_firstname"];
-        $_SESSION["othername"] = $row["student_othername"];
-
-            $loginStmt = mysqli_prepare($conn, "SELECT login_count FROM students WHERE id = ?");
-            mysqli_stmt_bind_param($loginStmt, "i", $row['id']);
-            mysqli_stmt_execute($loginStmt);
-            $result = mysqli_stmt_get_result($loginStmt);
-            $row = mysqli_fetch_assoc($result);
-            if ($row["login_count"] < 1) {
-                header("Location: ../selectSubjects.php");
-            } else {
-                header("Location: ../dashboard.php");
-            }
-        } else {
-            $_SESSION["surname"] = $row["teacher_surname"];
-            $_SESSION["firstname"] = $row["teacher_firstname"];
-            $_SESSION["othername"] = $row["teacher_othername"];
-            header("Location: ../dashboard.php");
-        }
-        exit();
-    } else {
+    if (!$row = mysqli_fetch_assoc($result)) {
         header("Location: ../login.php?error=invalidcredentials");
         exit();
     }
-} else {
-    header("Location: ../login.php?error=invalidcredentials");
+
+    if (!password_verify($pwd, $row['pwd'])) {
+        header("Location: ../login.php?error=invalidcredentials");
+        exit();
+    }
+
+    $_SESSION['id'] = $row['id'];
+    $_SESSION['role'] = $row['roles'];
+    $_SESSION["gender"] = $row['gender'];
+    $_SESSION['dob'] = $row['dob'];
+    $_SESSION['class_name'] = $row['class_name'] ?? 'Not Assigned';
+    $_SESSION['class_id'] = $row['class_id'];
+    $_SESSION['class_arm'] = $row['class_arm'];
+    $_SESSION['arm_id'] = $row['arm_id'];
+    $_SESSION["surname"] = $row["surname"];
+    $_SESSION["firstname"] = $row["firstname"];
+    $_SESSION["othername"] = $row["othername"];
+    $login_count = (int)$row['login_count'];
+
+    if ($login_count === 0 && $row['roles'] === 'student') {
+        header("Location: ../selectSubjects.php");
+        exit();
+    }
+
+    header("Location: ../dashboard.php");
     exit();
 }
