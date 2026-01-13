@@ -96,7 +96,7 @@
                     <?php endforeach; ?>
                 </nav>
             </div>
-            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover cursor-pointer px-2">
+            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover px-2">
                 <?php renderIcon('logout', 'w-6 h-6 text-neutral-800') ?>
                 <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg py-4 pr-28", '', 'w-full h-fit flex text-neutral-800 py-3 pl-2') ?>
             </div>
@@ -107,7 +107,7 @@
                 <div>
                     <p class="font-semibold hidden lg:block"><?= formatName($surname) ?> <?= formatName($firstname) ?></p>
                 </div>
-            </div>
+            </div> 
 
             <div x-show="isLoading" class="h-full flex items-center justify-center">
                 <div class="text-center">

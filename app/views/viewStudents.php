@@ -1,12 +1,10 @@
 <?php 
 include APP_ROOT . '/includes/dbh.inc.php';
-// include APP_ROOT . '/components/icons.php';
-// include APP_ROOT . '/includes/cards.php';
 
-    $id = $_SESSION['user_id'];
+$id = $_SESSION['id'];
 
-    $classQuery = "SELECT * FROM classes";
-    $classResult = mysqli_query($conn, $classQuery);
+$classQuery = "SELECT * FROM classes";
+$classResult = mysqli_query($conn, $classQuery);
 ?>
 
 <main class="w-full max-w-7xl mx-auto">

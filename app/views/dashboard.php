@@ -39,7 +39,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
     <main class="max-w-7xl w-full p-2 mx-auto relative">
         <section class="mx-auto w-full lg:w-11/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-purple-500/90 rounded-md p-3 lg:pt-3 lg:pl-5 flex justify-center items-center">
-                <div class="w-full border h-full flex flex-wrap flex-col justify-between gap-4 lg:gap-0">
+                <div class="w-full h-full flex flex-wrap flex-col justify-between gap-4 lg:gap-0">
                     <div>
                         <p class="text-xl lg:text-2xl font-semibold text-neutral-50">Lorem, ipsum dolor.</p>
                         <p class="text-xs lg:text-sm text-neutral-200 font-semibold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, nisi sequi tenetur possimus veniam beatae.</p>

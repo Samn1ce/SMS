@@ -102,13 +102,17 @@
                                 }
                             ?> 
                         </div>
-                        <div class="w-full flex justify-between gap-4">
+                        <div
+                            x-data="{ role: '' }"
+                            class="w-full flex justify-between gap-4"
+                        >
                             <div class="w-full flex flex-col">
                                 <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && (isset($_GET['role']) && $_GET['role'] === 'none') ? 'border-red-500' : 'border-zinc-400') ?>">
                                     <select 
                                         name="role" 
                                         class="w-full outline-none"
                                         required
+                                        x-model='role'
                                     >
                                         <option value="">-- Select role --</option>
                                         <option value="student">Student</option>
@@ -117,8 +121,16 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
-                                <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <select name="class_id" id="class" class="w-full outline-none">
+                                <div 
+                                    class="w-full flex gap-2 items-center border-b-2 p-3"
+                                    :class="role === 'teacher' ? 'text-zinc-400 border-zinc-200' : 'text-zinc-800 border-zinc-400'"
+                                >
+                                    <select 
+                                        name="class_id" 
+                                        id="class" 
+                                        class="w-full outline-none"
+                                        :disabled="role === 'teacher'"
+                                    >
                                         <option value="">-- Select Class --</option>
                                         <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
                                         <option value="<?= $class['id'] ?>">
