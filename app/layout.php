@@ -60,9 +60,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="assets/js/renderLayout.js"></script>
     <script src="assets/js/results.js"></script>
-    <?php if($role === 'teacher') { ?>
-        <script src="assets/js/studentManager.js"></script>
-    <?php } ?>
+    <script src="assets/js/studentManager.js"></script>
     <link rel="stylesheet" href="assets/css/style.css"/>
     <title>SchoolY - <?= $surname ?>&nbsp;<?= $firstname ?></title>
 </head>

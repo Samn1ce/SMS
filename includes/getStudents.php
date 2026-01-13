@@ -9,19 +9,19 @@ if (!$class_id) {
     exit;
 }
 
-$sql = "SELECT s.id, CONCAT(
-            s.student_firstname, ' ',
-            s.student_surname, ' ',
-            COALESCE(s.student_othername, '')
+$sql = "SELECT u.id, CONCAT(
+            u.firstname, ' ',
+            u.surname, ' ',
+            COALESCE(u.othername, '')
         ) AS full_name, c.class_name, ca.class_arm
-            FROM students s
-            JOIN classes c ON s.class_id = c.id
-            JOIN class_arms ca ON s.arm_id = ca.id
-            WHERE s.class_id = ?
+            FROM users u
+            JOIN classes c ON u.class_id = c.id
+            JOIN class_arms ca ON u.arm_id = ca.id
+            WHERE u.class_id = ?
             AND CONCAT(
-                s.student_firstname, ' ',
-                s.student_surname, ' ',
-                COALESCE(s.student_othername, '')
+                u.firstname, ' ',
+                u.surname, ' ',
+                COALESCE(u.othername, '')
             ) LIKE ?";
 $stmt = mysqli_prepare($conn, $sql);
 $searchTerm = "%$search%";
