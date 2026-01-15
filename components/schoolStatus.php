@@ -1,5 +1,5 @@
 <?php
-include './includes/dbh.inc.php';
+include APP_ROOT . '/includes/dbh.inc.php';
 
 $session = mysqli_fetch_assoc(
     mysqli_query($conn, "SELECT id FROM sessions WHERE is_active = 1 LIMIT 1")
