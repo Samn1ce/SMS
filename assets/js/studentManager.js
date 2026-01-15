@@ -3,6 +3,7 @@ document.addEventListener("alpine:init", () => {
     selectedClass: "",
     search: "",
     students: [],
+    selectedStudentId: null,
 
     async fetchStudents() {
       if (!this.selectedClass) {
@@ -12,7 +13,7 @@ document.addEventListener("alpine:init", () => {
 
       try {
         // Ensure the path to your PHP file is correct relative to public root
-        const baseUrl = "includes/getStudents.php";
+        const baseUrl = "/schoolManagementSystem/includes/getStudents.php";
 
         const res = await fetch(
           `${baseUrl}?class_id=${

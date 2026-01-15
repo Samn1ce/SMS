@@ -94,7 +94,7 @@
                     <?php endforeach; ?>
                 </nav>
             </div>
-            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover px-2">
+            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover px-2 cursor-pointer">
                 <?php renderIcon('logout', 'w-6 h-6 text-neutral-800') ?>
                 <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg py-4 pr-28", '', 'w-full h-fit flex text-neutral-800 py-3 pl-2') ?>
             </div>

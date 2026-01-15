@@ -1,6 +1,6 @@
 <?php 
 include APP_ROOT . '/includes/dbh.inc.php';
-// include __DIR__ . '/../../includes/dbh.inc.php';
+include APP_ROOT . '/components/schoolStatus.php';
 
 $id = $_SESSION['id'];
 
@@ -53,9 +53,26 @@ $classResult = mysqli_query($conn, $classQuery);
                                     </div>
                                 </div>
                                 <p class="text-lg font-semibold" x-text="student.class_name + '(' + student.class_arm + ')'"></p>
-                                <div class="hidden lg:flex flex-col lg:flex-row gap-4">
+                                <div x-data="{ open: false}" class="hidden lg:flex flex-col lg:flex-row gap-4">
+                                    <button x-on:click="open = ! open" class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">Mark Attendance</button>
                                     <button class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">View Details</button>
                                     <button class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">Assign Scores</button>
+
+                                    <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/40 fixed z-10 h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
+                                        <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
+                                            <div class="flex flex-col items-center w-full rounded-3xl p-2 md:p-5 bg-neutral-50 border border-neutral-100">
+                                                <form method="POST" action="includes/markAttendance.php">
+                                                    <?= $term ?>
+                                                    <input type="hidden" name="student_id" :value="selectedStudentId">
+                                                    <input hidden name="term_id" value="<?= $term ?>" />
+                                                    <div class="flex w-full gap">
+                                                        <button type="submit" name="status" value="present" class="p-3 font-semibold text-neutral-900 bg-green-500">Present</button>
+                                                        <button type="submit" name="status" value="absent" class="p-3 font-semibold text-neutral-900 bg-red-500">Absent</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Mobile view -->
@@ -76,13 +93,13 @@ $classResult = mysqli_query($conn, $classQuery);
                     </div>
                 </template>
             </div>
-            <template x-if="students.length === 0 && selectedClass">
-                <p class="text-gray-500 italic text-lg text-center mt-5">No students found for this class.</p>
-            </template>
+        </template>
+        <template x-if="students.length === 0 && selectedClass">
+            <p class="text-gray-500 italic text-lg text-center mt-5">No students found for this class.</p>
+        </template>
 
-            <template x-if="!selectedClass">
-                <p class="text-gray-400 italic text-lg text-center mt-5">Select a class to view students</p>
-            </template>
+        <template x-if="!selectedClass">
+            <p class="text-gray-400 italic text-lg text-center mt-5">Select a class to view students</p>
         </template>
     </section>
 </main>

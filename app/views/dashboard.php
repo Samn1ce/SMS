@@ -135,7 +135,7 @@ $assignmentCount = mysqli_num_rows($assignmentResult);
                             <div class="w-full lg:w-1/2 h-32 bg-white flex flex-col lg:flex-1 rounded-b-xl shadow-gray-950">
                                 <div class="w-full p-2 flex justify-center items-center bg-purple-300/30 text-purple-500/80 font-semibold text-sm shadow-black">Last Attendance</div>
                                 <p class="w-full flex-1 text-neutral-900 text-3xl lg:text-5xl text-center font-semibold pt-5">7th, Oct</p>
-                                <a href="" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-purple-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View attendance</a>
+                                <a href="#" @click.prevent="navigate('attendance')" class="text-xs mb-2 self-end mr-3 border-b border-dotted border-b-purple-400 text-neutral-700 hover:text-neutral-900 duration-300 transition-all font-semibold">View attendance</a>
                             </div>
                         </div>
                     <?php
