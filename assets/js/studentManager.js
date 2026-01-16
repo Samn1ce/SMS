@@ -5,6 +5,8 @@ document.addEventListener("alpine:init", () => {
     students: [],
     selectedStudentId: null,
 
+    activateToast() {},
+
     async fetchStudents() {
       if (!this.selectedClass) {
         this.students = [];
@@ -12,7 +14,6 @@ document.addEventListener("alpine:init", () => {
       }
 
       try {
-        // Ensure the path to your PHP file is correct relative to public root
         const baseUrl = "/schoolManagementSystem/includes/getStudents.php";
 
         const res = await fetch(

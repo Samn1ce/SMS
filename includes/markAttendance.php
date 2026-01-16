@@ -11,7 +11,7 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'teacher') {
     exit;
 }
 
-$student_id = $_POST['student_id'] ?? null;
+$student_id = $_POST['user_id'] ?? null;
 $term_id = $_POST['term_id'] ?? null;
 $status = $_POST['status'] ?? null; // present | absent
 $teacher_id = $_SESSION['id'];
@@ -31,12 +31,12 @@ if ($now < $open || $now > $close) {
     exit;
 }
 
-$today = date('d-m-Y');
+$today = date('Y-m-d');
 
 // 3️⃣ Prevent re-marking
 $check = mysqli_prepare(
     $conn,
-    "SELECT id FROM attendance WHERE student_id = ? AND attendance_date = ?"
+    "SELECT id FROM attendance WHERE user_id = ? AND attendance_date = ?"
 );
 mysqli_stmt_bind_param($check, "is", $student_id, $today);
 mysqli_stmt_execute($check);
@@ -51,7 +51,7 @@ if (mysqli_stmt_num_rows($check) > 0) {
 $stmt = mysqli_prepare(
     $conn,
     "INSERT INTO attendance 
-    (student_id, term_id, attendance_date, status, marked_by)
+    (user_id, term_id, attendance_date, status, marked_by)
     VALUES (?, ?, ?, ?, ?)"
 );
 mysqli_stmt_bind_param(
