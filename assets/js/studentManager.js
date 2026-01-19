@@ -4,6 +4,7 @@ document.addEventListener("alpine:init", () => {
     search: "",
     students: [],
     selectedStudentId: null,
+    toastActive: false,
 
     activateToast() {},
 

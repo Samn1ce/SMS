@@ -100,7 +100,10 @@ $classResult = mysqli_query($conn, $classQuery);
         <template x-if="!selectedClass">
             <p class="text-gray-400 italic text-lg text-center mt-5">Select a class to view students</p>
         </template>
-        <div class="absolute top-12 transform scale-100 translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100 shadow-sm max-w-md">
+        <div 
+            class="absolute transform translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100 shadow-sm max-w-md"
+            :class="toastActive ? 'top-12 scale-100' : 'top-0 scale-0'"
+        >
             <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
