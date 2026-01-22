@@ -6,7 +6,15 @@ document.addEventListener("alpine:init", () => {
     selectedStudentId: null,
     toastActive: false,
 
-    activateToast() {},
+    activateToast() {
+      this.toastActive = true;
+      setTimeout(() => {
+        this.toastActive = false;
+      }, 5000);
+    },
+    deactivateToast() {
+      this.toastActive = false;
+    },
 
     async fetchStudents() {
       if (!this.selectedClass) {

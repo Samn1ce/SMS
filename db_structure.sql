@@ -34,7 +34,7 @@ CREATE TABLE `assignments` (
   `arm_id` int(11) DEFAULT NULL,
   `subject_id` int(11) NOT NULL,
   `description` text NOT NULL,
-  `dueDate` datetime NOT NULL,
+  `due_date` datetime NOT NULL CURRENTIMESTAMP,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

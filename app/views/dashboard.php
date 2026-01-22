@@ -28,7 +28,8 @@ function getSelectedSubjects($conn, $user_id) {
 
 $assignmentQuery = "SELECT * FROM assignments
                        WHERE class_id = ? 
-                       AND (arm_id IS NULL OR arm_id = ?)";
+                       AND (arm_id IS NULL OR arm_id = ?)
+                       AND due_date >= NOW()";
 $assignmentStmt = mysqli_prepare($conn, $assignmentQuery);
 mysqli_stmt_bind_param($assignmentStmt, "ii", $class_id, $arm_id);
 mysqli_stmt_execute($assignmentStmt);

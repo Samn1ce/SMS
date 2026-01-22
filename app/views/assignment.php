@@ -21,52 +21,32 @@
     $subjects = "SELECT * FROM subjects";
     $subjectsResult = mysqli_query($conn, $subjects);
 
-    if ($role === 'teacher') {
-        // Teachers see only assignments they created
-        $assignmentsQuery = "
+    $assignmentsQuery = "
             SELECT 
                 a.*,
                 c.class_name,
                 ca.class_arm,
                 s.subject_name,
-                CONCAT(t.teacher_firstname, ' ', t.teacher_surname) as teacher_name
-            FROM assignments a
-            LEFT JOIN classes c ON a.class_id = c.id
-            LEFT JOIN class_arms ca ON a.arm_id = ca.id
-            LEFT JOIN subjects s ON a.subject_id = s.id
-            LEFT JOIN teachers t ON a.teacher_id = t.id
-            WHERE a.teacher_id = ?
-            ORDER BY a.created_at DESC
-        ";
-        $stmt = mysqli_prepare($conn, $assignmentsQuery);
-        mysqli_stmt_bind_param($stmt, "i", $id);
-        mysqli_stmt_execute($stmt);
-        $assignmentsResult = mysqli_stmt_get_result($stmt);
-    } elseif ($role === 'student') {
-        // Students see assignments for their class
-        // If arm_id is NULL in assignment = for all arms
-        // If arm_id matches student's arm = for specific arm
-        $assignmentsQuery = "
-            SELECT 
-                a.*,
-                c.class_name,
-                ca.class_arm,
-                s.subject_name,
-                CONCAT(u.firstname, ' ', u.surname) as teacher_name
+                CONCAT(u.firstname, ' ', u.surname) as name
             FROM assignments a
             LEFT JOIN classes c ON a.class_id = c.id
             LEFT JOIN class_arms ca ON a.arm_id = ca.id
             LEFT JOIN subjects s ON a.subject_id = s.id
             LEFT JOIN users u ON a.user_id = u.id
-            WHERE a.class_id = ?
-            AND (a.arm_id IS NULL OR a.arm_id = ?)
+            WHERE (
+                a.user_id = ?
+                OR (
+                    a.class_id = ?
+                    AND (a.arm_id IS NULL OR a.arm_id = ?)
+                )
+            )
+            AND a.due_date > NOW()
             ORDER BY a.created_at DESC
-        ";
-        $stmt = mysqli_prepare($conn, $assignmentsQuery);
-        mysqli_stmt_bind_param($stmt, "ii", $class_id, $arm_id);
-        mysqli_stmt_execute($stmt);
-        $assignmentsResult = mysqli_stmt_get_result($stmt);
-    }
+    ";
+    $stmt = mysqli_prepare($conn, $assignmentsQuery);
+    mysqli_stmt_bind_param($stmt, "iii", $id, $class_id, $arm_id);
+    mysqli_stmt_execute($stmt);
+    $assignmentsResult = mysqli_stmt_get_result($stmt);
 ?>
 
     <main class="w-full text-neutral-800 p-2">
@@ -91,7 +71,7 @@
                             </button>
 
                             <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/20 fixed z-10 h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
-                                <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
+                                <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/4 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
                                     <div class="flex flex-col w-full rounded-3xl p-3 md:p-5 bg-neutral-50 border border-neutral-100">
                                         <h3 class="font-semibold text-xl">New Assigment</h3>
                                         <form 
@@ -113,7 +93,7 @@
                                                 <div required class="flex flex-col w-full">
                                                     <label id="class" for="class" class="italic text-xs md:text-sm font-semibold">Class Arm:</label>
                                                     <select name="arm_id" class="border rounded-md p-1 text-xs md:text-sm">
-                                                        <option>-- Select Arm --</option>
+                                                        <option value="">All Arms</option>
                                                         <?php while ($class_arm = mysqli_fetch_assoc($class_armResult)) : ?>
                                                         <option value="<?= $class_arm['id'] ?>">
                                                             <?= htmlspecialchars($class_arm['class_arm']) ?>
@@ -123,7 +103,13 @@
                                                 </div>
                                                 <div required class="flex flex-col w-full">
                                                     <label id="class" for="class" class="italic text-xs md:text-sm font-semibold">To be submitted:</label>
-                                                    <input type="date" name="due_date" class="border rounded-md p-0.5">
+                                                    <input 
+                                                        type="datetime-local"
+                                                        name="due_date"
+                                                        required
+                                                        min="<?= date('Y-m-d\TH:i') ?>"
+                                                        class="border rounded-md p-1"
+                                                    />
                                                 </div>
                                             </div>
                                             <select required name="subject_id" id="subject" class="border rounded-md p-1 text-xs md:text-sm w-full mt-3">
@@ -152,6 +138,7 @@
                         while ($assignment = mysqli_fetch_assoc($assignmentsResult)) {
                             // Format dates
                             $dueDate = date('l, d F Y', strtotime($assignment['due_date']));
+                            $dueTime = date('g:ia', strtotime($assignment['due_date']));
                             $createdDate = date('l, d F Y', strtotime($assignment['created_at']));                    
                             // Display arm info
                             $armDisplay = $assignment['class_arm'] 
@@ -162,14 +149,14 @@
                                 <p class="font-semibold text-xl"><?= htmlspecialchars($assignment['subject_name']) ?> Assignment</p>
                                 <div class="pl-2 flex justify-between">
                                     <div>
-                                        <p class="italic text-xs md:text-sm">From: <span class="font-semibold"><?= htmlspecialchars($assignment['teacher_name']) ?></span></p>
+                                        <p class="italic text-xs md:text-sm">From: <span class="font-semibold"><?= htmlspecialchars($assignment['name']) ?></span></p>
                                         <p class="italic text-xs md:text-sm">To: <span>
                                             <?= htmlspecialchars($assignment['class_name']) ?> <?php if ($assignment['class_arm']): ?>&#40;<?= htmlspecialchars($assignment['class_arm']) ?>&#41; <?php endif; ?>
                                         </span></p>
                                     </div>
                                     <div>
-                                        <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold"><?htmlspecialchars($createdDate) ?></span></p>
-                                        <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold"><?= htmlspecialchars($dueDate) ?>. 12:00pm</span></p>
+                                        <p class="italic text-xs md:text-sm">Date Given: <span class="font-semibold"><?= htmlspecialchars($createdDate) ?></span></p>
+                                        <p class="italic text-xs md:text-sm">To be Submitted: <span class="font-semibold"><?= htmlspecialchars($dueDate) ?>, <?= htmlspecialchars($dueTime) ?></span></p>
                                     </div>
                                 </div>
                                 <p class="mt-4"><?= nl2br(htmlspecialchars($assignment['description'])) ?></p>

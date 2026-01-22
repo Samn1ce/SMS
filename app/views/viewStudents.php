@@ -55,7 +55,7 @@ $classResult = mysqli_query($conn, $classQuery);
                                 <p class="text-lg font-semibold" x-text="student.class_name + '(' + student.class_arm + ')'"></p>
                                 <div x-data="{ open: false}" class="hidden lg:flex flex-col lg:flex-row gap-4">
                                     <button x-on:click="open = ! open" class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">Mark Attendance</button>
-                                    <button class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">View Details</button>
+                                    <button @click="activateToast" class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">View Details</button>
                                     <button class="px-3 py-2 text-xs bg-blue-400 font-semibold text-neutral-100 rounded-md">Assign Scores</button>
 
                                     <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/40 fixed z-10 h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
@@ -113,11 +113,11 @@ $classResult = mysqli_query($conn, $classQuery);
             <div class="flex-1">
                 <h4 class="font-semibold text-emerald-900">Attendance Marked Successfully.</h4>
                 <p class="text-sm text-emerald-700">
-                Attendance for STUDENT NAME has been marked succesfully.
+                Attendance for <b>STUDENT NAME</b> has been marked succesfully.
                 </p>
             </div>
 
-            <button class="text-emerald-400 hover:text-emerald-600">
+            <button @click="deactivateToast" class="text-emerald-400 hover:text-emerald-600">
                 ✕
             </button>
         </div>
