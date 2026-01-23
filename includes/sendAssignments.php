@@ -35,8 +35,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             mysqli_stmt_bind_param($stmt, "iiiiss", $id, $class_id, $arm_id, $subject_id, $description, $due_date);
         }
         mysqli_stmt_execute($stmt);
+        
+        $_SESSION['toast'] = [
+            'type' => 'success',
+            'message' => 'Assignment sent successfully'
+        ];
         header("Location: ../assignment.php?assignment=sentout");
         exit;
+    } else {
+        $_SESSION['toast'] = [
+            'type' => 'error',
+            'message' => 'Please fill all required fields'
+        ];
+        header("Location: ../assignment.php?emptyfields");
     }
-    header("Location: ../assignment.php?emptyfields");
 }

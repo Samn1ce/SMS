@@ -4,7 +4,6 @@ require 'dbh.inc.php';
 
 header('Content-Type: application/json');
 
-// 1️⃣ Only teachers
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'teacher') {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
@@ -13,7 +12,7 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'teacher') {
 
 $student_id = $_POST['user_id'] ?? null;
 $term_id = $_POST['term_id'] ?? null;
-$status = $_POST['status'] ?? null; // present | absent
+$status = $_POST['status'] ?? null;
 $teacher_id = $_SESSION['id'];
 
 if (!$student_id || !$term_id || !in_array($status, ['present', 'absent'])) {
@@ -21,7 +20,6 @@ if (!$student_id || !$term_id || !in_array($status, ['present', 'absent'])) {
     exit;
 }
 
-// 2️⃣ Time window enforcement
 $now = new DateTime();
 $open = new DateTime('07:00');
 $close = new DateTime('17:00');
@@ -33,7 +31,6 @@ if ($now < $open || $now > $close) {
 
 $today = date('Y-m-d');
 
-// 3️⃣ Prevent re-marking
 $check = mysqli_prepare(
     $conn,
     "SELECT id FROM attendance WHERE user_id = ? AND attendance_date = ?"
@@ -47,7 +44,6 @@ if (mysqli_stmt_num_rows($check) > 0) {
     exit;
 }
 
-// 4️⃣ Insert attendance
 $stmt = mysqli_prepare(
     $conn,
     "INSERT INTO attendance 

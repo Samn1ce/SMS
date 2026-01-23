@@ -61,14 +61,23 @@ $classResult = mysqli_query($conn, $classQuery);
                                     <div x-show="open" x-transition.opacity.duration.300ms class="bg-zinc-100/40 fixed z-10 h-screen top-0 left-0 w-full flex justify-center items-center backdrop-blur-sm p-5">
                                         <div x-transition.opacity.scale.duration.350ms class="bg-white/40 w-11/12 lg:w-2/5 flex justify-center items-center p-5 rounded-4xl backdrop-blur-md border-zinc-100 border shadow-lg">
                                             <div class="flex flex-col items-center w-full rounded-3xl p-2 md:p-5 bg-neutral-50 border border-neutral-100">
-                                                <form method="POST" action="includes/markAttendance.php">
-                                                    <input type="hidden" name="user_id" :value="student.id">
-                                                    <input type="hidden" name="term_id" value="<?= $term['id'] ?>" />
+                                                <!-- <form method="POST" action="includes/markAttendance.php"> -->
+                                                
                                                     <div class="flex w-full gap">
-                                                        <button type="submit" name="status" value="present" class="p-2 font-semibold text-neutral-900 bg-green-500 rounded-full">Present</button>
-                                                        <button type="submit" name="status" value="absent" class="p-2 font-semibold text-neutral-900 bg-red-500 rounded-full">Absent</button>
+                                                        <button 
+                                                            @click="() => markAttendance(student.id, 'present'), open = !open" 
+                                                            class="p-2 font-semibold text-neutral-900 bg-green-500 rounded-full"
+                                                        >
+                                                            Present
+                                                        </button>
+                                                        <button 
+                                                            @click="() => markAttendance(student.id, 'absent'), open = !open" 
+                                                            class="p-2 font-semibold text-neutral-900 bg-red-500 rounded-full"
+                                                        >
+                                                            Absent
+                                                        </button>
                                                     </div>
-                                                </form>
+                                                <!-- </form> -->
                                             </div>
                                         </div>
                                     </div>
@@ -101,8 +110,13 @@ $classResult = mysqli_query($conn, $classQuery);
             <p class="text-gray-400 italic text-lg text-center mt-5">Select a class to view students</p>
         </template>
         <div 
-            class="absolute transform translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100 shadow-sm max-w-md"
-            :class="toastActive ? 'top-12 scale-100' : 'top-0 scale-0'"
+            class="absolute transform translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl shadow-sm max-w-md"
+            :class="[
+                toastActive ? 'top-12 scale-100' : 'top-0 scale-0',
+                toastType === 'success'
+                ? 'bg-emerald-50 border border-emerald-100'
+                : 'bg-red-100 border border-red-200'
+            ]"
         >
             <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -112,9 +126,7 @@ $classResult = mysqli_query($conn, $classQuery);
 
             <div class="flex-1">
                 <h4 class="font-semibold text-emerald-900">Attendance Marked Successfully.</h4>
-                <p class="text-sm text-emerald-700">
-                Attendance for <b>STUDENT NAME</b> has been marked succesfully.
-                </p>
+                <p class="text-sm text-emerald-700" x-text="toastMessage"></p>
             </div>
 
             <button @click="deactivateToast" class="text-emerald-400 hover:text-emerald-600">

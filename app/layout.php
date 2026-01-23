@@ -114,7 +114,43 @@
                 </div>
             </div>
             
-            <div x-show="!isLoading" x-html="content" class="w-full px-1 pb-18 lg:p-4"></div>
+            <div x-show="!isLoading" class="w-full px-1 pb-18 lg:p-4">
+                <div
+                    x-data="{ show: false, type: '', message: '' }"
+                    x-init="
+                        <?php if (isset($_SESSION['toast'])): ?>
+                            type = '<?= $_SESSION['toast']['type'] ?>';
+                            message = '<?= $_SESSION['toast']['message'] ?>';
+                            show = true;
+                            setTimeout(() => show = false, 3000);
+                        <?php unset($_SESSION['toast']); endif; ?>
+                    "
+                    x-show="show"
+                    x-transition
+                    class="fixed top-0 w-full transition-all px-4 py-3 rounded-xl text-white z-10"
+                >
+                    <div 
+                        class="absolute top-12 scale-0 transform translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl shadow-sm max-w-md"
+                        :class="type === 'success' ? 'bg-emerald-50 border border-emerald-100 scale-100' : 'bg-red-200 border border-red-100 scale-100'"
+                    >
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-emerald-900" x-text="type === 'success' ? 'Success.' : 'Failed.'"></h4>
+                            <p class="text-sm text-emerald-700" x-text="message"></p>
+                        </div>
+
+                        <button @click="show = !show" class="text-emerald-400 hover:text-emerald-600">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+                <div x-html="content"></div>
+            </div>
         </div>
     </div>
 

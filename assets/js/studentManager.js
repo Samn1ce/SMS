@@ -5,8 +5,12 @@ document.addEventListener("alpine:init", () => {
     students: [],
     selectedStudentId: null,
     toastActive: false,
+    toastMessage: "",
+    toastType: "success",
 
-    activateToast() {
+    activateToast(message, type) {
+      this.toastMessage = message;
+      this.toastType = type;
       this.toastActive = true;
       setTimeout(() => {
         this.toastActive = false;
@@ -37,6 +41,34 @@ document.addEventListener("alpine:init", () => {
       } catch (error) {
         console.error("Error fetching students:", error);
         this.students = [];
+      }
+    },
+
+    async markAttendance(student_id, status) {
+      try {
+        const res = await fetch(
+          "/schoolManagementSystem/includes/markAttendance.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              user_id: student_id,
+              term_id: window.TERM_ID, // we'll define this in PHP
+              status: status,
+            }),
+          }
+        );
+        const data = await res.json();
+
+        if (data.error) {
+          this.activateToast(data.error, "error");
+        } else {
+          this.activateToast("Attendance marked successfully", "success");
+        }
+      } catch (error) {
+        this.activateToast("Network error. Try again.", "error");
       }
     },
   }));

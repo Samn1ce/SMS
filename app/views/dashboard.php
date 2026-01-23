@@ -37,6 +37,7 @@ $assignmentResult = mysqli_stmt_get_result($assignmentStmt);
 $assignmentCount = mysqli_num_rows($assignmentResult);
 ?>
 
+    
     <main class="max-w-7xl w-full p-2 mx-auto relative">
         <section class="mx-auto w-full lg:w-11/12 flex flex-col lg:flex-row lg:gap-4 gap-2">
             <div class="w-full lg:w-9/12 md:h-38 lg:h-48 bg-purple-500/90 rounded-md p-3 lg:pt-3 lg:pl-5 flex justify-center items-center">
