@@ -89,6 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode([
                 'success' => true,
                 'message' => 'School and admin created successfully',
+                'data' => [
+                    'school_name' => $school_data['name']
+                ]
             ]);
             
         } catch (Exception $e) {

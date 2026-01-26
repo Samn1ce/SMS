@@ -244,15 +244,14 @@
                 <p class="text-gray-600 mb-6">Your school and admin account have been created successfully.</p>
                 <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
                     <h4 class="font-semibold text-gray-800 mb-2">Login Details:</h4>
-                    <p class="text-sm text-gray-600">School Code: <strong x-text="setupResult.school_name"></strong></p>
+                    <p class="text-sm text-gray-600">School Name: <strong x-text="setupResult.school_name"></strong></p>
                     <p class="text-sm text-gray-600">Email: <strong x-text="admin.email"></strong></p>
                 </div>
-                    <a href="login.php" @click="submitting" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                        Go to Login →
-                    </a>
-                </div>
-
-             </div>
+                <a href="login.php" @click="submitting" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                    Go to Login →
+                </a>
+            </div>
+        </div>
 
         <!-- Notification Toast -->
         <div x-show="notification.show" 
