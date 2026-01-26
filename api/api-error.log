@@ -1,0 +1,26 @@
+[26-Jan-2026 12:49:12 Europe/Berlin] PHP Warning:  include(dbh.inc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:49:12 Europe/Berlin] PHP Warning:  include(): Failed opening 'dbh.inc.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:54:44 Europe/Berlin] PHP Warning:  require_once(includes/dbh.inc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:54:44 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'includes/dbh.inc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:55:22 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\schoolManagementSystem\apiincludes/dbh.inc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:55:22 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\schoolManagementSystem\apiincludes/dbh.inc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:55:55 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\schoolManagementSystem\api/includes/dbh.inc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:55:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\schoolManagementSystem\api/includes/dbh.inc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:56:43 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "APP_ROOT" in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:57:20 Europe/Berlin] PHP Warning:  require_once(./includes/dbh.inc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12
+[26-Jan-2026 12:57:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required './includes/dbh.inc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:12
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 12

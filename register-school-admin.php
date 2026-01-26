@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Setup</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="assets/js/school-admin.js"></script>
+    <script src="assets/js/school-admin.js?v=<?= rand(0000,9999) ?>"></script>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-linear-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div x-data="setupApp" class="container mx-auto px-4 py-8 max-w-4xl">
         
         <!-- Header -->
@@ -56,8 +56,19 @@
                             </label>
                             <input 
                                 type="text" 
-                                x-model="school.school_name"
+                                x-model="school.name"
                                 placeholder="e.g., Green Valley Academy"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                School Slug <span class="text-red-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                x-model="school.slug"
+                                placeholder="e.g., gva or greenvalley"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
 
@@ -126,13 +137,39 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Admin Name <span class="text-red-500">*</span>
+                                Admin Surname <span class="text-red-500">*</span>
                             </label>
                             <input 
                                 type="text" 
-                                x-model="admin.name"
-                                placeholder="Full name"
+                                x-model="admin.name.surname"
+                                placeholder="Surname"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <div class="flex justify-center items-center gap-4">
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Admin Firstname <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    x-model="admin.name.firstname"
+                                    placeholder="Firstname"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+
+                            <div class="w-full">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Admin Othername
+                                </label>
+                                <input 
+                                    type="text" 
+                                    x-model="admin.name.othername"
+                                    placeholder="Othername"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
                         </div>
 
                         <div>

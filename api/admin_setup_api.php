@@ -1,12 +1,15 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/api-error.log');
+error_reporting(E_ALL);
+
 header('Content-Type: application/json');
-// header('Access-Control-Allow-Origin: *');
-// header('Access-Control-Allow-Methods: GET, POST, PUT');
-// header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT');
+header('Access-Control-Allow-Headers: Content-Type');
 
-require_once 'dbh.inc.php';
-session_start();
-
+require_once '../includes/dbh.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
@@ -16,9 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // All-in-one: Create school and admin in one go
         $school_data = $data['school'] ?? [];
         $admin_data = $data['admin'] ?? [];
+        $admin_name = $admin_data['name'] ?? [];
         
         // Validate school data
-        if (empty($school_data['school_name']) || empty($school_data['school_code']) || empty($school_data['email'])) {
+        if (empty($school_data['name']) || empty($school_data['slug']) || empty($school_data['email'])) {
             echo json_encode([
                 'success' => false,
                 'message' => 'School name, code, and email are required'
@@ -27,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         // Validate admin data
-        if (empty($admin_data['name']) || empty($admin_data['email']) || empty($admin_data['password'])) {
+        if (empty($admin_name['surname']) || empty($admin_name['firstname']) || empty($admin_data['email']) || empty($admin_data['password'])) {
             echo json_encode([
                 'success' => false,
                 'message' => 'Admin name, email, and password are required'
@@ -40,31 +44,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         try {           
             // Create school
-            $insertSchoolQuery = "INSERT INTO schools (school_name, school_email, school_phone_number, school_address) 
-                                 VALUES (?, ?, ?, ?)";
+            $insertSchoolQuery = "INSERT INTO schools (school_name, school_slug, school_email, school_phone, school_address) VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $insertSchoolQuery);
             mysqli_stmt_bind_param($stmt, "sssss", 
-                $school_data['school_name'], 
-                $school_data['school_email'], 
-                $school_data['school_phone_number'] ?? '', 
-                $school_data['school_address'] ?? '', 
+                $school_data['name'],
+                $school_data['slug'],
+                $school_data['email'], 
+                $school_data['phone'] ?? '',
+                $school_data['address']
             );
             
             if (!mysqli_stmt_execute($stmt)) {
                 throw new Exception('Failed to create school');
             }
-            
+
             $school_id = mysqli_insert_id($conn);
             
             // Create admin user
             $hashed_password = password_hash($admin_data['password'], PASSWORD_DEFAULT);
             
-            $insertAdminQuery = "INSERT INTO users (school_id, name, email, password, role) 
-                                VALUES (?, ?, ?, ?, 'admin')";
+            $insertAdminQuery = "INSERT INTO users (school_id, surname, firstname, othername, email, password, role) 
+                                VALUES (?, ?, ?, ?, ?, ?, 'admin')";
             $stmt = mysqli_prepare($conn, $insertAdminQuery);
-            mysqli_stmt_bind_param($stmt, "isss", 
+            mysqli_stmt_bind_param($stmt, "isssss", 
                 $school_id, 
-                $admin_data['name'], 
+                $admin_name['surname'],
+                $admin_name['firstname'],
+                $admin_name['othername'] ?? '',
                 $admin_data['email'], 
                 $hashed_password
             );
@@ -72,19 +78,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!mysqli_stmt_execute($stmt)) {
                 throw new Exception('Failed to create admin user');
             }
-            
+
             $admin_id = mysqli_insert_id($conn);
-            
+
+            $updateSchool = "UPDATE schools SET admin_id = ? WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $updateSchool);
+            mysqli_stmt_bind_param($stmt, "ii", $admin_id, $school_id);
+            mysqli_stmt_execute($stmt);
+
             // Commit transaction
             mysqli_commit($conn);
             
             echo json_encode([
                 'success' => true,
                 'message' => 'School and admin created successfully',
-                'data' => [
-                    'school_id' => $school_id,
-                    'admin_id' => $admin_id
-                ]
             ]);
             
         } catch (Exception $e) {

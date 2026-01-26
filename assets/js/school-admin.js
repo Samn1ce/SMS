@@ -5,13 +5,18 @@ document.addEventListener("alpine:init", () => {
     submitting: false,
     showPassword: false,
     school: {
-      school_name: "",
+      name: "",
+      slug: "",
       email: "",
       phone: "",
       address: "",
     },
     admin: {
-      name: "",
+      name: {
+        surname: "",
+        firstname: "",
+        othername: "",
+      },
       email: "",
       password: "",
       confirm_password: "",
@@ -34,8 +39,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     nextStep() {
-      // Validate school information
-      if (!this.school.school_name || !this.school.email) {
+      if (!this.school.name || !this.school.slug || !this.school.email) {
         this.showNotification("Please fill all required fields", "error");
         return;
       }
@@ -46,14 +50,14 @@ document.addEventListener("alpine:init", () => {
         this.showNotification("Please enter a valid email address", "error");
         return;
       }
-
       this.step = 2;
     },
 
     async submitSetup() {
       // Validate admin information
       if (
-        !this.admin.name ||
+        !this.admin.name.surname ||
+        !this.admin.name.firstname ||
         !this.admin.email ||
         !this.admin.password ||
         !this.admin.confirm_password
@@ -87,23 +91,32 @@ document.addEventListener("alpine:init", () => {
       this.submitting = true;
 
       try {
-        const response = await fetch("admin_setup_api.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            action: "create_school_and_admin",
-            school: this.school,
-            admin: {
-              name: this.admin.name,
-              email: this.admin.email,
-              password: this.admin.password,
+        const response = await fetch(
+          "/schoolmanagementsystem/api/admin_setup_api.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
-          }),
-        });
+            body: JSON.stringify({
+              action: "create_school_and_admin",
+              school: this.school,
+              admin: {
+                name: {
+                  surname: this.admin.surname,
+                  firstname: this.admin.firstname,
+                  othername: this.admin.othername,
+                },
+                email: this.admin.email,
+                password: this.admin.password,
+              },
+            }),
+          }
+        );
 
         const data = await response.json();
+        // const text = await response.text();
+        console.log(data);
 
         if (data.success) {
           this.setupResult = data.data;

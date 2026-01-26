@@ -47,7 +47,7 @@ document.addEventListener("alpine:init", () => {
     async markAttendance(student_id, status) {
       try {
         const res = await fetch(
-          "/schoolManagementSystem/includes/markAttendance.php",
+          "/schoolManagementSystem/api/markAttendance.php",
           {
             method: "POST",
             headers: {
