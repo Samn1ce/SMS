@@ -58,14 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Create admin user
             $hashed_password = password_hash($admin_data['password'], PASSWORD_DEFAULT);
             
-            $insertAdminQuery = "INSERT INTO users (school_id, surname, firstname, othername, email, password, role) 
+            $othername = $admin_name['othername'] ?? '';
+
+            $insertAdminQuery = "INSERT INTO users (school_id, surname, firstname, othername, email, pwd, roles) 
                                 VALUES (?, ?, ?, ?, ?, ?, 'admin')";
             $stmt = mysqli_prepare($conn, $insertAdminQuery);
             mysqli_stmt_bind_param($stmt, "isssss", 
                 $school_id, 
                 $admin_name['surname'],
                 $admin_name['firstname'],
-                $admin_name['othername'] ?? '',
+                $othername,
                 $admin_data['email'], 
                 $hashed_password
             );

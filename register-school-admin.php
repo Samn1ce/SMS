@@ -117,7 +117,7 @@
             </div>
 
             <!-- Step 2: Admin Account -->
-            <div x-show="step === 2" x-transition class="space-y-6">
+            <div x-show="step === 2 && !success" x-transition class="space-y-6">
                 <div>
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-bold text-gray-800">Admin Account</h2>
@@ -244,15 +244,15 @@
                 <p class="text-gray-600 mb-6">Your school and admin account have been created successfully.</p>
                 <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
                     <h4 class="font-semibold text-gray-800 mb-2">Login Details:</h4>
-                    <p class="text-sm text-gray-600">School Code: <strong x-text="setupResult.school_code"></strong></p>
+                    <p class="text-sm text-gray-600">School Code: <strong x-text="setupResult.school_name"></strong></p>
                     <p class="text-sm text-gray-600">Email: <strong x-text="admin.email"></strong></p>
                 </div>
-                <a href="login.php" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                    Go to Login →
-                </a>
-            </div>
+                    <a href="login.php" @click="submitting" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                        Go to Login →
+                    </a>
+                </div>
 
-        </div>
+             </div>
 
         <!-- Notification Toast -->
         <div x-show="notification.show" 

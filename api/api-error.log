@@ -36,3 +36,23 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 48
+[26-Jan-2026 18:17:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli_stmt_bind_param(): Argument #6 cannot be passed by reference in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:68
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 68
+[26-Jan-2026 18:17:45 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli_stmt_bind_param(): Argument #6 cannot be passed by reference in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:68
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 68
+[26-Jan-2026 18:20:00 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli_stmt_bind_param(): Argument #6 cannot be passed by reference in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:68
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 68
+[26-Jan-2026 18:23:17 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli_stmt_bind_param(): Argument #6 cannot be passed by reference in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:68
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 68
+[26-Jan-2026 18:26:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: mysqli_stmt_bind_param(): Argument #6 cannot be passed by reference in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php:68
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\api\admin_setup_api.php on line 68

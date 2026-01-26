@@ -120,6 +120,7 @@ document.addEventListener("alpine:init", () => {
 
         if (data.success) {
           this.setupResult = data.data;
+          console.log(this.setupResult);
           this.success = true;
           this.showNotification("Setup completed successfully!", "success");
         } else {
