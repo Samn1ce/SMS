@@ -16,12 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $data['action'] ?? '';
 
     if ($action === 'create_school_and_admin') {
-        // All-in-one: Create school and admin in one go
         $school_data = $data['school'] ?? [];
         $admin_data = $data['admin'] ?? [];
         $admin_name = $admin_data['name'] ?? [];
         
-        // Validate school data
         if (empty($school_data['name']) || empty($school_data['slug']) || empty($school_data['email'])) {
             echo json_encode([
                 'success' => false,
@@ -30,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         
-        // Validate admin data
         if (empty($admin_name['surname']) || empty($admin_name['firstname']) || empty($admin_data['email']) || empty($admin_data['password'])) {
             echo json_encode([
                 'success' => false,
@@ -39,18 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         
-        // Start transaction
         mysqli_begin_transaction($conn);
         
-        try {           
-            // Create school
+        try {
             $insertSchoolQuery = "INSERT INTO schools (school_name, school_slug, school_email, school_phone, school_address) VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $insertSchoolQuery);
             mysqli_stmt_bind_param($stmt, "sssss", 
                 $school_data['name'],
                 $school_data['slug'],
                 $school_data['email'], 
-                $school_data['phone'] ?? '',
+                $school_data['phone'],
                 $school_data['address']
             );
             

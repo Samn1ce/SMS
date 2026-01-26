@@ -90,7 +90,7 @@
                             <input 
                                 type="tel" 
                                 x-model="school.phone"
-                                placeholder="+234 XXX XXX XXXX"
+                                placeholder="090 XXX XXX XXXX"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
 

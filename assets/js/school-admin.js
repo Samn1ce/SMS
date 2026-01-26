@@ -103,9 +103,9 @@ document.addEventListener("alpine:init", () => {
               school: this.school,
               admin: {
                 name: {
-                  surname: this.admin.surname,
-                  firstname: this.admin.firstname,
-                  othername: this.admin.othername,
+                  surname: this.admin.name.surname,
+                  firstname: this.admin.name.firstname,
+                  othername: this.admin.name.othername,
                 },
                 email: this.admin.email,
                 password: this.admin.password,

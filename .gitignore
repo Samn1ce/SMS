@@ -2,4 +2,5 @@ node_modules/
 package-lock.json
 package.json
 src/
-db
+db_structure.sql
+api/api-error.log
