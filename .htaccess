@@ -1,10 +1,26 @@
-# .htaccess (place in root folder)
+# # .htaccess (place in root folder)
+# RewriteEngine On
+
+# # If it's a real file or directory, leave it alone
+# RewriteCond %{REQUEST_FILENAME} -f [OR]
+# RewriteCond %{REQUEST_FILENAME} -d
+# RewriteRule ^ - [L]
+
+# # Rewrite all other requests to index.php
+# RewriteRule ^(.*)$ index.php?path=$1 [L,QSA]
+
 RewriteEngine On
 
-# If it's a real file or directory, leave it alone
+# 1️⃣ Ignore real files and folders
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Rewrite all other requests to index.php
-RewriteRule ^(.*)$ index.php?path=$1 [L,QSA]
+# 2️⃣ Route school-based URLs
+RewriteRule ^s/([^/]+)/?(.*)$ s/school-router.php?school=$1&path=$2 [L,QSA]
+
+# 3️⃣  Block root access explicitly
+RewriteRule ^$ index.php [L]
+
+# Everything else = 404
+RewriteRule . - [R=404,L]

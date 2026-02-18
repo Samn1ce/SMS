@@ -1,8 +1,10 @@
 <?php
-    include 'includes/dbh.inc.php';
-    include 'components/icons.php';
+    include '../includes/dbh.inc.php';
+    include '../components/icons.php';
     $classQuery = "SELECT * FROM classes";
     $classResult = mysqli_query($conn, $classQuery);
+
+    $slug = $_SESSION['school_slug'];
 ?>
 
 <!DOCTYPE html>
@@ -12,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Register</title>
+    <title>Schooly | Register</title>
 </head>
 <body>
     <form 
-        action="includes/registerFormhandler.inc.php" 
+        action="" 
         method="post"
         x-data="{ loading: false }" 
         @submit="loading = true"
@@ -191,7 +193,7 @@
                                     Register
                                 </span>
                             </button>
-                            <a href="login.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I already have an account</a>
+                            <a href="/schoolManagementSystem/s/<?= htmlspecialchars($slug) ?>/login" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I already have an account</a>
                         </div>
                     </div>
                 </div>

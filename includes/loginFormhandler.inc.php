@@ -5,6 +5,8 @@ require 'dbh.inc.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $pwd = $_POST['pwd'];
+    $school_id = $_SESSION['school_id'];
+    $slug = $_SESSION['school_slug'];
 
     $sql = "SELECT users.*, classes.class_name, class_arms.class_arm
             FROM users
@@ -18,13 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_stmt_get_result($stmt);
 
     if (!$row = mysqli_fetch_assoc($result)) {
-        header("Location: ../login.php?error=invalidcredentials");
+        header("Location: /schoolmanagementsystem/s/$slug/login?error=invalidcredentials");
         exit();
     }
 
     if (!password_verify($pwd, $row['pwd'])) {
-        header("Location: ../login.php?error=invalidcredentials");
+        header("Location: /schoolmanagementsystem/s/$slug/login?error=invalidcredentials");
         exit();
+    }
+
+    if ($school_id !== $row['school_id']) {
+        header("Location: /schoolmanagementsystem/s/$slug/login?error=invalidcredentials");
+        exit;
     }
 
     $_SESSION['id'] = $row['id'];
@@ -41,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login_count = (int)$row['login_count'];
 
     if ($login_count === 0 && $row['roles'] === 'student') {
-        header("Location: ../selectSubjects.php");
+        header("Location: /schoolmanagementsystem/s/$slug/selectSubjects");
         exit();
     }
 
-    header("Location: ../dashboard.php");
+    header("Location: /schoolmanagementsystem/s/$slug/dashboard");
     exit();
 }

@@ -1,9 +1,10 @@
 <?php
-    define('APP_ROOT', __DIR__);
-    include 'includes/dbh.inc.php';
-    include 'components/icons.php';
-    include 'components/logoutDialogue.php';
-    include 'includes/nameFormat.php';
+    // define('APP_ROOT', __DIR__);
+    // define('APP_ROOT', dirname(__DIR__));
+    include APP_ROOT . '/includes/dbh.inc.php';
+    // include APP_ROOT . '/components/icons.php';
+    include APP_ROOT . '/components/logoutDialogue.php';
+    include APP_ROOT . '/includes/nameFormat.php';
 
     $BASE_PATH = '/schoolManagementSystem';
     $id = $_SESSION['id'];
@@ -58,10 +59,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="assets/js/renderLayout.js"></script>
+    <!-- <script src="assets/js/renderLayout.js"></script>
     <script src="assets/js/results.js"></script>
     <script src="assets/js/studentManager.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/> -->
+    <script src="<?= $BASE_PATH ?>/assets/js/renderLayout.js"></script>
+    <script src="<?= $BASE_PATH ?>/assets/js/results.js"></script>
+    <script src="<?= $BASE_PATH ?>/assets/js/studentManager.js"></script>
+    <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/style.css"/>
     <title>SchoolY - <?= $surname ?>&nbsp;<?= $firstname ?></title>
 </head>
 <body>
@@ -149,7 +154,10 @@
                         </button>
                     </div>
                 </div>
-                <div x-html="content"></div>
+                <!-- <div x-html="content"></div> -->
+                <div>
+                    <?= $content ?>
+                </div>
             </div>
         </div>
     </div>

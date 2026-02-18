@@ -1,8 +1,8 @@
 <?php 
-session_start();
-include 'includes/dbh.inc.php';
-include 'components/header.php';
-include 'components/logoutDialogue.php';
+// session_start();
+// include '../includes/dbh.inc.php';
+include '../components/header.php';
+include '../components/logoutDialogue.php';
 
 $id = $_SESSION["id"];
 $surname = $_SESSION['surname'];
@@ -65,7 +65,7 @@ while ($coreRow = mysqli_fetch_assoc($coreResult)) {
                     <h2 class="text-neutral-900 text-3xl lg:text-4xl">Welcome <span class="font-semibold"><?= htmlspecialchars($surname) ?>&nbsp;<?= htmlspecialchars($firstname) ?></span>!</h2>
                 </div>
                 <div>
-                    <form action="includes/saveStudentData.php" method="POST" class="space-y-3">
+                    <form action="" method="POST" class="space-y-3">
                         <p class="text-zinc-400 font-semibold">Select your Class Arm...</p>
                         <div class="flex gap-2">
                             <input type="hidden" name="user_id" value="<?= $id ?>">

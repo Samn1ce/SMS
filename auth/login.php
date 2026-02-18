@@ -1,9 +1,11 @@
 <?php 
-    include 'components/icons.php';
-    session_start();
+    include '../components/icons.php';
+
+    $slug = $_SESSION['school_slug'];
+    $school_name = $_SESSION['school_name'];
 
     if (isset($_SESSION['id'])) {
-        header("Location: ./dashboard.php");
+        header("Location: /schoolmanagementsystem/s/$slug/");
         exit();
     }
 ?>
@@ -14,11 +16,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Document</title>
+    <title>Schooly | Login</title>
 </head>
 <body>
     <form 
-        action="includes/loginFormhandler.inc.php" 
+        action="" 
         method="post"
         x-data="{ loading: false }" 
         @submit="loading = true"
@@ -40,7 +42,8 @@
                             <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
                                 <?php renderIcon('email', 'w-6 h-6') ?>
                                 <input 
-                                    type="text" name="email" 
+                                    type="text" 
+                                    name="email" 
                                     placeholder="Email"
                                     required
                                     class="w-full font-semibold outline-none <?= 
@@ -100,7 +103,7 @@
                                     Login
                                 </span>
                             </button>
-                        <a href="register.php" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
+                        <a href="/schoolManagementSystem/s/<?= htmlspecialchars($slug) ?>/register" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
                     </div>
                 </div>
             </div>

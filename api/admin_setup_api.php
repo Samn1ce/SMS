@@ -90,7 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'success' => true,
                 'message' => 'School and admin created successfully',
                 'data' => [
-                    'school_name' => $school_data['name']
+                    'school_name' => $school_data['name'],
+                    'school_slug' => $school_data['slug']
                 ]
             ]);
             

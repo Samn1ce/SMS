@@ -1,4 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/api-error.log');
+error_reporting(E_ALL);
+
 session_start();
 include 'dbh.inc.php';
 
@@ -14,10 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $class = !empty($_POST['class_id']) ? $_POST['class_id'] : null;
     $gender = $_POST["gender"];
     $dob = $_POST["dob"];
+    $slug = $_SESSION["school_slug"];
+    $school_id = $_SESSION['school_id'];
 
     // Function to easily redirect with old input values
     function redirectWithData($error, $email, $surname, $firstname, $othername) {
-        $url = "../register.php?error=$error"
+        $slug = $_SESSION["school_slug"];
+
+        $url = "/schoolManagementSystem/s/$slug/register"
             . "&email=" . urlencode($email)
             . "&surname=" . urlencode($surname)
             . "&firstname=" . urlencode($firstname)
@@ -43,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (email, pwd, surname, firstname, othername, class_id, roles, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (school_id, email, pwd, surname, firstname, othername, class_id, roles, gender, dob) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssssisss", $email, $hashedPwd, $surname, $firstname, $othername, $class, $role, $gender, $dob);
+    mysqli_stmt_bind_param($stmt, "isssssisss", $school_id, $email, $hashedPwd, $surname, $firstname, $othername, $class, $role, $gender, $dob);
 
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: ../login.php?register=success");
+        header("Location: /schoolManagementSystem/s/$slug/login?register=success");
         exit();
     } else {
         redirectWithData("sqlerror", $email, $email, $surname, $firstname, $othername, $role, $class);

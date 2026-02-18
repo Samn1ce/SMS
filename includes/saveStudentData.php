@@ -1,17 +1,19 @@
 <?php
-include 'dbh.inc.php';
-session_start();
+include '../includes/dbh.inc.php';
+// session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $arm_id = $_POST['arm_id'];
     $subjects = $_POST["subjects"] ?? [];
-    $user_id = $_POST['user_id'];
-    if ($user_id != $_SESSION['id']) {
+    $id = $_POST['user_id'];
+    $slug = $_SESSION['school_slug'];
+
+    if ($id != $_SESSION['id']) {
         exit("Unauthorized");
     }
 
-    if (empty($arm_id) || empty($user_id)) {
-        header("Location: ../selectSubjects.php?error=empty");
+    if (empty($arm_id) || empty($id)) {
+        header("Location: /schoolmagementsystem/s/$slug/selectSubjects.php?error=empty");
         exit();
     }
 
@@ -33,13 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $deleteSql = "DELETE FROM student_subjects WHERE user_id = ?";
         $deleteStmt = mysqli_prepare($conn, $deleteSql);
-        mysqli_stmt_bind_param($deleteStmt, "i", $user_id);
+        mysqli_stmt_bind_param($deleteStmt, "i", $id);
         mysqli_stmt_execute($deleteStmt);
         mysqli_stmt_close($deleteStmt);
 
         $sql = "UPDATE users SET arm_id = ? WHERE id = ?";
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ii", $arm_id, $user_id);
+        mysqli_stmt_bind_param($stmt, "ii", $arm_id, $id);
         mysqli_stmt_execute($stmt);
 
 
@@ -57,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // Insert both subject_id and subject_name into student_subjects
                 $sql = "INSERT INTO student_subjects (user_id, subject_name, subject_id) VALUES (?, ?, ?)";
                 $stmt = mysqli_prepare($conn, $sql);
-                mysqli_stmt_bind_param($stmt, "isi", $user_id, $subject_name, $subject_id);
+                mysqli_stmt_bind_param($stmt, "isi", $id, $subject_name, $subject_id);
                 mysqli_stmt_execute($stmt);
             }
         }
@@ -65,19 +67,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Increase login_count again so modal won’t show next time
         $update = "UPDATE users SET login_count = login_count + 1 WHERE id = ?";
         $updateStmt = mysqli_prepare($conn, $update);
-        mysqli_stmt_bind_param($updateStmt, "i", $user_id);
+        mysqli_stmt_bind_param($updateStmt, "i", $id);
         mysqli_stmt_execute($updateStmt);
         mysqli_stmt_close($updateStmt);
 
         mysqli_commit($conn);
 
-        header("Location: ../dashboard.php");
+        header("Location: /schoolmagementsystem/s/$slug/dashboard");
         exit();
     } catch (Exception $e) {
        // Rollback on error
         mysqli_rollback($conn);
         error_log($e->getMessage());
-        header("Location: ../selectSubjects.php?error=1");
+        header("Location: /schoolmagementsystem/s/$slug/selectSubjects?error=1");
         exit();
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2026 at 12:50 PM
+-- Generation Time: Jan 26, 2026 at 08:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,8 +34,8 @@ CREATE TABLE `assignments` (
   `arm_id` int(11) DEFAULT NULL,
   `subject_id` int(11) NOT NULL,
   `description` text NOT NULL,
-  `due_date` datetime NOT NULL CURRENTIMESTAMP,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `due_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -110,6 +110,23 @@ CREATE TABLE `results` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `schools`
+--
+
+CREATE TABLE `schools` (
+  `id` int(11) NOT NULL,
+  `school_name` varchar(255) NOT NULL,
+  `school_slug` varchar(20) NOT NULL,
+  `school_email` varchar(255) NOT NULL,
+  `school_phone` varchar(15) NOT NULL,
+  `school_address` text NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -165,6 +182,7 @@ CREATE TABLE `terms` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `school_id` int(11) NOT NULL DEFAULT 1,
   `email` varchar(100) NOT NULL,
   `pwd` varchar(100) NOT NULL,
   `surname` varchar(50) NOT NULL,
@@ -174,7 +192,7 @@ CREATE TABLE `users` (
   `gender` varchar(8) NOT NULL,
   `dob` date NOT NULL,
   `login_count` int(11) NOT NULL DEFAULT 0,
-  `roles` varchar(8) NOT NULL,
+  `roles` enum('student','teacher','admin','super_admin') NOT NULL,
   `class_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -232,6 +250,12 @@ ALTER TABLE `results`
   ADD KEY `session_id` (`session_id`);
 
 --
+-- Indexes for table `schools`
+--
+ALTER TABLE `schools`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -263,7 +287,6 @@ ALTER TABLE `terms`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `class_id` (`class_id`),
   ADD KEY `users_ibfk_2` (`arm_id`),
   ADD KEY `user_ibfk_1` (`class_id`);
 
@@ -308,6 +331,12 @@ ALTER TABLE `results`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `schools`
+--
+ALTER TABLE `schools`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -347,8 +376,7 @@ ALTER TABLE `users`
 ALTER TABLE `assignments`
   ADD CONSTRAINT `assignments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `assignments_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `assignments_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
-  ADD CONSTRAINT `assignments_ibfk_4` FOREIGN KEY (`arm_id`) REFERENCES `class_arms` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `assignments_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`);
 
 --
 -- Constraints for table `attendance`
