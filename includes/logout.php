@@ -1,7 +1,7 @@
 <?php
-session_start();        // Start the session
-session_unset();        // Remove all session variables
-session_destroy();      // Destroy the session (log the user out)
+$slug = $school_slug;
+session_unset();
+session_destroy();
 
-header("Location: /schoolManagementSystem/s/$slug/login"); // Send user back to login
+header("Location: /schoolManagementSystem/s/$slug/login");
 exit();
