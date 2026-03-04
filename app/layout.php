@@ -1,17 +1,19 @@
 <?php
     // define('APP_ROOT', __DIR__);
-    // define('APP_ROOT', dirname(__DIR__));
+    define('APP_ROOT', dirname(__DIR__));
     include APP_ROOT . '/includes/dbh.inc.php';
-    // include APP_ROOT . '/components/icons.php';
+    include APP_ROOT . '/components/icons.php';
     include APP_ROOT . '/components/logoutDialogue.php';
     include APP_ROOT . '/includes/nameFormat.php';
 
-    $BASE_PATH = '/schoolManagementSystem';
+    $school_name = $_SESSION['school_name'];
+    $slug = $_SESSION['school_slug'];
+    $BASE_PATH = "/schoolManagementSystem";
+    $URL_BASE_PATH = "/schoolManagementSystem/s/" . $slug;
     $id = $_SESSION['id'];
     $firstname = $_SESSION['firstname'];
     $surname = $_SESSION['surname'];
     $role = $_SESSION['role'];
-    // $logoutIcon = renderIcon('logout', 'w-6 h-6 text-neutral-800');
 
     $navItems = [
         [
@@ -47,7 +49,7 @@
     $currentView = htmlspecialchars($_GET['view'] ?? 'dashboard', ENT_QUOTES);
 
     $layoutData = [
-        'basePath' => $BASE_PATH,
+        'basePath' => $URL_BASE_PATH,
         'currentView' => $currentView,
     ];
 ?>
@@ -106,7 +108,7 @@
         </div>
         <div class="bg-neutral-100 w-full lg:w-4/5 rounded-r-md h-full overflow-auto">
             <div class="text-neutral-800 flex justify-between items-center px-12 py-2 border border-b border-zinc-200">
-                <h1 class="font-bold">School Name</h1>
+                <h1 class="font-bold"><?= htmlspecialchars($school_name) ?></h1>
                 <div>
                     <p class="font-semibold hidden lg:block"><?= formatName($surname) ?> <?= formatName($firstname) ?></p>
                 </div>
@@ -154,10 +156,10 @@
                         </button>
                     </div>
                 </div>
-                <!-- <div x-html="content"></div> -->
-                <div>
+                <div x-html="content"></div>
+                <!-- <div>
                     <?= $content ?>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
