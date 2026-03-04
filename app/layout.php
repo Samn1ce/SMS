@@ -61,10 +61,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- <script src="assets/js/renderLayout.js"></script>
-    <script src="assets/js/results.js"></script>
-    <script src="assets/js/studentManager.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css"/> -->
     <script src="<?= $BASE_PATH ?>/assets/js/renderLayout.js"></script>
     <script src="<?= $BASE_PATH ?>/assets/js/results.js"></script>
     <script src="<?= $BASE_PATH ?>/assets/js/studentManager.js"></script>

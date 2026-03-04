@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if (empty($arm_id) || empty($id)) {
-        header("Location: /schoolmagementsystem/s/$slug/selectSubjects.php?error=empty");
+        header("Location: /schoolManagementSystem/s/$slug/selectSubjects.php?error=empty");
         exit();
     }
 
@@ -73,13 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         mysqli_commit($conn);
 
-        header("Location: /schoolmagementsystem/s/$slug/dashboard");
+        header("Location: /schoolManagementSystem/s/$slug/dashboard");
         exit();
     } catch (Exception $e) {
        // Rollback on error
         mysqli_rollback($conn);
         error_log($e->getMessage());
-        header("Location: /schoolmagementsystem/s/$slug/selectSubjects?error=1");
+        header("Location: /schoolManagementSystem/s/$slug/selectSubjects?error=1");
         exit();
     }
 }
