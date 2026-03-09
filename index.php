@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SchooLY – Smart School Management System</title>
+  <script src="assets/js/features.js"></script>
+  <script src="assets/js/carousel.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -13,7 +15,6 @@
 </head>
 <body x-data>
 
-<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
 <nav class="fixed top-0 left-0 right-0 z-50 border-b border-slate-100">
   <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
     <div class="flex items-center gap-2">
@@ -30,13 +31,11 @@
       <a href="#" class="hover:text-blue-600 transition-colors">Contact</a>
     </div>
     <div class="flex items-center gap-3">
-      <a href="#" class="hidden md:block text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors">Sign In</a>
-      <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm">Get Started</a>
+      <a href="register-school-admin.php" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm">Get Started</a>
     </div>
   </div>
 </nav>
 
-<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
 <section class="hero-bg pt-28 pb-24 px-6 border-b border-blue-100">
   <div class="hero-dots"></div>
   <div class="max-w-6xl mx-auto relative z-10">
@@ -72,7 +71,6 @@
       </div>
     </div>
 
-    <!-- Hero stat cards -->
     <div class="flex flex-col md:flex-row items-stretch justify-center gap-5 max-w-4xl mx-auto stagger-group">
       <div x-intersect.once="$el.classList.add('visible')" class="float-card flex-1 min-w-0 reveal">
         <div class="flex items-center gap-3 mb-3">
@@ -121,33 +119,27 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════ TRUSTED BY ═══════════════════════════ -->
-<section class="bg-white py-12 border-b border-slate-100">
+<section x-data="trustedBy" class="bg-white py-12 border-b border-slate-100">
   <div class="max-w-6xl mx-auto px-6 text-center">
     <p x-intersect.once="$el.classList.add('visible')" class="text-slate-400 text-sm font-medium mb-6 uppercase tracking-widest reveal">Trusted By More Than <span class="text-blue-600 font-bold">+5,000</span> Schools Worldwide</p>
     <div class="ticker-wrap">
       <div class="ticker-inner">
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🏫 Greenfield Academy</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">📚 Horizon University</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🎓 Sunrise College</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">📐 Apex High School</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🌟 Pinnacle Academy</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🏆 Brightpath Institute</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🏫 Greenfield Academy</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">📚 Horizon University</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🎓 Sunrise College</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">📐 Apex High School</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🌟 Pinnacle Academy</span>
-        <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap">🏆 Brightpath Institute</span>
+        <template x-for="school in ticker" :key="school.name + Math.random()">
+          <span class="text-slate-400 font-bold text-base tracking-tight whitespace-nowrap"
+                x-text="school.emoji + ' ' + school.name">
+          </span>
+        </template>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════ FEATURES ═══════════════════════════ -->
-<section id="features" class="bg-neutral-50 py-24 px-6" x-data="{ tab: 'administrators' }">
+<section 
+  id="features" 
+  class="bg-neutral-50 py-24 px-6" 
+  x-data="featuresSection"
+>
   <div class="max-w-6xl mx-auto">
-
     <div x-intersect.once="$el.classList.add('visible')" class="text-center mb-14 reveal">
       <div class="badge mb-4">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
@@ -159,12 +151,7 @@
 
     <!-- Tab buttons — plain static buttons, Alpine binds active state -->
     <div x-intersect.once="$el.classList.add('visible')" class="flex justify-center gap-3 mb-10 flex-wrap reveal">
-      <template x-for="btn in [
-        { key: 'administrators', label: 'Administrators' },
-        { key: 'teachers',       label: 'Teachers'       },
-        { key: 'students',       label: 'Students'       },
-        { key: 'parents',        label: 'Parents'        }
-      ]" :key="btn.key">
+      <template x-for="btn in tabs" :key="btn.key">
         <button
           @click="tab = btn.key"
           :class="tab === btn.key
@@ -176,9 +163,8 @@
       </template>
     </div>
 
-    <!-- ── PANEL: Administrators ────────────────────────────────── -->
     <div
-      x-show="tab === 'administrators'"
+      x-show="panelVisible"
       x-transition:enter="transition ease-out duration-300"
       x-transition:enter-start="opacity-0"
       x-transition:enter-end="opacity-100"
@@ -187,197 +173,42 @@
       x-transition:leave-end="opacity-0"
       class="grid grid-cols-1 md:grid-cols-3 gap-5"
     >
-      <!-- Card 1 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Admin Dashboard</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Full school overview: enrolment, finances, staff records, and real-time analytics — all from one central hub.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 2 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Reports & Analytics</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Generate detailed academic, financial, and attendance reports. Export to PDF or share with stakeholders instantly.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 3 — accent -->
-      <div class="feat-card p-7 flex flex-col gap-4 bg-blue-50 border-blue-200">
-        <div class="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-blue-800 mb-1">Timetable Manager</h3>
-          <p class="text-sm text-blue-700/70 leading-relaxed">Drag-and-drop timetable builder. Automatically detects clashes and generates optimal class schedules.</p>
-        </div>
-        <div class="flex gap-2 flex-wrap">
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">⏰ Auto-schedule</span>
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">🔁 Conflict check</span>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
+      <template x-for="card in activeCards" :key="card.title">
+        <div :class="card.accent
+            ? 'feat-card p-7 flex flex-col gap-4 bg-blue-50 border-blue-200'
+            : 'feat-card p-7 flex flex-col gap-4'">
 
-    <!-- ── PANEL: Teachers ──────────────────────────────────────── -->
-    <div
-      x-cloak x-show="tab === 'teachers'"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="grid grid-cols-1 md:grid-cols-3 gap-5"
-    >
-      <!-- Card 1 — accent -->
-      <div class="feat-card p-7 flex flex-col gap-4 bg-blue-50 border-blue-200">
-        <div class="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-blue-800 mb-1">Teacher Portal</h3>
-          <p class="text-sm text-blue-700/70 leading-relaxed">Mark attendance, grade assignments, share lesson materials, and message students from one clean interface.</p>
-        </div>
-        <div class="flex gap-2 flex-wrap">
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">📝 Gradebook</span>
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">📅 Timetable</span>
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">💬 Messaging</span>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 2 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Assignment Manager</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Create, distribute, and auto-grade assignments. Students submit online; teachers review with inline feedback.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 3 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Class Messaging</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Send announcements, broadcast to the whole class, or DM individual students and parents with ease.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
+          <div
+            :class="card.accent
+              ? 'w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center'
+              : 'w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center'"
+            x-html="card.svg">
+          </div>
 
-    <!-- ── PANEL: Students ─────────────────────────────────────── -->
-    <div
-      x-cloak x-show="tab === 'students'"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="grid grid-cols-1 md:grid-cols-3 gap-5"
-    >
-      <!-- Card 1 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Student Portal</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Access timetables, assignments, grades, the library, and announcements in one personalised student space.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 2 — accent -->
-      <div class="feat-card p-7 flex flex-col gap-4 bg-blue-50 border-blue-200">
-        <div class="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-blue-800 mb-1">Digital Library</h3>
-          <p class="text-sm text-blue-700/70 leading-relaxed">Browse thousands of e-books, past exam papers, and learning resources available 24/7 from any device.</p>
-        </div>
-        <div class="flex gap-2 flex-wrap">
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">📖 E-books</span>
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">📄 Past papers</span>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 3 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Achievements & Badges</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Earn badges for attendance, grades, and improvements. Climb the class leaderboard and collect honours.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-    </div>
+          <div>
+            <h3
+              :class="card.accent ? 'text-base font-bold text-blue-800 mb-1' : 'text-base font-bold text-slate-800 mb-1'"
+              x-text="card.title">
+            </h3>
+            <p
+              :class="card.accent ? 'text-sm text-blue-700/70 leading-relaxed' : 'text-sm text-slate-500 leading-relaxed'"
+              x-text="card.body">
+            </p>
+          </div>
 
-    <!-- ── PANEL: Parents ──────────────────────────────────────── -->
-    <div
-      x-cloak x-show="tab === 'parents'"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="grid grid-cols-1 md:grid-cols-3 gap-5"
-    >
-      <!-- Card 1 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <template x-if="card.tags.length > 0">
+            <div class="flex gap-2 flex-wrap">
+              <template x-for="tag in card.tags" :key="tag">
+                <span
+                  class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full"
+                  x-text="tag">
+                </span>
+              </template>
+            </div>
+          </template>
         </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Parent Dashboard</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Monitor your child's attendance, grades, and behaviour from one simple parent portal. Always stay informed.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 2 — accent -->
-      <div class="feat-card p-7 flex flex-col gap-4 bg-blue-50 border-blue-200">
-        <div class="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-blue-800 mb-1">Instant Notifications</h3>
-          <p class="text-sm text-blue-700/70 leading-relaxed">Get real-time push, SMS, or email alerts for grades, absenteeism, events, and new messages from teachers.</p>
-        </div>
-        <div class="flex gap-2 flex-wrap">
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">📱 Push</span>
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">✉️ Email</span>
-          <span class="bg-white/70 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">📞 SMS</span>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <!-- Card 3 -->
-      <div class="feat-card p-7 flex flex-col gap-4">
-        <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Teacher Communication</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Message teachers directly, request meetings, and receive homework updates — all without leaving the platform.</p>
-        </div>
-        <a href="#" class="inline-flex items-center text-blue-600 text-sm font-semibold gap-1 mt-auto group">Learn More <svg class="group-hover:translate-x-1 transition-transform" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+      </template>
     </div>
-
   </div>
 </section>
 
@@ -393,15 +224,15 @@
       <p class="text-slate-500 text-sm leading-relaxed mb-6 max-w-md">Gamify learning at your school. Award badges, track milestones, and celebrate achievements automatically — keeping students engaged all year long.</p>
       <div class="flex flex-col gap-3">
         <div class="flex items-start gap-3">
-          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <p class="text-sm text-slate-600">Auto badge awards for attendance, grades, and improvement</p>
         </div>
         <div class="flex items-start gap-3">
-          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <p class="text-sm text-slate-600">Class leaderboard keeps friendly competition healthy and fun</p>
         </div>
         <div class="flex items-start gap-3">
-          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <p class="text-sm text-slate-600">Parents notified instantly for every milestone their child earns</p>
         </div>
       </div>
@@ -670,8 +501,5 @@
     </div>
   </div>
 </footer>
-
-
-
 </body>
 </html>
