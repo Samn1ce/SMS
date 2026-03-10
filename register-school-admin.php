@@ -10,17 +10,13 @@
 </head>
 <body class="bg-linear-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div x-data="setupApp" class="container mx-auto px-4 py-8 max-w-4xl">
-        
-        <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-800 mb-2">School Management System</h1>
             <p class="text-gray-600">Set up your school and create admin account</p>
         </div>
 
-        <!-- Setup Form -->
         <div class="bg-white rounded-2xl shadow-xl p-8">
-            
-            <!-- Step Indicator -->
+
             <div class="mb-8">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
@@ -44,7 +40,6 @@
                 </div>
             </div>
 
-            <!-- Step 1: School Information -->
             <div x-show="step === 1" x-transition class="space-y-6">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">School Information</h2>
@@ -116,7 +111,6 @@
                 </div>
             </div>
 
-            <!-- Step 2: Admin Account -->
             <div x-show="step === 2 && !success" x-transition class="space-y-6">
                 <div>
                     <div class="flex items-center justify-between mb-6">
@@ -231,7 +225,6 @@
                 </div>
             </div>
 
-            <!-- Success Message -->
             <div x-show="success" x-transition class="text-center py-8">
                 <div class="mb-6">
                     <div class="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
@@ -246,14 +239,14 @@
                     <h4 class="font-semibold text-gray-800 mb-2">Login Details:</h4>
                     <p class="text-sm text-gray-600">School Name: <strong x-text="setupResult.school_name"></strong></p>
                     <p class="text-sm text-gray-600">Email: <strong x-text="admin.email"></strong></p>
+                    <p class="text-sm text-gray-600">School Unique Link: <strong x-text="`schoolManagementSystem/s/${setupResult.school_slug}/login`"></strong></p>
                 </div>
-                <a href="login.php" @click="submitting" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                <a :href="`/schoolManagementSystem/s/${setupResult.school_slug}/login`" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                     Go to Login →
                 </a>
             </div>
         </div>
 
-        <!-- Notification Toast -->
         <div x-show="notification.show" 
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 transform translate-y-2"

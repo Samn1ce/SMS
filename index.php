@@ -212,7 +212,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════ ACHIEVEMENTS ═══════════════════════════ -->
 <section class="bg-white py-24 px-6">
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
     <div x-intersect.once="$el.classList.add('visible')" class="reveal from-left">
@@ -283,7 +282,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════ SECURITY ═══════════════════════════ -->
 <section id="security" class="bg-neutral-50 py-24 px-6">
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
     <div class="relative">
@@ -359,7 +357,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════ ONBOARDING ═══════════════════════════ -->
 <section class="bg-white py-24 px-6">
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
     <div x-intersect.once="$el.classList.add('visible')" class="reveal from-left">
@@ -419,7 +416,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════ CTA BANNER ═══════════════════════════ -->
 <section class="bg-blue-600 py-24 px-6">
   <div x-intersect.once="$el.classList.add('visible')" class="max-w-2xl mx-auto text-center relative z-10 reveal">
     <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">Start Managing Your School<br/>In Just 4 Minutes</h2>
@@ -436,7 +432,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
 <footer class="bg-slate-900 text-slate-400 py-16 px-6">
   <div class="max-w-6xl mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">

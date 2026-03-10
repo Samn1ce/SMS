@@ -10,13 +10,11 @@ require_once __DIR__ . '/../includes/dbh.inc.php';
 $school_slug = $_GET['school'] ?? null;
 $path = $_GET['path'] ?? 'login';
 
-/* ── 1. Block missing slug ───────────────────────────── */
 if (!$school_slug) {
   http_response_code(404);
   exit('Invalid school link');
 }
 
-/* ── 2. Verify school in DB ──────────────────────────── */
 $stmt = mysqli_prepare($conn,
   "SELECT id, school_name FROM schools WHERE school_slug = ?"
 );
@@ -29,18 +27,14 @@ if (!$school) {
   exit('School not found');
 }
 
-/* ── 3. Store school in session ──────────────────────── */
 $_SESSION['school_id'] = $school['id'];
 $_SESSION['school_slug'] = $school_slug;
 $_SESSION['school_name'] = $school['school_name'];
 
-/* ── 4. Valid SPA views ──────────────────────────────── */
 $spa_views = ['dashboard', 'assignment', 'result', 'profile', 'attendance', 'viewStudents'];
 
-/* ── 5. Detect AJAX request ──────────────────────────── */
 $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
-/* ── 6. Route ────────────────────────────────────────── */
 switch ($path) {
   case 'login':
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

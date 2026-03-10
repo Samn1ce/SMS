@@ -54,7 +54,6 @@ document.addEventListener("alpine:init", () => {
     },
 
     async submitSetup() {
-      // Validate admin information
       if (
         !this.admin.name.surname ||
         !this.admin.name.firstname ||
@@ -66,14 +65,12 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      // Validate email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.admin.email)) {
         this.showNotification("Please enter a valid email address", "error");
         return;
       }
 
-      // Validate password length
       if (this.admin.password.length < 8) {
         this.showNotification(
           "Password must be at least 8 characters long",
@@ -82,7 +79,6 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      // Validate password match
       if (this.admin.password !== this.admin.confirm_password) {
         this.showNotification("Passwords do not match", "error");
         return;
@@ -115,12 +111,10 @@ document.addEventListener("alpine:init", () => {
         );
 
         const data = await response.json();
-        // const text = await response.text();
         console.log(data);
 
         if (data.success) {
           this.setupResult = data.data;
-          console.log(this.setupResult);
           this.success = true;
           this.showNotification("Setup completed successfully!", "success");
         } else {
