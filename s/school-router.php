@@ -60,6 +60,10 @@ switch ($path) {
     }
     break;
 
+  case 'admin/home':
+     require __DIR__ . '/../admin/home.php';
+    break;
+
   case 'includes/logout.php':
     require __DIR__ . '/../includes/logout.php';
     break;

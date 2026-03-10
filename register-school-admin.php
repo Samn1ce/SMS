@@ -13,8 +13,6 @@
     <style>
         body { font-family: 'DM Sans', sans-serif; }
         h1,h2,h3,h4,.sora { font-family: 'Sora', sans-serif; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spinner { animation: spin .8s linear infinite; }
     </style>
 </head>
 
@@ -30,7 +28,8 @@
             x-transition:leave-end="opacity-0 -translate-y-3"
             class="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm shadow-2xl rounded-2xl overflow-hidden"
             :class="notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'"
-            style="display:none;">
+            style="display:none;"
+        >
             <div class="flex items-center gap-3 px-5 py-4">
                 <p class="flex-1 text-sm font-medium text-white" x-text="notification.message"></p>
                 <button @click="notification.show = false" class="text-white/70 hover:text-white transition-colors">
@@ -239,7 +238,7 @@
                                 Complete Setup
                             </span>
                             <span x-show="submitting" class="flex items-center gap-2">
-                                <svg class="spinner w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <svg class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>

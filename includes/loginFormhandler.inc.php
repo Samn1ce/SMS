@@ -34,6 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    if ($row['roles'] === 'admin') {
+        header("Location: /schoolmanagementsystem/s/$slug/admin/home");
+        exit;
+    }
+
     $_SESSION['id'] = $row['id'];
     $_SESSION['role'] = $row['roles'];
     $_SESSION["gender"] = $row['gender'];

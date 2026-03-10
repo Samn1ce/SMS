@@ -59,15 +59,14 @@
                                 }
                             ?> 
                         </div>
-                            <div class="flex flex-col">
+                        <!-- <div class="flex flex-col">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
                                 <select name="role" class="w-full outline-none" required>
                                     <option value="">What's your role?</option>
                                     <option value="student">Student</option>
                                     <option value="teacher">Teacher</option>
                                 </select>
-                            </div>
-                        </div>
+                            </div> -->
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
                                 <?php renderIcon('password', 'w-6 h-6') ?>
