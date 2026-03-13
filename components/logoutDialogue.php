@@ -16,10 +16,10 @@ function renderLogoutDialogue(
         >
             <p class="'. htmlspecialchars($pClass) .'">'. htmlspecialchars($pText) .'
                 <span>
-                    <a 
+                    <button 
                         x-on:click="open = ! open" 
                         class="'. htmlspecialchars($aClass) .'">'. htmlspecialchars($aText) .'
-                    </a>
+                    </button>
                         '. htmlspecialchars($spanText) .'
                 </span>
             </p>

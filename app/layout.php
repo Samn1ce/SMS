@@ -1,5 +1,4 @@
 <?php
-    // define('APP_ROOT', __DIR__);
     define('APP_ROOT', dirname(__DIR__));
     include APP_ROOT . '/includes/dbh.inc.php';
     include APP_ROOT . '/components/icons.php';
@@ -73,7 +72,6 @@
         x-data="layoutRender(<?= htmlspecialchars(json_encode($layoutData)) ?>)"
         x-init="init()"
     >
-        <!-- Sidebar -->
         <div class="w-full lg:w-1/5 absolute lg:relative z-10 bottom-3 lg:bottom-0 rounded-full lg:rounded-none lg:rounded-r-md lg:h-full px-6 py-2 lg:p-4 flex flex-col justify-between border border-purple-300 lg:border-neutral-200/70 bg-purple-500 lg:bg-white">
             <div>
                 <h1 class="hidden lg:block font-semibold text-2xl text-center">SchoolY</h1>
@@ -153,15 +151,8 @@
                     </div>
                 </div>
                 <div x-html="content"></div>
-                <!-- <div>
-                    <?= $content ?>
-                </div> -->
             </div>
         </div>
     </div>
-
-    <script>
-        
-    </script>
 </body>
 </html>

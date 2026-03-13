@@ -34,11 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if ($row['roles'] === 'admin') {
-        header("Location: /schoolmanagementsystem/s/$slug/admin/home");
-        exit;
-    }
-
     $_SESSION['id'] = $row['id'];
     $_SESSION['role'] = $row['roles'];
     $_SESSION["gender"] = $row['gender'];
@@ -51,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION["firstname"] = $row["firstname"];
     $_SESSION["othername"] = $row["othername"];
     $login_count = (int)$row['login_count'];
+
+    if ($row['roles'] === 'admin') {
+        header("Location: /schoolmanagementsystem/s/$slug/admin/home");
+        exit;
+    }
 
     if ($login_count === 0 && $row['roles'] === 'student') {
         header("Location: /schoolmanagementsystem/s/$slug/selectSubjects");
