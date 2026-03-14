@@ -1,13 +1,13 @@
-<?php 
-    include '../components/icons.php';
+<?php
+include '../components/icons.php';
 
-    $slug = $_SESSION['school_slug'];
-    $school_name = $_SESSION['school_name'];
+$slug = $_SESSION['school_slug'];
+$school_name = $_SESSION['school_name'];
 
-    if (isset($_SESSION['id'])) {
-        header("Location: /schoolmanagementsystem/s/$slug/");
-        exit();
-    }
+if (isset($_SESSION['id'])) {
+  header("Location: /schoolmanagementsystem/s/$slug/");
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,31 +33,38 @@
                         <p class=" text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                     </div>
                     <div class="w-full flex flex-col gap-4">
-                        <div class="flex items-center h-10 bg-[#441717] pr-5 gap-2 mx-auto rounded-r <?= (isset($_GET['error']) && $_GET['error'] === 'invalidcredentials') ? 'block' : 'hidden' ?>">
+                        <div class="flex items-center h-10 bg-[#441717] pr-5 gap-2 mx-auto rounded-r <?= isset(
+                          $_GET['error'],
+                        ) && $_GET['error'] === 'invalidcredentials'
+                          ? 'block'
+                          : 'hidden' ?>">
                             <div class="w-1 h-full bg-red-600"></div>
-                            <?php renderIcon('exclamation', 'text-red-500') ?>
+                            <?php renderIcon('exclamation', 'text-red-500'); ?>
                             <p class="text-red-500 font-semibold text-xs ">Invalid Credentials. Check your crendentials and try again</p>
                         </div>
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                <?php renderIcon('email', 'w-6 h-6') ?>
+                                <?php renderIcon('email', 'w-6 h-6'); ?>
                                 <input 
                                     type="text" 
                                     name="email" 
                                     placeholder="Email"
                                     required
-                                    class="w-full font-semibold outline-none <?= 
-                                        (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' 
-                                    ?>" 
+                                    class="w-full font-semibold outline-none <?= isset(
+                                      $_GET['error'],
+                                    ) &&
+                                    ($_GET['error'] === 'invalidcredentials' ||
+                                      $_GET['error'] === 'emptyfields')
+                                      ? 'border-red-500'
+                                      : 'border-black' ?>" 
                                 />
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields')) { echo '
+                            <?php if (isset($_GET['error']) && $_GET['error'] === 'emptyfields') {
+                              echo '
                                     <p class="text-red-500 text-xs self-end">
                                         This field is empty
-                                    </p>'; 
-                                }
-                            ?> 
+                                    </p>';
+                            } ?> 
                         </div>
                         <!-- <div class="flex flex-col">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
@@ -69,22 +76,27 @@
                             </div> -->
                         <div class="flex flex-col">
                             <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                <?php renderIcon('password', 'w-6 h-6') ?>
+                                <?php renderIcon('password', 'w-6 h-6'); ?>
                                 <input 
                                     type="password" 
                                     name="pwd" 
                                     placeholder="Password" 
                                     required
-                                    class="w-full font-semibold outline-none <?= (isset($_GET['error']) && ($_GET['error'] === 'invalidcredentials' || $_GET['error'] === 'emptyfields')) ? 'border-red-500' : 'border-black' ?>" 
+                                    class="w-full font-semibold outline-none <?= isset(
+                                      $_GET['error'],
+                                    ) &&
+                                    ($_GET['error'] === 'invalidcredentials' ||
+                                      $_GET['error'] === 'emptyfields')
+                                      ? 'border-red-500'
+                                      : 'border-black' ?>" 
                                 />
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields')) { echo '
+                            <?php if (isset($_GET['error']) && $_GET['error'] === 'emptyfields') {
+                              echo '
                                     <p class="text-red-500 text-xs self-end">
                                         This field is empty
-                                    </p>'; 
-                                }
-                            ?> 
+                                    </p>';
+                            } ?> 
                         </div>
                     </div>
                     <div class="flex flex-col gap-2 justify-end items-end mt-2">
@@ -102,7 +114,9 @@
                                     Login
                                 </span>
                             </button>
-                        <a href="/schoolManagementSystem/s/<?= htmlspecialchars($slug) ?>/register" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
+                        <a href="/schoolManagementSystem/s/<?= htmlspecialchars(
+                          $slug,
+                        ) ?>/register" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I don't have an account</a>
                     </div>
                 </div>
             </div>
