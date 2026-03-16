@@ -1,22 +1,19 @@
-<div class="border-2 border-blue-500">
-    <div class="z-10 relative">
-        <div class="bg-[#EBE7FF] rounded-3xl p-8 relative border border-zinc-200/60 overflow-hidden flex flex-col justify-center h-[200px]">
+<div>
+    <div class="z-10 bg-[#EBE7FF] rounded-3xl p-8 relative border border-zinc-200/60 overflow-hidden flex flex-col justify-center h-[200px]">
         <h2 class="text-4xl font-serif text-[#1F1B3E] font-bold mb-3">Hi, <?= formatName(
           $firstname,
         ) ?></h2>
         <p class="text-gray-600 text-sm">Ready to start your day with some pitch decks?</p>
+        <div class="absolute right-10 bottom-0 w-64 h-48 flex items-end justify-center">
+            <div class="w-48 h-12 bg-white rounded-lg shadow-sm mb-4 absolute z-0 skew-x-12 border border-purple-100"></div>
+            <div class="w-24 h-24 bg-[#FCD34D] rounded-t-full absolute z-10 -ml-12 border-4 border-[#EBE7FF]"></div>
+            <div class="w-16 h-16 bg-[#1F1B3E] rounded-full absolute top-8 ml-4 z-20"></div>
+            <div class="w-20 h-16 bg-[#493988] rounded-xl absolute z-30 ml-20 shadow-lg border-2 border-white -skew-x-6"></div>
+            <div class="w-2 h-2 bg-[#7B61FF] rounded-full absolute top-10 left-10"></div>
+            <div class="w-3 h-3 border-2 border-[#7B61FF] rounded-full absolute top-20 right-0"></div>
+            <div class="w-1 h-1 bg-gray-400 rounded-full absolute top-8 right-20"></div>
+        </div>
     </div>
-    <div class="absolute right-10 bottom-0 w-64 h-48 flex items-end justify-center">
-        <div class="w-48 h-12 bg-white rounded-lg shadow-sm mb-4 absolute z-0 skew-x-12 border border-purple-100"></div>
-        <div class="w-24 h-24 bg-[#FCD34D] rounded-t-full absolute z-10 -ml-12 border-4 border-[#EBE7FF]"></div>
-        <div class="w-16 h-16 bg-[#1F1B3E] rounded-full absolute top-8 ml-4 z-20"></div>
-        <div class="w-20 h-16 bg-[#493988] rounded-xl absolute z-30 ml-20 shadow-lg border-2 border-white -skew-x-6"></div>
-        <div class="w-2 h-2 bg-[#7B61FF] rounded-full absolute top-10 left-10"></div>
-        <div class="w-3 h-3 border-2 border-[#7B61FF] rounded-full absolute top-20 right-0"></div>
-        <div class="w-1 h-1 bg-gray-400 rounded-full absolute top-8 right-20"></div>
-    </div>
-</div>
-
     <div class="mt-8">
         <h3 class="text-gray-400 text-sm font-medium mb-4">Overview</h3>
         <div class="grid grid-cols-4 gap-4">
@@ -26,7 +23,7 @@
                 </div>
                 <div>
                     <div class="text-2xl font-bold">83%</div>
-                    <div class="text-[10px] font-medium opacity-80 uppercase tracking-wide">Open Rate</div>
+                    <div class="text-[10px] font-medium opacity-80 uppercase tracking-wide">No. of Students</div>
                 </div>
             </div>
             <div class="bg-[#4D4594] rounded-xl p-4 flex items-center gap-4 text-white shadow-sm">

@@ -3,7 +3,7 @@ include '../components/icons.php';
 include '../components/logoutDialogue.php';
 include '../includes/nameFormat.php';
 
-$id = $_SESSION["id"];
+$id = $_SESSION['id'];
 $surname = $_SESSION['surname'];
 $firstname = $_SESSION['firstname'];
 $arm_id = $_SESSION['arm_id'];
@@ -11,36 +11,48 @@ $role = $_SESSION['role'];
 $school_name = $_SESSION['school_name'];
 $slug = $_SESSION['school_slug'];
 
-if (!isset($_SESSION["id"])) {
-    header("Location: login.php");
-    exit();
+if (!isset($_SESSION['id'])) {
+  header('Location: login.php');
+  exit();
 }
 
 $page = $_GET['page'] ?? 'dashboard';
 $allowed = ['dashboard', 'students', 'teachers', 'profile'];
-if (!in_array($page, $allowed)) $page = '404';
+if (!in_array($page, $allowed)) {
+  $page = '404';
+}
 
 $navItems = [
-    [
-        'page'  => 'dashboard',
-        'label' => 'Dashboard',
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>',
-    ],
-    [
-        'page'  => 'teachers',
-        'label' => 'Teacher Request',
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>',
-    ],
-    [
-        'page'  => 'students',
-        'label' => 'View Student',
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>',
-    ],
-    [
-        'page'  => 'profile',
-        'label' => 'Profile',
-        'icon'  => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',
-    ],
+  [
+    'page' => 'dashboard',
+    'label' => 'Dashboard',
+    'icon' =>
+      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>',
+  ],
+  [
+    'page' => 'teachers',
+    'label' => 'Teacher Request',
+    'icon' =>
+      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>',
+  ],
+  [
+    'page' => 'students',
+    'label' => 'View Student',
+    'icon' =>
+      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>',
+  ],
+  [
+    'page' => 'school',
+    'label' => 'School Information',
+    'icon' =>
+      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>',
+  ],
+  [
+    'page' => 'profile',
+    'label' => 'Profile',
+    'icon' =>
+      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>',
+  ],
 ];
 ?>
 
@@ -74,11 +86,12 @@ $navItems = [
 
             <nav class="flex-1 space-y-2">
                 <?php foreach ($navItems as $item):
-                    $isActive = $page === $item['page'];
-                    $classes  = $isActive
-                        ? 'bg-gray-50 text-gray-900'
-                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50';
-                ?>
+
+                  $isActive = $page === $item['page'];
+                  $classes = $isActive
+                    ? 'bg-gray-50 text-gray-900'
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50';
+                  ?>
                 <a href="/schoolManagementSystem/s/<?= $slug ?>/admin/<?= $item['page'] ?>"
                 class="flex items-center gap-4 px-4 py-3 rounded-xl font-medium transition-colors <?= $classes ?>">
                     <svg class="w-5 h-5 <?= $isActive ? 'text-gray-500' : '' ?>"
@@ -87,7 +100,8 @@ $navItems = [
                     </svg>
                     <?= $item['label'] ?>
                 </a>
-                <?php endforeach; ?>
+                <?php
+                endforeach; ?>
             </nav>
         </div>
 
@@ -95,7 +109,9 @@ $navItems = [
             <header class="px-10 py-6 bg-white">
                 <div class="mx-auto max-w-7xl flex justify-between items-center">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900"><?= htmlspecialchars($school_name) ?></h1>
+                        <h1 class="text-2xl font-bold text-gray-900"><?= htmlspecialchars(
+                          $school_name,
+                        ) ?></h1>
                         <p 
                             class="text-sm text-gray-400 mt-1" 
                             x-data 
@@ -116,14 +132,21 @@ $navItems = [
                                 x-text="(surname[0]) + firstname[0].toUpperCase()"
                                 class="w-8 h-8 bg-[#DED6FF] text-[#493988] rounded-md flex items-center justify-center font-bold text-sm">
                             </div>
-                            <span class="text-sm font-semibold text-gray-700"><?= formatName($surname) ?> <?= formatName($firstname) ?></span>
+                            <span class="text-sm font-semibold text-gray-700"><?= formatName(
+                              $surname,
+                            ) ?> <?= formatName($firstname) ?></span>
                             <button class="hover:bg-slate-200 duration-300 rounded-full cursor-pointer p-2" x-on:click="open = !open">
                                 <svg class="w-4 h-4 text-gray-400 transition-all duration-300" :class="open ? 'rotate-0' : 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
 
                             <div x-show="open" class="cursor-pointer bg-neutral-100 w-full h-10 rounded-xl absolute top-10 px-4 flex justify-center items-center hover:bg-slate-200 transition-all duration-300 border border-zinc-200/50" :class="open ? '' : ''">
-                                <?php renderIcon('logout', 'w-6 h-6 text-neutral-800') ?>
-                                <?php renderLogoutDialogue('w-full', 'Logout', 'w-full pl-2 text-left', '') ?>
+                                <?php renderIcon('logout', 'w-6 h-6 text-neutral-800'); ?>
+                                <?php renderLogoutDialogue(
+                                  'w-full',
+                                  'Logout',
+                                  'w-full pl-2 text-left',
+                                  '',
+                                ); ?>
                             </div>
                         </div>
                     </div>
