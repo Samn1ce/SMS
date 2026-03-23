@@ -72,7 +72,7 @@ switch ($path) {
 
     if (str_starts_with($path, 'admin/')) {
       $adminPage = substr($path, strlen('admin/')) ?: 'dashboard';
-      $allowed = ['dashboard', 'students', 'teachers', 'profile'];
+      $allowed = ['dashboard', 'students', 'teachers', 'profile', 'school'];
 
       $_GET['page'] = in_array($adminPage, $allowed) ? $adminPage : '404';
       require __DIR__ . '/../admin/index.php';

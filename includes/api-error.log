@@ -2,3 +2,10 @@
 [10-Mar-2026 08:02:29 Europe/Berlin] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php on line 7
 [10-Mar-2026 08:06:53 Europe/Berlin] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php on line 7
 [13-Mar-2026 08:58:02 Europe/Berlin] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php on line 7
+[23-Mar-2026 15:21:20 Europe/Berlin] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php on line 7
+[23-Mar-2026 15:21:21 Europe/Berlin] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php:79
+Stack trace:
+#0 C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php(79): mysqli_stmt_bind_param(Object(mysqli_stmt), 'isssssisss', 24, 'teacher@email.c...', '$2y$10$cj85/6cS...', 'john', 'doe', 'teacher', NULL, 'teacher', 'male', '2005-02-24', 'pending')
+#1 C:\xampp\htdocs\schoolManagementSystem\s\school-router.php(49): require('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\schoolManagementSystem\includes\registerFormhandler.inc.php on line 79

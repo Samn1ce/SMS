@@ -1,6 +1,5 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('teacherRow', (teacherId) => ({
-    confirming: null,
     loading: false,
 
     async handle(action) {
@@ -21,7 +20,6 @@ document.addEventListener('alpine:init', () => {
         alert('Something went wrong. Please try again.');
       } finally {
         this.loading = false;
-        this.confirming = null;
       }
     },
   }));

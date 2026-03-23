@@ -4,7 +4,7 @@ $school_id = $_SESSION['school_id'];
 $sql = "SELECT id, surname, firstname, email, gender
          FROM users 
          WHERE school_id = ? AND roles = 'teacher' AND status = 'pending'
-         ORDER BY created_at DESC";
+         ";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, 'i', $school_id);
 mysqli_stmt_execute($stmt);
@@ -52,31 +52,29 @@ $teachers = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <?= htmlspecialchars(formatName($teacher['firstname'])) ?>
                     </h3>
                     <p class="text-sm text-neutral-400 font-semibold">
-                        <?= htmlspecialchars($teacher['email']) ?>
+                        <?= htmlspecialchars($teacher['gender']) ?>
                     </p>
                 </div>
 
                 <div>
                     <p class="text-sm text-neutral-400 font-semibold">
-                        <?= date('d M Y', strtotime($teacher['gender'])) ?>
+                        <?= htmlspecialchars($teacher['email']) ?>
                     </p>
                 </div>
 
                 <div class="flex gap-4">
-                    <template x-if="confirming === null">
-                        <div class="flex gap-4">
-                            <button
-                                x-on:click="handle('accept')"
-                                class="text-center px-4 py-1 font-semibold text-sm text-neutral-900 bg-green-400 rounded-full cursor-pointer">
-                                Accept
-                            </button>
-                            <button
-                                x-on:click="handle('reject')"
-                                class="text-center px-4 py-1 font-semibold text-sm text-neutral-900 bg-red-400 rounded-full cursor-pointer">
-                                Reject
-                            </button>
-                        </div>
-                    </template>
+                    <button
+                        x-on:click="handle('accept')"
+                        :disabled="loading"
+                        class="text-center px-4 py-1 font-semibold text-sm text-neutral-900 bg-green-400 rounded-full cursor-pointer disabled:opacity-50">
+                        Accept
+                    </button>
+                    <button
+                        x-on:click="handle('reject')"
+                        :disabled="loading"
+                        class="text-center px-4 py-1 font-semibold text-sm text-neutral-900 bg-red-400 rounded-full cursor-pointer disabled:opacity-50">
+                        Reject
+                    </button>
                 </div>
             </div>
             <?php endforeach; ?>

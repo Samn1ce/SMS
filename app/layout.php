@@ -1,56 +1,57 @@
 <?php
-    define('APP_ROOT', dirname(__DIR__));
-    include APP_ROOT . '/includes/dbh.inc.php';
-    include APP_ROOT . '/components/icons.php';
-    include APP_ROOT . '/components/logoutDialogue.php';
-    include APP_ROOT . '/includes/nameFormat.php';
+define('APP_ROOT', dirname(__DIR__));
+include APP_ROOT . '/includes/dbh.inc.php';
+include APP_ROOT . '/components/icons.php';
+include APP_ROOT . '/components/logoutDialogue.php';
+include APP_ROOT . '/includes/nameFormat.php';
 
-    $school_name = $_SESSION['school_name'];
-    $slug = $_SESSION['school_slug'];
-    $BASE_PATH = "/schoolManagementSystem";
-    $URL_BASE_PATH = "/schoolManagementSystem/s/" . $slug;
-    $id = $_SESSION['id'];
-    $firstname = $_SESSION['firstname'];
-    $surname = $_SESSION['surname'];
-    $role = $_SESSION['role'];
+$school_name = $_SESSION['school_name'];
+$slug = $_SESSION['school_slug'];
+$BASE_PATH = '/schoolManagementSystem';
+$URL_BASE_PATH = '/schoolManagementSystem/s/' . $slug;
+$id = $_SESSION['id'];
+$firstname = $_SESSION['firstname'];
+$surname = $_SESSION['surname'];
+$role = $_SESSION['role'];
+$status = $_SESSION['status'];
 
-    $navItems = [
-        [
-            'id' => 'dashboard',
-            'label' => 'Dashboard',
-            'icon' => 'dashboard'
-        ],
-        [
-            'id' => 'assignment',
-            'label' => 'Assignment',
-            'icon' => 'assignment'
-        ],
-    ];
-    if ($role === 'teacher') {
-        $navItems[] = [
-            'id' => 'viewStudents',
-            'label' => 'View Students',
-            'icon' => 'result'
-        ];
-    } else {
-        $navItems[] = [
-            'id' => 'result',
-            'label' => 'Result Profile',
-            'icon' => 'result'
-        ];
-    };
-    $navItems[] =  [
-        'id' => 'profile',
-        'label' => 'Student Profile',
-        'icon' => 'person'
-    ];
+$navItems = [
+  [
+    'id' => 'dashboard',
+    'label' => 'Dashboard',
+    'icon' => 'dashboard',
+  ],
+  [
+    'id' => 'assignment',
+    'label' => 'Assignment',
+    'icon' => 'assignment',
+  ],
+];
+if ($role === 'teacher') {
+  $navItems[] = [
+    'id' => 'viewStudents',
+    'label' => 'View Students',
+    'icon' => 'result',
+  ];
+} else {
+  $navItems[] = [
+    'id' => 'result',
+    'label' => 'Result Profile',
+    'icon' => 'result',
+  ];
+}
+$navItems[] = [
+  'id' => 'profile',
+  'label' => 'Student Profile',
+  'icon' => 'person',
+];
 
-    $currentView = htmlspecialchars($_GET['view'] ?? 'dashboard', ENT_QUOTES);
+$currentView = htmlspecialchars($_GET['view'] ?? 'dashboard', ENT_QUOTES);
 
-    $layoutData = [
-        'basePath' => $URL_BASE_PATH,
-        'currentView' => $currentView,
-    ];
+$layoutData = [
+  'basePath' => $URL_BASE_PATH,
+  'currentView' => $currentView,
+];
 ?>
 
 <!DOCTYPE html>
@@ -67,92 +68,120 @@
     <title>SchoolY - <?= $surname ?>&nbsp;<?= $firstname ?></title>
 </head>
 <body>
-    <div 
-        class="w-full h-screen flex" 
-        x-data="layoutRender(<?= htmlspecialchars(json_encode($layoutData)) ?>)"
-        x-init="init()"
-    >
-        <div class="w-full lg:w-1/5 absolute lg:relative z-10 bottom-3 lg:bottom-0 rounded-full lg:rounded-none lg:rounded-r-md lg:h-full px-6 py-2 lg:p-4 flex flex-col justify-between border border-purple-300 lg:border-neutral-200/70 bg-purple-500 lg:bg-white">
-            <div>
-                <h1 class="hidden lg:block font-semibold text-2xl text-center">SchoolY</h1>
-                <nav class="flex flex-row justify-between lg:justify-normal lg:flex-col lg:mt-7">
-                    <?php foreach($navItems as $item): ?>
-                    <div 
-                        @click="navigate('<?= $item['id'] ?>')"
-                        :class="currentView === '<?= $item['id'] ?>' ? 
-                               'bg-neutral-200 lg:bg-purple-500 text-white border-neutral-200/65 lg:border-purple-500' : 
-                               'text-neutral-400 hover:bg-gray-100 border-transparent'"
-                        class="w-12 h-12 lg:w-full lg:p-3 flex gap-4 items-center justify-center lg:justify-normal rounded-full lg:rounded-lg font-semibold transition-all border cursor-pointer"
-                    >
-                        <div :class="currentView === '<?= $item['id'] ?>' ? 'text-neutral-800 lg:text-neutral-100' : 'text-neutral-800 lg:text-neutral-400'">
-                            <?php renderIcon($item['icon'], 'w-5 h-5') ?>
-                        </div>
-                        <p class="lg:block hidden" :class="currentView === '<?= $item['id'] ?>' ? 'text-neutral-100' : 'text-neutral-400'">
-                            <?= htmlspecialchars($item['label']) ?>
-                            <?php  ?>
-                        </p>
-                    </div>
-                    <?php endforeach; ?>
-                </nav>
-            </div>
-            <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover px-2 cursor-pointer">
-                <?php renderIcon('logout', 'w-6 h-6 text-neutral-800') ?>
-                <?php renderLogoutDialogue("w-full", "Log Out", "font-semibold text-lg py-4 pr-28", '', 'w-full h-fit flex text-neutral-800 py-3 pl-2') ?>
+    <?php if ($status === 'pending'): ?>
+        <div class="bg-neutral-100 w-full h-screen flex justify-center items-center">
+            <div class="bg-white border border-zinc-200/60 rounded-xl w-11/12 md:w-2/4 h-60 px-14 py-4 shadow-xl">
+                <p class="text-xl text-center">Dear, <span class="font-semibold"><?= formatName(
+                  $firstname,
+                ) ?></span></p>
+                <p class="text-sm text-center mt-10">Your request to access the school system as a teacher has been sent to the admin. Please, logout while you await confirmation.</p>
+                <?php renderLogoutDialogue(
+                  'w-full flex justify-center items-center mt-5',
+                  'Log Out',
+                  'font-semibold text-lg px-6 py-1 rounded-full bg-blue-500 text-neutral-50 cursor-pointer text-sm hover:bg-blue-400 transition-all duration-300',
+                ); ?>
             </div>
         </div>
-        <div class="bg-neutral-100 w-full lg:w-4/5 rounded-r-md h-full overflow-auto">
-            <div class="text-neutral-800 flex justify-between items-center px-12 py-2 border border-b border-zinc-200">
-                <h1 class="font-bold"><?= htmlspecialchars($school_name) ?></h1>
+    <?php else: ?>
+        <div 
+            class="w-full h-screen flex" 
+            x-data="layoutRender(<?= htmlspecialchars(json_encode($layoutData)) ?>)"
+            x-init="init()"
+        >
+            <div class="w-full lg:w-1/5 absolute lg:relative z-10 bottom-3 lg:bottom-0 rounded-full lg:rounded-none lg:rounded-r-md lg:h-full px-6 py-2 lg:p-4 flex flex-col justify-between border border-purple-300 lg:border-neutral-200/70 bg-purple-500 lg:bg-white">
                 <div>
-                    <p class="font-semibold hidden lg:block"><?= formatName($surname) ?> <?= formatName($firstname) ?></p>
+                    <h1 class="hidden lg:block font-semibold text-2xl text-center">SchoolY</h1>
+                    <nav class="flex flex-row justify-between lg:justify-normal lg:flex-col lg:mt-7">
+                        <?php foreach ($navItems as $item): ?>
+                        <div 
+                            @click="navigate('<?= $item['id'] ?>')"
+                            :class="currentView === '<?= $item['id'] ?>' ? 
+                                'bg-neutral-200 lg:bg-purple-500 text-white border-neutral-200/65 lg:border-purple-500' : 
+                                'text-neutral-400 hover:bg-gray-100 border-transparent'"
+                            class="w-12 h-12 lg:w-full lg:p-3 flex gap-4 items-center justify-center lg:justify-normal rounded-full lg:rounded-lg font-semibold transition-all border cursor-pointer"
+                        >
+                            <div :class="currentView === '<?= $item[
+                              'id'
+                            ] ?>' ? 'text-neutral-800 lg:text-neutral-100' : 'text-neutral-800 lg:text-neutral-400'">
+                                <?php renderIcon($item['icon'], 'w-5 h-5'); ?>
+                            </div>
+                            <p class="lg:block hidden" :class="currentView === '<?= $item[
+                              'id'
+                            ] ?>' ? 'text-neutral-100' : 'text-neutral-400'">
+                                <?= htmlspecialchars($item['label']) ?>
+                                <?php  ?>
+                            </p>
+                        </div>
+                        <?php endforeach; ?>
+                    </nav>
                 </div>
-            </div> 
-
-            <div x-show="isLoading" class="h-full flex items-center justify-center">
-                <div class="text-center">
-                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
-                    <p class="mt-2 text-gray-600">Loading...</p>
+                <div class="w-full border border-zinc-200 hidden lg:flex gap-1 items-center justify-center rounded-lg font-semibold neon-hover px-2 cursor-pointer">
+                    <?php renderIcon('logout', 'w-6 h-6 text-neutral-800'); ?>
+                    <?php renderLogoutDialogue(
+                      'w-full',
+                      'Log Out',
+                      'font-semibold text-lg py-4 pr-28',
+                      '',
+                      'w-full h-fit flex text-neutral-800 py-3 pl-2',
+                    ); ?>
                 </div>
             </div>
-            
-            <div x-show="!isLoading" class="w-full px-1 pb-18 lg:p-4">
-                <div
-                    x-data="{ show: false, type: '', message: '' }"
-                    x-init="
-                        <?php if (isset($_SESSION['toast'])): ?>
-                            type = '<?= $_SESSION['toast']['type'] ?>';
-                            message = '<?= $_SESSION['toast']['message'] ?>';
-                            show = true;
-                            setTimeout(() => show = false, 3000);
-                        <?php unset($_SESSION['toast']); endif; ?>
-                    "
-                    x-show="show"
-                    x-transition
-                    class="fixed top-0 w-full transition-all px-4 py-3 rounded-xl text-white z-10"
-                >
-                    <div 
-                        class="absolute top-12 scale-0 transform translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl shadow-sm max-w-md"
-                        :class="type === 'success' ? 'bg-emerald-50 border border-emerald-100 scale-100' : 'bg-red-200 border border-red-100 scale-100'"
-                    >
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
-                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                        </div>
+            <div class="bg-neutral-100 w-full lg:w-4/5 rounded-r-md h-full overflow-auto">
+                <div class="text-neutral-800 flex justify-between items-center px-12 py-2 border border-b border-zinc-200">
+                    <h1 class="font-bold"><?= htmlspecialchars($school_name) ?></h1>
+                    <div>
+                        <p class="font-semibold hidden lg:block"><?= formatName(
+                          $surname,
+                        ) ?> <?= formatName($firstname) ?></p>
+                    </div>
+                </div> 
 
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-emerald-900" x-text="type === 'success' ? 'Success.' : 'Failed.'"></h4>
-                            <p class="text-sm text-emerald-700" x-text="message"></p>
-                        </div>
-
-                        <button @click="show = !show" class="text-emerald-400 hover:text-emerald-600">
-                            ✕
-                        </button>
+                <div x-show="isLoading" class="h-full flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+                        <p class="mt-2 text-gray-600">Loading...</p>
                     </div>
                 </div>
-                <div x-html="content"></div>
+                
+                <div x-show="!isLoading" class="w-full px-1 pb-18 lg:p-4">
+                    <div
+                        x-data="{ show: false, type: '', message: '' }"
+                        x-init="
+                            <?php if (isset($_SESSION['toast'])): ?>
+                                type = '<?= $_SESSION['toast']['type'] ?>';
+                                message = '<?= $_SESSION['toast']['message'] ?>';
+                                show = true;
+                                setTimeout(() => show = false, 3000);
+                            <?php unset($_SESSION['toast']);endif; ?>
+                        "
+                        x-show="show"
+                        x-transition
+                        class="fixed top-0 w-full transition-all px-4 py-3 rounded-xl text-white z-10"
+                    >
+                        <div 
+                            class="absolute top-12 scale-0 transform translate-x-50 transition-all flex items-start gap-4 p-4 rounded-xl shadow-sm max-w-md"
+                            :class="type === 'success' ? 'bg-emerald-50 border border-emerald-100 scale-100' : 'bg-red-200 border border-red-100 scale-100'"
+                        >
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-emerald-900" x-text="type === 'success' ? 'Success.' : 'Failed.'"></h4>
+                                <p class="text-sm text-emerald-700" x-text="message"></p>
+                            </div>
+
+                            <button @click="show = !show" class="text-emerald-400 hover:text-emerald-600">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                    <div x-html="content"></div>
+                </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 </body>
 </html>

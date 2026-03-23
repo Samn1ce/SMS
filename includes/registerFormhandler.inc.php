@@ -4,7 +4,6 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/api-error.log');
 error_reporting(E_ALL);
 
-session_start();
 include 'dbh.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -49,15 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     empty($confirmPwd) ||
     empty($role) ||
     empty($dob) ||
-    empty($gender)
+    empty($gender) ||
+    empty($class)
   ) {
     if ($role === 'student') {
       redirectWithData('emptyfields', $email, $surname, $firstname, $othername, $role, $class);
     }
-  }
-
-  if ($role === 'student' && empty($class)) {
-    redirectWithData('emptyfields', $email, $surname, $firstname, $othername, $role, $class);
   }
 
   if ($pwd !== $confirmPwd) {
@@ -81,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $stmt = mysqli_prepare($conn, $sql);
   mysqli_stmt_bind_param(
     $stmt,
-    'isssssisss',
+    'isssssissss',
     $school_id,
     $email,
     $hashedPwd,

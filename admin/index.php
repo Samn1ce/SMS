@@ -10,6 +10,7 @@ $arm_id = $_SESSION['arm_id'];
 $role = $_SESSION['role'];
 $school_name = $_SESSION['school_name'];
 $slug = $_SESSION['school_slug'];
+$BASE_PATH = '/schoolManagementSystem';
 
 if (!isset($_SESSION['id'])) {
   header('Location: login.php');
@@ -17,7 +18,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 $page = $_GET['page'] ?? 'dashboard';
-$allowed = ['dashboard', 'students', 'teachers', 'profile'];
+$allowed = ['dashboard', 'students', 'teachers', 'school', 'profile'];
 if (!in_array($page, $allowed)) {
   $page = '404';
 }
@@ -61,10 +62,11 @@ $navItems = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pitch.io Dashboard</title>
+    <title>Schooly | Admin</title>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="<?= $BASE_PATH ?>/assets/js/teachersRequest.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
