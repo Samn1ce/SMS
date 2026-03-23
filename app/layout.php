@@ -120,7 +120,7 @@ $layoutData = [
                     <?php renderLogoutDialogue(
                       'w-full',
                       'Log Out',
-                      'font-semibold text-lg py-4 pr-28',
+                      'font-semibold text-lg',
                       '',
                       'w-full h-fit flex text-neutral-800 py-3 pl-2',
                     ); ?>

@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <div class="text-2xl font-bold">77%</div>
-                    <div class="text-[10px] font-medium opacity-80 uppercase tracking-wide">Complete</div>
+                    <div class="text-[10px] font-medium opacity-80 uppercase tracking-wide">Current Term</div>
                 </div>
             </div>
             <div class="bg-[#FA6288] rounded-xl p-4 flex items-center gap-4 text-white shadow-sm">
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <div class="text-2xl font-bold">91</div>
-                    <div class="text-[10px] font-medium opacity-80 uppercase tracking-wide">Unique Views</div>
+                    <div class="text-[10px] font-medium opacity-80 uppercase tracking-wide">Current Session</div>
                 </div>
             </div>
             <div class="bg-[#C5BAE7] rounded-xl p-4 flex items-center gap-4 text-white shadow-sm">

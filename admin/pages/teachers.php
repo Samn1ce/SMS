@@ -12,7 +12,6 @@ $result = mysqli_stmt_get_result($stmt);
 $teachers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
-<!-- Toast -->
 <div
     x-data="{ show: false, message: '', type: '' }"
     x-on:teacher-actioned.window="

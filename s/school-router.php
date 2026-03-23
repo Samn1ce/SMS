@@ -28,6 +28,9 @@ if (!$school) {
 $_SESSION['school_id'] = $school['id'];
 $_SESSION['school_slug'] = $school_slug;
 $_SESSION['school_name'] = $school['school_name'];
+$_SESSION['school_email'] = $school['school_email'];
+$_SESSION['school_address'] = $school['school_address'];
+$_SESSION['school_phone'] = $school['school_phone'];
 
 $spa_views = ['dashboard', 'assignment', 'result', 'profile', 'attendance', 'viewStudents'];
 
