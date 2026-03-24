@@ -67,6 +67,70 @@ $navItems = [
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="<?= $BASE_PATH ?>/assets/js/teachersRequest.js"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#d8dadc",
+              "on-primary-container": "#c4d2ff",
+              "on-surface-variant": "#434654",
+              "on-error": "#ffffff",
+              "tertiary-fixed-dim": "#ffb59b",
+              "inverse-surface": "#2d3133",
+              "surface-container-high": "#e6e8ea",
+              "primary": "#003d9b",
+              "outline-variant": "#c3c6d6",
+              "on-background": "#191c1e",
+              "tertiary-fixed": "#ffdbcf",
+              "surface": "#f7f9fb",
+              "primary-fixed": "#dae2ff",
+              "surface-bright": "#f7f9fb",
+              "on-tertiary-container": "#ffc6b2",
+              "on-surface": "#191c1e",
+              "on-primary-fixed": "#001848",
+              "surface-tint": "#0c56d0",
+              "on-primary": "#ffffff",
+              "primary-container": "#0052cc",
+              "on-primary-fixed-variant": "#0040a2",
+              "surface-container": "#eceef0",
+              "surface-container-low": "#f2f4f6",
+              "inverse-primary": "#b2c5ff",
+              "error": "#ba1a1a",
+              "primary-fixed-dim": "#b2c5ff",
+              "outline": "#737685",
+              "surface-container-highest": "#e0e3e5",
+              "on-secondary-container": "#54647a",
+              "on-secondary-fixed": "#0b1c30",
+              "inverse-on-surface": "#eff1f3",
+              "tertiary-container": "#a33500",
+              "tertiary": "#7b2600",
+              "surface-variant": "#e0e3e5",
+              "secondary-container": "#d0e1fb",
+              "on-tertiary-fixed-variant": "#812800",
+              "on-error-container": "#93000a",
+              "secondary-fixed": "#d3e4fe",
+              "on-tertiary-fixed": "#380d00",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#38485d",
+              "background": "#f7f9fb",
+              "secondary-fixed-dim": "#b7c8e1",
+              "secondary": "#505f76"
+            },
+            fontFamily: {
+              "headline": ["Work Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>

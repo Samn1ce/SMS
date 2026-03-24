@@ -15,7 +15,7 @@ if (!$school_slug) {
   exit('Invalid school link');
 }
 
-$stmt = mysqli_prepare($conn, 'SELECT id, school_name FROM schools WHERE school_slug = ?');
+$stmt = mysqli_prepare($conn, 'SELECT * FROM schools WHERE school_slug = ?');
 mysqli_stmt_bind_param($stmt, 's', $school_slug);
 mysqli_stmt_execute($stmt);
 $school = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
