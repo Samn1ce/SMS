@@ -408,6 +408,96 @@ function renderIcon($name, $class = '')
         </svg>
         ';
       break;
+    case 'sparkles':
+      echo '
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class=" ' .
+        htmlspecialchars($class) .
+        '"  
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="1.8" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+            >
+              <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813 a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12 l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+              <path d="M18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6 l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 012.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/>
+            </svg>
+        ';
+      break;
+    case 'graduateCap':
+      echo '
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class=" ' .
+        htmlspecialchars($class) .
+        '" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="2" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+            >
+                <path d="M4.26 10.147a60.44 60.44 0 00-.491 6.347A48.627 48.627 0 0112 20.904 a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347 m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493 a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814 m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"/>
+                <path d="M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675 A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+            </svg>
+        ';
+      break;
+    case 'sync':
+      echo '
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class=" ' .
+        htmlspecialchars($class) .
+        '" 
+                viewBox="0 0 24 24" 
+                fill="none"
+                stroke="currentColor" 
+                stroke-width="2.5" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+            >
+                <polyline points="23 4 23 10 17 10"/>
+                <polyline points="1 20 1 14 7 14"/>
+                <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+            </svg>
+        ';
+      break;
+    case 'umbrella':
+      echo '
+          <svg xmlns="http://www.w3.org/2000/svg" 
+            class=" ' .
+        htmlspecialchars($class) .
+        '" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="M23 12a11.05 11.05 0 00-22 0zm-5 7a3 3 0 01-6 0v-7"/>
+          </svg>
+        ';
+      break;
+    case 'settings':
+      echo '
+          <svg xmlns="http://www.w3.org/2000/svg" 
+            class=" ' .
+        htmlspecialchars($class) .
+        '"  
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+          </svg>
+        ';
+      break;
     default:
       echo '<!-- Unknown icon: ' . htmlspecialchars($name) . ' -->';
   }
