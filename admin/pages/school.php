@@ -97,19 +97,18 @@ $school_initials = strtoupper(substr($school_name, 0, 2));
   </div>
 
  <div x-data="{
-  open: null,
+  termOpen: false,
+  scheduleOpen: false,
   session: '2024/2025',
   term: 'First Term',
   schedule: 'Mid-Term Break',
   sessions: ['2023/2024', '2024/2025', '2025/2026'],
   terms: ['First Term', 'Second Term', 'Third Term'],
   schedules: ['In Session', 'Holiday', 'Mid-Term Break'],
-  toggle(name) { this.open = this.open === name ? null : name }
 }" class="relative">
 
   <div class="flex items-end justify-between mb-4 px-1">
     <h3 class="text-lg font-bold text-gray-900">Operational Parameters</h3>
-    <a href="#" class="text-blue-700 font-semibold text-sm hover:underline">Manage All</a>
   </div>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -126,7 +125,7 @@ $school_initials = strtoupper(substr($school_name, 0, 2));
         <p class="text-gray-400 font-semibold text-xs">Term: <span class="text-blue-700 font-semibold" x-text="term"></span></p>
       </div>
       <button
-        @click="toggle('term')"
+        @click="termOpen = true"
         class="w-full mt-auto py-2 border border-zinc-200 hover:border-zinc-300 hover:shadow-sm transition-all duration-300 text-blue-700 font-semibold rounded-xl flex justify-center items-center text-sm"
       >
         Change session&nbsp;
@@ -135,21 +134,21 @@ $school_initials = strtoupper(substr($school_name, 0, 2));
 
       <!-- Term & Session Popover -->
       <div
-        x-show="open === 'term'"
+        x-show="termOpen"
         x-transition:enter="transition ease-out duration-150"
         x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
         x-transition:leave="transition ease-in duration-100"
         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
-        @click.outside="open = null"
+        @click.outside="termOpen = false"
         class="absolute bottom-[calc(100%+8px)] left-0 right-0 z-50 bg-white border border-zinc-200 rounded-2xl shadow-xl p-4 space-y-3"
         style="display:none"
       >
         <div class="flex items-center justify-between mb-1">
           <p class="text-xs font-bold text-gray-700 uppercase tracking-wide">Set Term &amp; Session</p>
-          <button @click="open = null" class="text-gray-400 hover:text-gray-600">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button @click="termOpen = false" class="text-gray-400 hover:text-gray-600">
+            <span><?php renderIcon('cancel', 'w-4 h-4'); ?></span>
           </button>
         </div>
 
@@ -194,7 +193,7 @@ $school_initials = strtoupper(substr($school_name, 0, 2));
         <p class="text-gray-400 font-semibold text-xs">Schedule: <span class="text-blue-700 font-semibold" x-text="schedule"></span></p>
       </div>
       <button
-        @click="toggle('schedule')"
+        @click="scheduleOpen = true"
         class="w-full mt-auto py-2 border border-zinc-200 hover:border-zinc-300 hover:shadow-sm transition-all duration-300 text-blue-700 font-semibold rounded-xl flex justify-center items-center text-sm"
       >
         Change Term Schedule&nbsp;
@@ -203,28 +202,28 @@ $school_initials = strtoupper(substr($school_name, 0, 2));
 
       <!-- Schedule Popover -->
       <div
-        x-show="open === 'schedule'"
+        x-show="scheduleOpen"
         x-transition:enter="transition ease-out duration-150"
         x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
         x-transition:leave="transition ease-in duration-100"
         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
-        @click.outside="open = null"
+        @click.outside="scheduleOpen = false"
         class="absolute bottom-[calc(100%+8px)] left-0 right-0 z-50 bg-white border border-zinc-200 rounded-2xl shadow-xl p-4 space-y-3"
         style="display:none"
       >
         <div class="flex items-center justify-between mb-1">
           <p class="text-xs font-bold text-gray-700 uppercase tracking-wide">Set Schedule Status</p>
-          <button @click="open = null" class="text-gray-400 hover:text-gray-600">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button @click="scheduleOpen = false" class="text-gray-400 hover:text-gray-600">
+              <?php renderIcon('cancel', 'w-4 h-4'); ?>
           </button>
         </div>
 
         <div class="space-y-1.5">
           <template x-for="s in schedules" :key="s">
             <button
-              @click="schedule = s; open = null"
+              @click="schedule = s; schedule = false"
               :class="schedule === s ? 'border-blue-400 bg-blue-50 text-blue-700' : 'border-zinc-200 bg-zinc-50 text-gray-700 hover:border-zinc-300'"
               class="w-full flex items-center justify-between px-3 py-2.5 border rounded-xl text-sm font-semibold transition-all"
             >

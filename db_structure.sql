@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2026 at 08:07 PM
+-- Generation Time: Mar 30, 2026 at 03:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,6 +64,18 @@ CREATE TABLE `classes` (
   `class_name` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`id`, `class_name`) VALUES
+(1, 'JSS1'),
+(2, 'JSS2'),
+(3, 'JSS3'),
+(4, 'SSS1'),
+(5, 'SSS2'),
+(6, 'SSS3');
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +86,15 @@ CREATE TABLE `class_arms` (
   `id` int(11) NOT NULL,
   `class_arm` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_arms`
+--
+
+INSERT INTO `class_arms` (`id`, `class_arm`) VALUES
+(1, 'A'),
+(2, 'B'),
+(3, 'C');
 
 -- --------------------------------------------------------
 
@@ -124,6 +145,13 @@ CREATE TABLE `schools` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `schools`
+--
+
+INSERT INTO `schools` (`id`, `school_name`, `school_slug`, `school_email`, `school_phone`, `school_address`, `admin_id`, `created_at`) VALUES
+(24, 'Samnice Academy', 'sam', 'admin@school.com', '09066828098', '123, iba housing estate', 32, '2026-03-10 11:54:30');
+
 -- --------------------------------------------------------
 
 --
@@ -136,6 +164,14 @@ CREATE TABLE `sessions` (
   `is_active` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `session_name`, `is_active`, `created_at`) VALUES
+(1, '2024/2025', 0, '2026-01-15 11:06:06'),
+(2, '2025/2026', 1, '2026-01-15 11:06:06');
 
 -- --------------------------------------------------------
 
@@ -150,6 +186,21 @@ CREATE TABLE `student_subjects` (
   `subject_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `student_subjects`
+--
+
+INSERT INTO `student_subjects` (`id`, `user_id`, `subject_id`, `subject_name`) VALUES
+(117, 33, 4, 'Chemistry'),
+(118, 33, 5, 'Biology'),
+(119, 33, 6, 'Physics'),
+(120, 33, 9, 'CRS'),
+(121, 33, 12, 'Basic Science'),
+(122, 33, 13, 'Basic Tech'),
+(123, 33, 15, 'Computer Studies'),
+(124, 33, 1, 'Mathematics'),
+(125, 33, 2, 'English');
+
 -- --------------------------------------------------------
 
 --
@@ -160,6 +211,27 @@ CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
   `subject_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `subject_name`) VALUES
+(1, 'Mathematics'),
+(2, 'English'),
+(3, 'Economics'),
+(4, 'Chemistry'),
+(5, 'Biology'),
+(6, 'Physics'),
+(7, 'Government'),
+(8, 'Literature'),
+(9, 'CRS'),
+(10, 'IRS'),
+(11, 'Home Economics'),
+(12, 'Basic Science'),
+(13, 'Basic Tech'),
+(14, 'French'),
+(15, 'Computer Studies');
 
 -- --------------------------------------------------------
 
@@ -173,6 +245,15 @@ CREATE TABLE `terms` (
   `session_id` int(11) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `terms`
+--
+
+INSERT INTO `terms` (`id`, `term_name`, `session_id`, `is_active`) VALUES
+(1, 'First Term', 1, 0),
+(2, 'Second Term', 1, 1),
+(3, 'Third Term', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -193,8 +274,18 @@ CREATE TABLE `users` (
   `dob` date NOT NULL,
   `login_count` int(11) NOT NULL DEFAULT 0,
   `roles` enum('student','teacher','admin','super_admin') NOT NULL,
-  `class_id` int(11) DEFAULT NULL
+  `class_id` int(11) DEFAULT NULL,
+  `status` enum('pending','accepted') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `school_id`, `email`, `pwd`, `surname`, `firstname`, `othername`, `arm_id`, `gender`, `dob`, `login_count`, `roles`, `class_id`, `status`) VALUES
+(32, 24, 'samnice@admin.com', '$2y$10$1gEAL6t6CFdyxqSM64WpKO6Ny5t1NKajxgGw9UuNVjksPOBFmuhma', 'Babatunde', 'Ifeoluwa', 'Samson', NULL, '', '0000-00-00', 0, 'admin', NULL, 'accepted'),
+(33, 24, 'iamsamnice@gmail.com', '$2y$10$JTc32/vbrRj1TVkcoJFWE.c09XqyscYpsja1XqcHO6gaGF9r7c/Ri', 'Babatunde', 'Ifeoluwa', 'Samson', 2, 'male', '2014-11-25', 1, 'student', 3, 'accepted'),
+(34, 24, 'teacher@email.com', '$2y$10$6kucEt88.ikCOhpphUKvFuGwr8q307cJI9Dvl.Kv0.bUJJFO5ACo2', 'john', 'doe', 'teacher', NULL, 'male', '2005-02-24', 0, 'teacher', NULL, 'accepted');
 
 --
 -- Indexes for dumped tables
@@ -298,25 +389,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `class_arms`
 --
 ALTER TABLE `class_arms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `holidays`
@@ -334,37 +425,37 @@ ALTER TABLE `results`
 -- AUTO_INCREMENT for table `schools`
 --
 ALTER TABLE `schools`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `student_subjects`
 --
 ALTER TABLE `student_subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `terms`
 --
 ALTER TABLE `terms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables
