@@ -60,3 +60,31 @@ Stack trace:
 [23-Mar-2026 17:25:57 Europe/Berlin] PHP Warning:  include(): Failed opening 'dbh.inc.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\teacherVerification.php on line 8
 [23-Mar-2026 17:26:58 Europe/Berlin] PHP Warning:  include(dbh.inc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\schoolManagementSystem\api\teacherVerification.php on line 8
 [23-Mar-2026 17:26:58 Europe/Berlin] PHP Warning:  include(): Failed opening 'dbh.inc.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\schoolManagementSystem\api\teacherVerification.php on line 8
+[31-Mar-2026 17:30:34 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:30:34 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:30:34 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:30:34 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:31:06 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:31:06 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:31:06 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:31:06 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:31:10 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:31:10 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:31:10 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:31:10 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:33:53 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:33:53 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:33:53 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:33:53 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:33:54 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:33:54 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:33:54 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:33:54 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:38:25 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:38:25 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:38:25 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:38:25 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:38:31 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:38:31 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 11
+[31-Mar-2026 17:38:31 Europe/Berlin] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
+[31-Mar-2026 17:38:31 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\schoolManagementSystem\api\school_settings_handler.php on line 12
