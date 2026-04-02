@@ -166,6 +166,11 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
           Change <?php renderIcon('sync', 'w-3.5 h-3.5 text-blue-700'); ?>
         </button>
 
+        <button @click="testt()"
+          class="w-full mt-auto py-2 border border-zinc-200 hover:border-zinc-300 hover:shadow-sm transition-all text-blue-700 font-semibold rounded-xl flex justify-center items-center gap-1 text-sm">
+          Test <?php renderIcon('sync', 'w-3.5 h-3.5 text-blue-700'); ?>
+        </button>
+
         <div 
           x-show="termOpen" 
           x-transition 

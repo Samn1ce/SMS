@@ -5,7 +5,12 @@ $slug = $_SESSION['school_slug'];
 $school_name = $_SESSION['school_name'];
 
 if (isset($_SESSION['id'])) {
-  header("Location: /schoolmanagementsystem/s/$slug/");
+  $role = $_SESSION['role'];
+  if ($role !== 'admin') {
+    header("Location: /schoolmanagementsystem/s/$slug/dashboard");
+  } else {
+    header("Location: /schoolManagementSystem/s/$slug/admin/dashboard");
+  }
   exit();
 }
 ?>

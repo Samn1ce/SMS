@@ -16,6 +16,16 @@ document.addEventListener('alpine:init', () => {
     newSessionError: '',
     newSessionLoading: false,
 
+    async testt() {
+      console.log('clicked');
+      fetch('/schoolmanagementsystem/api/school_settings_handler.php', {
+        method: 'POST',
+        body: new URLSearchParams({ action: 'auto_generate_session' }),
+      })
+        .then((r) => r.json())
+        .then((data) => console.log(data));
+    },
+
     openConfirm() {
       if (!this.selectedSessionId || !this.selectedTermId) {
         this.saveError = 'Please select both a session and a term';

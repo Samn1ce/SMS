@@ -1,10 +1,21 @@
 <?php
-    include '../includes/dbh.inc.php';
-    include '../components/icons.php';
-    $classQuery = "SELECT * FROM classes";
-    $classResult = mysqli_query($conn, $classQuery);
+include '../includes/dbh.inc.php';
+include '../components/icons.php';
 
-    $slug = $_SESSION['school_slug'];
+$slug = $_SESSION['school_slug'];
+
+if (isset($_SESSION['id'])) {
+  $role = $_SESSION['role'];
+  if ($role !== 'admin') {
+    header("Location: /schoolmanagementsystem/s/$slug/dashboard");
+  } else {
+    header("Location: /schoolManagementSystem/s/$slug/admin/dashboard");
+  }
+  exit();
+}
+
+$classQuery = 'SELECT * FROM classes';
+$classResult = mysqli_query($conn, $classQuery);
 ?>
 
 <!DOCTYPE html>
@@ -32,89 +43,139 @@
                     </div>
                     <div class="w-full flex flex-col gap-4">
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
-                                <?php renderIcon('email', 'w-6 h-6') ?>
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= isset(
+                              $_GET['error'],
+                            ) &&
+                            $_GET['error'] === 'emptyfields' &&
+                            $_GET['email'] === ''
+                              ? 'border-red-500'
+                              : 'border-zinc-400' ?>">
+                                <?php renderIcon('email', 'w-6 h-6'); ?>
                                 <input
                                     type="text" 
                                     name="email" 
                                     placeholder="Enter your e-mail..."
                                     required
-                                    value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"    
+                                    value="<?= isset($_GET['email'])
+                                      ? htmlspecialchars($_GET['email'])
+                                      : '' ?>"    
                                     class="w-full outline-none font-semibold"
                                 />
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['email'] === '')) { echo '
+                            <?php if (
+                              isset($_GET['error']) &&
+                              $_GET['error'] === 'emptyfields' &&
+                              $_GET['email'] === ''
+                            ) {
+                              echo '
                                     <p class="text-red-500 text-xs self-end">
                                         This field is empty
                                     </p>';
-                                }
-                            ?> 
+                            } ?> 
                         </div>
                         <div class="flex flex-col">
-                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['surname'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
-                                <?php renderIcon('name', 'w-6 h-6') ?>
+                            <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= isset(
+                              $_GET['error'],
+                            ) &&
+                            $_GET['error'] === 'emptyfields' &&
+                            $_GET['surname'] === ''
+                              ? 'border-red-500'
+                              : 'border-zinc-400' ?>">
+                                <?php renderIcon('name', 'w-6 h-6'); ?>
                                 <input 
                                     type="text" 
                                     name="surname" 
                                     placeholder="Enter your Surname..."
                                     required
-                                    value="<?= isset($_GET['surname']) ? htmlspecialchars($_GET['surname']) : '' ?>" 
+                                    value="<?= isset($_GET['surname'])
+                                      ? htmlspecialchars($_GET['surname'])
+                                      : '' ?>" 
                                     class="w-full outline-none font-semibold"
                                 />
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['surname'] === '')) { echo '
+                            <?php if (
+                              isset($_GET['error']) &&
+                              $_GET['error'] === 'emptyfields' &&
+                              $_GET['surname'] === ''
+                            ) {
+                              echo '
                                     <p class="text-red-500 text-xs self-end">
                                         This field is empty
                                     </p>';
-                                }
-                            ?> 
+                            } ?> 
                         </div>
                         <div class="flex flex-col md:flex-row gap-4">
-                            <div class="w-1/2 flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['firstname'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
-                                <?php renderIcon('name', 'w-6 h-6') ?>
+                            <div class="w-1/2 flex gap-2 items-center border-b-2 p-3 <?= isset(
+                              $_GET['error'],
+                            ) &&
+                            $_GET['error'] === 'emptyfields' &&
+                            $_GET['firstname'] === ''
+                              ? 'border-red-500'
+                              : 'border-zinc-400' ?>">
+                                <?php renderIcon('name', 'w-6 h-6'); ?>
                                 <input 
                                     type="text" 
                                     name="firstname" 
                                     placeholder="Enter your firstname..."
                                     required
-                                    value="<?= isset($_GET['firstname']) ? htmlspecialchars($_GET['firstname']) : '' ?>" 
+                                    value="<?= isset($_GET['firstname'])
+                                      ? htmlspecialchars($_GET['firstname'])
+                                      : '' ?>" 
                                     class="w-full outline-none font-semibold"
                                 />
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['firstname'] === '')) { echo '
+                            <?php if (
+                              isset($_GET['error']) &&
+                              $_GET['error'] === 'emptyfields' &&
+                              $_GET['firstname'] === ''
+                            ) {
+                              echo '
                                     <p class="text-red-500 text-xs self-end">
                                         This field is empty
                                     </p>';
-                                }
-                            ?> 
-                            <div class="w-1/2 flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['othername'] === '') ? 'border-red-500' : 'border-zinc-400') ?>">
-                                <?php renderIcon('name', 'w-6 h-6') ?>
+                            } ?> 
+                            <div class="w-1/2 flex gap-2 items-center border-b-2 p-3 <?= isset(
+                              $_GET['error'],
+                            ) &&
+                            $_GET['error'] === 'emptyfields' &&
+                            $_GET['othername'] === ''
+                              ? 'border-red-500'
+                              : 'border-zinc-400' ?>">
+                                <?php renderIcon('name', 'w-6 h-6'); ?>
                                 <input 
                                     type="text" 
                                     name="othername" 
                                     placeholder="Enter your othernames..."
                                     required
-                                    value="<?= isset($_GET['othername']) ? htmlspecialchars($_GET['othername']) : '' ?>" 
+                                    value="<?= isset($_GET['othername'])
+                                      ? htmlspecialchars($_GET['othername'])
+                                      : '' ?>" 
                                     class="w-full outline-none font-semibold"
                                 />
                             </div>
-                            <?php 
-                                if (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && ($_GET['othername'] === '')) { echo '
+                            <?php if (
+                              isset($_GET['error']) &&
+                              $_GET['error'] === 'emptyfields' &&
+                              $_GET['othername'] === ''
+                            ) {
+                              echo '
                                     <p class="text-red-500 text-xs self-end">
                                         This field is empty
                                     </p>';
-                                }
-                            ?> 
+                            } ?> 
                         </div>
                         <div
                             x-data="{ role: '' }"
                             class="w-full flex justify-between gap-4"
                         >
                             <div class="w-full flex flex-col">
-                                <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= (isset($_GET['error']) && ($_GET['error'] === 'emptyfields') && (isset($_GET['role']) && $_GET['role'] === 'none') ? 'border-red-500' : 'border-zinc-400') ?>">
+                                <div class="w-full flex gap-2 items-center border-b-2 p-3 <?= isset(
+                                  $_GET['error'],
+                                ) &&
+                                $_GET['error'] === 'emptyfields' &&
+                                (isset($_GET['role']) && $_GET['role'] === 'none')
+                                  ? 'border-red-500'
+                                  : 'border-zinc-400' ?>">
                                     <select 
                                         name="role" 
                                         class="w-full outline-none"
@@ -139,7 +200,7 @@
                                         :disabled="role === 'teacher'"
                                     >
                                         <option value="">-- Select Class --</option>
-                                        <?php while ($class = mysqli_fetch_assoc($classResult)) : ?>
+                                        <?php while ($class = mysqli_fetch_assoc($classResult)): ?>
                                         <option value="<?= $class['id'] ?>">
                                             <?= htmlspecialchars($class['class_name']) ?>
                                         </option>
@@ -167,13 +228,13 @@
                         <div class="w-full flex flex-col md:flex-row justify-between gap-4">
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <?php renderIcon('password', 'w-6 h-6') ?>
+                                    <?php renderIcon('password', 'w-6 h-6'); ?>
                                     <input type="password" name="pwd" placeholder="password" required class="w-full outline-none" />
                                 </div>
                             </div>
                             <div class="flex flex-col w-full">
                                 <div class="w-full flex gap-2 items-center border-b-2 border-zinc-400 p-3">
-                                    <?php renderIcon('password', 'w-6 h-6') ?>
+                                    <?php renderIcon('password', 'w-6 h-6'); ?>
                                     <input type="password" name="confirmPwd" placeholder="confirm password" required class="w-full outline-none" />
                                 </div>
                             </div>
@@ -193,7 +254,9 @@
                                     Register
                                 </span>
                             </button>
-                            <a href="/schoolManagementSystem/s/<?= htmlspecialchars($slug) ?>/login" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I already have an account</a>
+                            <a href="/schoolManagementSystem/s/<?= htmlspecialchars(
+                              $slug,
+                            ) ?>/login" class="hover:text-red-500 text-blue-400 text-xs border-b border-dotted border-blue-400">I already have an account</a>
                         </div>
                     </div>
                 </div>

@@ -58,9 +58,9 @@ if ($action === 'auto_generate_session') {
   }
 
   // Insert NEXT session (NOT ACTIVE)
-  $stmt = mysqli_prepare($conn, 'INSERT INTO sessions (session_name) VALUES (?)');
-  mysqli_stmt_bind_param($stmt, 's', $session_name);
-  mysqli_stmt_execute($stmt);
+  // $stmt = mysqli_prepare($conn, 'INSERT INTO sessions (session_name) VALUES (?)');
+  // mysqli_stmt_bind_param($stmt, 's', $session_name);
+  // mysqli_stmt_execute($stmt);
 
   echo json_encode([
     'success' => true,

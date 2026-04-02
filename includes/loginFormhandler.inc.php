@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $login_count = (int) $row['login_count'];
 
   if ($row['roles'] === 'admin') {
+    require_once __DIR__ . '/generateSession.php';
     header("Location: /schoolmanagementsystem/s/$slug/admin/dashboard");
     exit();
   }
