@@ -1,6 +1,5 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('schoolSetting', (initialData) => ({
-    // seeded from PHP via x-data argument
     sessions: initialData.sessions,
     terms: initialData.terms,
     selectedSessionId: initialData.selectedSessionId,
@@ -8,13 +7,11 @@ document.addEventListener('alpine:init', () => {
     displaySession: initialData.displaySession,
     displayTerm: initialData.displayTerm,
 
-    // ui state
     termOpen: false,
     confirmOpen: false,
     saving: false,
     saveError: '',
 
-    // new session
     newSessionName: '',
     newSessionError: '',
     newSessionLoading: false,
@@ -34,7 +31,7 @@ document.addEventListener('alpine:init', () => {
       this.confirmOpen = false;
 
       try {
-        const res = await fetch('school_settings_handler.php', {
+        const res = await fetch('/schoolmanagementsystem/api/school_settings_handler.php', {
           method: 'POST',
           body: new URLSearchParams({
             action: 'save_settings',
@@ -62,12 +59,13 @@ document.addEventListener('alpine:init', () => {
 
     async createSession() {
       this.newSessionError = '';
+      console.log('session error:', this.newSessionError);
 
-      // frontend guards
       if (!this.newSessionName.trim()) {
         this.newSessionError = 'Session name cannot be empty';
         return;
       }
+      console.log('session name:', this.newSessionName);
 
       if (!/^\d{4}\/\d{4}$/.test(this.newSessionName)) {
         this.newSessionError = 'Format must be YYYY/YYYY e.g. 2025/2026';
@@ -83,7 +81,7 @@ document.addEventListener('alpine:init', () => {
       this.newSessionLoading = true;
 
       try {
-        const res = await fetch('school_settings_handler.php', {
+        const res = await fetch('/schoolmanagementsystem/api/school_settings_handler.php', {
           method: 'POST',
           body: new URLSearchParams({
             action: 'create_session',
@@ -97,7 +95,6 @@ document.addEventListener('alpine:init', () => {
         }
 
         this.sessions.unshift(res.session);
-        this.selectedSessionId = res.session.id;
         this.newSessionName = '';
       } catch (e) {
         this.newSessionError = 'Network error. Please try again.';

@@ -13,20 +13,17 @@ $result = mysqli_query($conn, 'SELECT * FROM terms ORDER BY id ASC');
 $all_terms = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // sessions for this school
-$stmt = mysqli_prepare($conn, 'SELECT * FROM sessions WHERE school_id = ? ORDER BY id DESC');
-mysqli_stmt_bind_param($stmt, 'i', $school_id);
-mysqli_stmt_execute($stmt);
-$all_sessions = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
+$stmt_sessions = mysqli_query($conn, 'SELECT * FROM sessions');
+$all_sessions = mysqli_fetch_all($stmt_sessions, MYSQLI_ASSOC);
 
-// current active setting for this school
 $stmt = mysqli_prepare(
   $conn,
   "
-    SELECT sts.*, t.term_name, s.session_name
-    FROM school_term_settings sts
-    JOIN terms t ON t.id = sts.term_id
-    JOIN sessions s ON s.id = sts.session_id
-    WHERE sts.school_id = ?
+    SELECT ss.*, t.term_name, s.session_name
+    FROM school_settings ss
+    JOIN terms t ON t.id = ss.term_id
+    JOIN sessions s ON s.id = ss.session_id
+    WHERE ss.school_id = ?
 ",
 );
 mysqli_stmt_bind_param($stmt, 'i', $school_id);
@@ -40,8 +37,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
 ?>
 
 <div class="space-y-10">
-
-  <!-- ── School Info + Registry ── -->
   <section class="flex flex-col md:flex-row gap-4">
     <div class="bg-white border border-zinc-200/60 rounded-2xl p-6 flex-1">
       <div class="flex items-start justify-between">
@@ -114,7 +109,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
     </div>
   </section>
 
-  <!-- ── Institutional Mission ── -->
   <div class="relative overflow-hidden bg-white border border-zinc-200/60 rounded-2xl p-8 shadow-sm">
     <div class="flex items-center gap-2 mb-5">
       <?php renderIcon('sparkles', 'w-6 h-6 text-blue-700'); ?>
@@ -139,16 +133,12 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
     </div>
   </div>
 
-  <!-- ── Operational Parameters ── -->
   <div>
     <div class="flex items-end justify-between mb-4 px-1">
       <h3 class="text-lg font-bold text-gray-900">Operational Parameters</h3>
-      <a href="#" class="text-blue-700 font-semibold text-sm hover:underline">Manage All</a>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-
-      <!-- ── Academic Term & Session ── -->
       <div 
         x-data='schoolSetting({
           sessions: <?= json_encode(array_values($all_sessions), JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
@@ -176,11 +166,13 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
           Change <?php renderIcon('sync', 'w-3.5 h-3.5 text-blue-700'); ?>
         </button>
 
-        <!-- popover -->
-        <div x-show="termOpen" x-transition @click.outside="termOpen = false; confirmOpen = false"
+        <div 
+          x-show="termOpen" 
+          x-transition 
+          @click.outside="termOpen = false; confirmOpen = false"
           class="absolute bottom-[calc(100%+8px)] left-0 right-0 z-50 bg-white border border-zinc-200 rounded-2xl shadow-xl p-4 space-y-3"
-          style="display:none">
-
+          style="display: none;"
+        >
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold text-gray-700 uppercase tracking-wide">Set Term &amp; Session</p>
             <button @click="termOpen = false; confirmOpen = false" class="text-gray-400 hover:text-gray-600">
@@ -188,7 +180,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
             </button>
           </div>
 
-          <!-- session select -->
           <div>
             <label class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1 block">Academic Session</label>
             <div class="relative">
@@ -205,17 +196,16 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
             </div>
           </div>
 
-          <!-- add new session -->
           <div>
             <label class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1 block">Add New Session</label>
-            <div class="flex gap-2">
+            <div class="flex gap-2 w-fulll">
               <input
                 x-model="newSessionName"
                 @input="newSessionName = newSessionName.replace(/[^\d\/]/g, '').slice(0, 9)"
                 @keydown.enter="createSession()"
                 placeholder="e.g. 2026/2027"
                 maxlength="9"
-                class="flex-1 border border-zinc-200 rounded-xl px-3 py-2 text-sm font-semibold text-gray-800 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
+                class="flex-1 w-4/5 border border-zinc-200 rounded-xl px-3 py-2 text-sm font-semibold text-gray-800 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
               />
               <button @click="createSession()" :disabled="newSessionLoading"
                 class="px-3 py-2 bg-zinc-100 hover:bg-zinc-200 text-gray-700 font-semibold text-sm rounded-xl transition-colors disabled:opacity-50">
@@ -226,7 +216,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
             <p x-show="newSessionError" x-text="newSessionError" class="text-xs text-red-500 mt-1" style="display:none"></p>
           </div>
 
-          <!-- term select -->
           <div>
             <label class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1 block">Current Term</label>
             <div class="relative">
@@ -245,7 +234,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
 
           <p x-show="saveError" x-text="saveError" class="text-xs text-red-500" style="display:none"></p>
 
-          <!-- save button -->
           <div x-show="!confirmOpen">
             <button @click="openConfirm()"
               class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl transition-colors">
@@ -253,7 +241,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
             </button>
           </div>
 
-          <!-- confirm step -->
           <div x-show="confirmOpen" class="space-y-2" style="display:none">
             <p class="text-xs text-gray-500 text-center">This updates the active term and session for your school. Continue?</p>
             <div class="flex gap-2">
@@ -268,11 +255,9 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
               </button>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- Holiday Schedule -->
       <div class="bg-white border border-zinc-200/70 rounded-xl p-5 hover:shadow-sm transition-shadow flex flex-col">
         <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
           <?php renderIcon('umbrella', 'w-4 h-4'); ?>
@@ -281,7 +266,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
         <p class="text-xs text-gray-400 leading-relaxed">Observance of regional breaks, institutional holidays, and faculty recesses.</p>
       </div>
 
-      <!-- Global Events & Policies -->
       <div class="bg-white border border-zinc-200/70 rounded-xl p-5 hover:shadow-sm transition-shadow cursor-pointer">
         <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
           <?php renderIcon('settings', 'w-4 h-4'); ?>
@@ -290,7 +274,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
         <p class="text-xs text-gray-400 leading-relaxed">Compliance guidelines and event management for international exchanges.</p>
       </div>
 
-      <!-- Administrative Support -->
       <div class="bg-white border border-zinc-200/70 rounded-xl p-5 hover:shadow-sm transition-shadow cursor-pointer">
         <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-blue-700 mb-4">
           <?php renderIcon('headphone', 'w-4 h-4'); ?>
@@ -298,8 +281,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
         <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">Administrative Support</h4>
         <p class="text-xs text-gray-400 leading-relaxed">Direct channels for faculty assistance, IT resources, and infrastructure aid.</p>
       </div>
-
     </div>
   </div>
-
 </div>
