@@ -45,13 +45,18 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
             <?= strtoupper(substr($school_name, 0, 2)) ?>
           </div>
           <div>
-            <h3 class="text-lg font-semibold text-gray-900"><?= htmlspecialchars(
+            <h3 class="text-sm md:text-lg font-semibold text-gray-900"><?= htmlspecialchars(
               $school_name,
             ) ?></h3>
-            <p class="text-sm text-neutral-400"><?= htmlspecialchars($school_address) ?></p>
+            <p class="text-xs md:text-sm text-neutral-400"><?= htmlspecialchars(
+              $school_address,
+            ) ?></p>
+            <div class="mt-1 w-20 block md:hidden items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700 uppercase">
+              <span class="mr-1 w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span> Active
+            </div>
           </div>
         </div>
-        <div class="mt-1 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700 uppercase tracking-wide">
+        <div class="mt-1 hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700 uppercase tracking-wide">
           <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span> Active
         </div>
       </div>
@@ -114,21 +119,21 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
       <?php renderIcon('sparkles', 'w-6 h-6 text-blue-700'); ?>
       <h3 class="text-base font-bold text-gray-900">Institutional Mission</h3>
     </div>
-    <p class="text-xl font-semibold text-gray-800 leading-snug italic mb-8" style="font-family:'Work Sans',sans-serif;">
+    <p class="text-sm md:text-xl font-semibold text-gray-800 leading-snug italic mb-8" style="font-family:'Work Sans',sans-serif;">
       "To cultivate intellectual curiosity and architectural precision in every student, preparing them for the complexities of a dynamic global landscape through interdisciplinary mastery."
     </p>
     <div class="grid grid-cols-3 gap-4 pt-6 border-t border-zinc-100">
       <div>
         <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Inquiry Rate</p>
-        <p class="text-xl font-bold text-blue-700">94%</p>
+        <p class="text-xs md:text-xl font-bold text-blue-700">94%</p>
       </div>
       <div>
         <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Global Partners</p>
-        <p class="text-xl font-bold text-blue-700">12 Countries</p>
+        <p class="text-xs md:text-xl font-bold text-blue-700">12 Countries</p>
       </div>
       <div>
         <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Faculty Tenure</p>
-        <p class="text-xl font-bold text-blue-700">8.4 Yrs</p>
+        <p class="text-xs md:text-xl font-bold text-blue-700">8.4 Yrs</p>
       </div>
     </div>
   </div>
@@ -138,7 +143,7 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
       <h3 class="text-lg font-bold text-gray-900">Operational Parameters</h3>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
       <div 
         x-data='schoolSetting({
           sessions: <?= json_encode(array_values($all_sessions), JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
@@ -164,11 +169,6 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
         <button @click="termOpen = true"
           class="w-full mt-auto py-2 border border-zinc-200 hover:border-zinc-300 hover:shadow-sm transition-all text-blue-700 font-semibold rounded-xl flex justify-center items-center gap-1 text-sm">
           Change <?php renderIcon('sync', 'w-3.5 h-3.5 text-blue-700'); ?>
-        </button>
-
-        <button @click="testt()"
-          class="w-full mt-auto py-2 border border-zinc-200 hover:border-zinc-300 hover:shadow-sm transition-all text-blue-700 font-semibold rounded-xl flex justify-center items-center gap-1 text-sm">
-          Test <?php renderIcon('sync', 'w-3.5 h-3.5 text-blue-700'); ?>
         </button>
 
         <div 
