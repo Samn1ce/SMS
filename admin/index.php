@@ -65,6 +65,7 @@ $navItems = [
     <title>Schooly | Admin</title>
     <script defer src="<?= $BASE_PATH ?>/assets/js/teachersRequest.js"></script>
     <script defer src="<?= $BASE_PATH ?>/assets/js/schoolSettings.js"></script>
+    <script defer src="<?= $BASE_PATH ?>/assets/js/noticeBoard.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -124,11 +125,217 @@ $navItems = [
                         ></p>
                     </div>
                     <div class="flex items-center gap-3 md:gap-4 lg:gap-6">
-                        <button class="text-gray-400 hover:text-gray-600">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        </button>
+                        <div x-data="noticeBoard()" class="relative">
+                            <button
+                                @click="open = true"
+                                class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                                <?= renderIcon('message', 'w-5 h-5') ?>
+                            </button>
+                            <div
+                                x-show="open"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100"
+                                x-transition:leave-end="opacity-0"
+                                @click="closeModal()"
+                                class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+                                style="display:none;"
+                            >
+                            </div>
+                            <div
+                                x-show="open"
+                                x-transition:enter="transition ease-out duration-250"
+                                x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+                                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                x-transition:leave-end="opacity-0 translate-y-4 scale-95"
+                                class="fixed inset-0 z-50 flex items-center justify-center p-4"
+                                @keydown.escape.window="closeModal()"
+                                style="display:none;"
+                            >
+                                <div
+                                    @click.stop
+                                    class="bg-white w-full max-w-lg rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
+                                >
+                                    <div class="px-6 pt-6 pb-4 border-b border-gray-100 flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 bg-[#EDE9FF] rounded-xl flex items-center justify-center">
+                                                <?php renderIcon(
+                                                  'journal',
+                                                  'w-5 h-5 text-[#493988]',
+                                                ); ?>
+                                            </div>
+                                            <div>
+                                                <h2 class="text-base font-bold text-gray-900 leading-tight">Post to Notice Board</h2>
+                                                <p class="text-xs text-gray-400 mt-0.5">Visible to all students & teachers</p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            @click="closeModal()"
+                                            class="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors duration-200">
+                                            <?php renderIcon('close', 'w-4 h-4'); ?>
+                                        </button>
+                                    </div>
+
+                                    <div class="px-6 py-5 space-y-4">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Priority</span>
+                                            <div class="flex gap-2">
+                                                <template x-for="level in priorities" :key="level.value">
+                                                    <button
+                                                        @click="form.priority = level.value"
+                                                        :class="form.priority === level.value
+                                                            ? level.activeClass
+                                                            : 'bg-gray-100 text-gray-500 hover:bg-gray-200'"
+                                                        class="px-3 py-1 rounded-full text-xs font-semibold transition-colors duration-150">
+                                                        <span x-text="level.label"></span>
+                                                    </button>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Subject</label>
+                                            <input
+                                                type="text"
+                                                x-model="form.subject"
+                                                @input="errors.subject = ''"
+                                                placeholder="e.g. School Closure - Public Holiday"
+                                                :class="errors.subject ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#493988]/20'"
+                                                class="w-full px-4 py-2.5 rounded-xl border text-sm text-gray-800 placeholder-gray-400
+                                                    focus:outline-none focus:ring-2 transition-all duration-150 bg-gray-50">
+                                            <p x-show="errors.subject" x-text="errors.subject" class="text-red-500 text-xs mt-1"></p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Send To</label>
+                                            <div class="flex gap-2">
+                                                <template x-for="group in audiences" :key="group.value">
+                                                    <button
+                                                        @click="toggleAudience(group.value)"
+                                                        :class="form.audience.includes(group.value)
+                                                            ? 'bg-[#493988] text-white border-[#493988]'
+                                                            : 'bg-white text-gray-500 border-gray-200 hover:border-[#493988]/40'"
+                                                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all duration-150">
+                                                        <span x-text="group.icon"></span>
+                                                        <span x-text="group.label"></span>
+                                                    </button>
+                                                </template>
+                                            </div>
+                                            <p x-show="errors.audience" x-text="errors.audience" class="text-red-500 text-xs mt-1"></p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Message</label>
+                                            <textarea
+                                                x-model="form.message"
+                                                @input="errors.message = ''"
+                                                rows="4"
+                                                placeholder="Write your notice here…"
+                                                :class="errors.message ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#493988]/20'"
+                                                class="w-full px-4 py-2.5 rounded-xl border text-sm text-gray-800 placeholder-gray-400
+                                                    focus:outline-none focus:ring-2 transition-all duration-150 bg-gray-50 resize-none"></textarea>
+                                            <div class="flex justify-between items-center mt-1">
+                                                <p x-show="errors.message" x-text="errors.message" class="text-red-500 text-xs"></p>
+                                                <span class="text-xs text-gray-300 ml-auto" x-text="`${form.message.length} / 500`"></span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-gray-600 mb-1.5">
+                                                    Expires After
+                                                    <span class="font-normal text-gray-400 ml-1">— notice hides from the board after this date</span>
+                                                </label>
+
+                                                <!-- Quick-pick buttons -->
+                                                <div class="flex flex-wrap gap-2 mb-2">
+                                                    <template x-for="preset in expiryPresets" :key="preset.label">
+                                                        <button
+                                                            @click="applyPreset(preset.days)"
+                                                            :class="form.expiryPreset === preset.days
+                                                                ? 'bg-[#493988] text-white border-[#493988]'
+                                                                : 'bg-white text-gray-500 border-gray-200 hover:border-[#493988]/40'"
+                                                            class="px-3 py-1.5 rounded-xl border text-xs font-medium transition-all duration-150"
+                                                            x-text="preset.label">
+                                                        </button>
+                                                    </template>
+                                                    <!-- Custom toggle -->
+                                                    <button
+                                                        @click="form.expiryPreset = 'custom'"
+                                                        :class="form.expiryPreset === 'custom'
+                                                            ? 'bg-[#493988] text-white border-[#493988]'
+                                                            : 'bg-white text-gray-500 border-gray-200 hover:border-[#493988]/40'"
+                                                        class="px-3 py-1.5 rounded-xl border text-xs font-medium transition-all duration-150">
+                                                        📅 Custom
+                                                    </button>
+                                                </div>
+
+                                                <!-- Custom date input — only shows when Custom is selected -->
+                                                <div x-show="form.expiryPreset === 'custom'"
+                                                    x-transition:enter="transition ease-out duration-150"
+                                                    x-transition:enter-start="opacity-0 -translate-y-1"
+                                                    x-transition:enter-end="opacity-100 translate-y-0">
+                                                    <input
+                                                        type="date"
+                                                        x-model="form.expires_at"
+                                                        :min="minDate()"
+                                                        @change="errors.expires_at = ''"
+                                                        :class="errors.expires_at ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-[#493988]/20'"
+                                                        class="w-full px-4 py-2.5 rounded-xl border text-sm text-gray-700
+                                                            focus:outline-none focus:ring-2 transition-all duration-150 bg-gray-50">
+                                                </div>
+
+                                                <!-- Live preview of the chosen date -->
+                                                <p x-show="form.expires_at"
+                                                class="text-xs text-[#493988] font-medium mt-1.5 flex items-center gap-1">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    <span x-text="'Expires ' + formatExpiry(form.expires_at)"></span>
+                                                </p>
+
+                                                <p x-show="errors.expires_at" x-text="errors.expires_at" class="text-red-500 text-xs mt-1"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-6 pb-6 flex items-center justify-between gap-3">
+                                        <button
+                                            @click="closeModal()"
+                                            class="px-4 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors duration-150">
+                                            Cancel
+                                        </button>
+                                        <button
+                                            @click="submitNotice()"
+                                            :disabled="submitting"
+                                            class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#493988] hover:bg-[#3a2d6e]
+                                                text-white text-sm font-semibold transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm shadow-[#493988]/30">
+                                            <svg x-show="submitting" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+                                            </svg>
+                                            <span x-text="submitting ? 'Posting…' : 'Post Notice'"></span>
+                                        </button>
+                                    </div>
+                                    <div
+                                        x-show="success"
+                                        x-transition:enter="transition ease-out duration-300"
+                                        x-transition:enter-start="opacity-0 -translate-y-2"
+                                        x-transition:enter-end="opacity-100 translate-y-0"
+                                        class="absolute inset-x-0 bottom-0 mx-4 mb-4 bg-emerald-50 border border-emerald-200
+                                            text-emerald-700 text-sm font-medium px-4 py-3 rounded-xl flex items-center gap-2"
+                                        style="display:none;">
+                                        <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        Notice posted to the board successfully!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <button class="text-gray-400 hover:text-gray-600 relative">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                            <?= renderIcon('bell', 'w-5 h-5') ?>
                             <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
                         </button>
                         <div x-data="{ open: false }" class="relative flex items-center gap-1 md:gap-2 lg:gap-3 ml-2 cursor-pointer">

@@ -36,7 +36,7 @@ $current_term_id = (int) ($active_setting['term_id'] ?? 0);
 $current_session_id = (int) ($active_setting['session_id'] ?? 0);
 ?>
 
-<div class="space-y-10">
+<div class="space-y-4">
   <section class="flex flex-col md:flex-row gap-4">
     <div class="bg-white border border-zinc-200/60 rounded-2xl p-6 flex-1">
       <div class="flex items-start justify-between">
@@ -44,7 +44,7 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
           <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center font-semibold text-blue-700 text-xl">
             <?= strtoupper(substr($school_name, 0, 2)) ?>
           </div>
-          <div>
+          <div class="flex flex-col gap-1 md:gap-0">
             <h3 class="text-sm md:text-lg font-semibold text-gray-900"><?= htmlspecialchars(
               $school_name,
             ) ?></h3>
@@ -61,17 +61,17 @@ $current_session_id = (int) ($active_setting['session_id'] ?? 0);
         </div>
       </div>
       <hr class="my-4 border-zinc-100">
-      <div class="flex gap-8 flex-wrap text-sm">
+      <div class="flex gap-3 md:gap-8 flex-wrap flex-col md:flex-row text-sm">
         <div>
-          <p class="text-xs text-neutral-400 uppercase tracking-wide mb-1">Code</p>
+          <p class="text-xs text-neutral-400 uppercase tracking-wide md:mb-1">Code</p>
           <span class="font-medium"><?= htmlspecialchars($school_slug) ?></span>
         </div>
         <div>
-          <p class="text-xs text-neutral-400 uppercase tracking-wide mb-1">Email</p>
+          <p class="text-xs text-neutral-400 uppercase tracking-wide md:mb-1">Email</p>
           <span class="font-medium"><?= htmlspecialchars($school_email) ?></span>
         </div>
         <div>
-          <p class="text-xs text-neutral-400 uppercase tracking-wide mb-1">Phone</p>
+          <p class="text-xs text-neutral-400 uppercase tracking-wide md:mb-1">Phone</p>
           <span class="font-medium"><?= htmlspecialchars($school_phone) ?></span>
         </div>
       </div>

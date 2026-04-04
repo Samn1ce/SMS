@@ -56,7 +56,7 @@ $currentSession = $result['session_name'] ?? 'N/A';
                 }
             }
         }" 
-        class="z-10 bg-[#EBE7FF] rounded-3xl p-5 md:p-6 lg:p-8 relative border border-zinc-200/60 overflow-hidden flex flex-col justify-center h-[160px] md:h-[180px] lg:h-[200px]"
+        class="z-10 bg-[#EBE7FF] rounded-3xl p-5 md:p-6 lg:p-8 relative border border-zinc-200/60 overflow-hidden flex flex-col justify-center h-40 md:h-[180px] lg:h-[200px]"
     >
         <h2 class="text-2xl md:text-3xl lg:text-4xl font-serif text-[#1F1B3E] font-bold mb-2 md:mb-2 lg:mb-3">
             <span x-text="greeting"></span>, <?= formatName($firstname) ?>.
