@@ -124,7 +124,7 @@ $currentSession = $result['session_name'] ?? 'N/A';
                 </div>
                 <div>
                     <div class="text-md font-bold text-[#493988]">126</div>
-                    <div class="text-[10px] font-medium text-[#493988] opacity-80 uppercase tracking-wide">Total Views</div>
+                    <div class="text-[10px] font-medium text-[#493988] opacity-80 uppercase tracking-wide">Notice Available</div>
                 </div>
             </div>
         </div>

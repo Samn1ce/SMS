@@ -116,7 +116,7 @@ document.addEventListener('alpine:init', () => {
       this.submitting = true;
 
       try {
-        const res = await fetch('/schoolManagementSystem/api/noticeBoard.php', {
+        const res = await fetch('/schoolManagementSystem/api/noticeBoard_api.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -153,7 +153,7 @@ document.addEventListener('alpine:init', () => {
       if (!confirm('Delete this notice?')) return;
 
       try {
-        const res = await fetch('/schoolManagementSystem/api/noticeBoard.php', {
+        const res = await fetch('/schoolManagementSystem/api/noticeBoard_api.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'delete_notice', id }),

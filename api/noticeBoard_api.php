@@ -13,7 +13,6 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 require_once '../includes/dbh.inc.php';
 
-// ── Auth guard ────────────────────────────────────────────────────────────────
 if (!isset($_SESSION['id'], $_SESSION['school_id'], $_SESSION['role'])) {
   echo json_encode(['success' => false, 'message' => 'Unauthorised.']);
   exit();
@@ -31,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $data = json_decode(file_get_contents('php://input'), true);
   $action = $data['action'] ?? '';
 
-  // ── ACTION: post_notice ───────────────────────────────────────────────────
   if ($action === 'post_notice') {
     $subject = trim($data['subject'] ?? '');
     $message = trim($data['message'] ?? '');
@@ -39,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $expires_at = trim($data['expires_at'] ?? '');
     $audienceRaw = $data['audience'] ?? ['all'];
 
-    // Resolve audience array → single ENUM value
     $audienceMap = [
       'all' => 'all',
       'students' => 'student',
@@ -54,8 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       count($normalised) >= 2 || in_array('all', $normalised, true)
         ? 'all'
         : $normalised[0] ?? 'all';
-
-    // --- Validate ---
     if (empty($subject) || empty($message) || empty($expires_at)) {
       echo json_encode([
         'success' => false,
@@ -115,15 +110,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       exit();
     }
 
-    // --- Insert ---
     mysqli_begin_transaction($conn);
 
     try {
       $stmt = mysqli_prepare(
         $conn,
         "
-            INSERT INTO notice (school_id, admin_id, subject, message, audience, priority, expires_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+          INSERT INTO notice (school_id, admin_id, subject, message, audience, priority, expires_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
         ",
       );
       mysqli_stmt_bind_param(
@@ -162,8 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       mysqli_rollback($conn);
       echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
-
-    // ── ACTION: delete_notice ─────────────────────────────────────────────────
   } elseif ($action === 'delete_notice') {
     $id = (int) ($data['id'] ?? 0);
 
@@ -173,11 +165,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-      // Verify ownership before deleting
       $stmt = mysqli_prepare(
         $conn,
         "
-            SELECT id FROM notice WHERE id = ? AND school_id = ? AND admin_id = ?
+          SELECT id FROM notice WHERE id = ? AND school_id = ? AND admin_id = ?
         ",
       );
       mysqli_stmt_bind_param($stmt, 'iii', $id, $schoolId, $adminId);
@@ -200,8 +191,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
       echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
-
-    // ── Unknown action ────────────────────────────────────────────────────────
   } else {
     echo json_encode(['success' => false, 'message' => 'Invalid action.']);
   }

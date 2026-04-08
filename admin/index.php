@@ -80,12 +80,12 @@ $navItems = [
                 <div class="w-8 h-8 bg-[#493988] rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0">S</div>
                 <span class="hidden lg:inline font-bold text-xl text-gray-900 tracking-tight">SchooLY</span>
             </div>
-            <button class="hidden lg:flex items-center justify-between w-full bg-white border border-gray-100 shadow-sm rounded-full py-2 pl-4 pr-2 mb-8 hover:shadow-md transition-shadow">
-                <span class="text-sm font-semibold text-gray-700">Create<br>New Pitch</span>
-                <div class="w-10 h-10 bg-[#7B61FF] rounded-full flex items-center justify-center text-white shadow-md">
+            <div x-data="noticeBoard()" class="hidden lg:flex items-center justify-between w-full bg-white border border-gray-100 shadow-sm rounded-full py-2 pl-4 pr-2 mb-8 hover:shadow-md transition-shadow">
+                <span class="text-sm font-semibold text-gray-700">Create<br>New "Notice"</span>
+                <button @click="open = true" class="cursor-pointer w-10 h-10 bg-[#7B61FF] rounded-full flex items-center justify-center text-white shadow-md">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                </div>
-            </button>
+                </button>
+            </div>
             <button class="flex lg:hidden w-10 h-10 bg-[#7B61FF] rounded-full items-center justify-center text-white shadow-md mb-8">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             </button>
@@ -124,6 +124,7 @@ $navItems = [
                             x-text="new Date().toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })"
                         ></p>
                     </div>
+                    <!-- Add Notice Modal -->
                     <div class="flex items-center gap-3 md:gap-4 lg:gap-6">
                         <div x-data="noticeBoard()" class="relative">
                             <button
