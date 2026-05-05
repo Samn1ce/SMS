@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/bootstrap.php';
 include '../includes/dbh.inc.php';
 include '../components/icons.php';
 

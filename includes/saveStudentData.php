@@ -1,6 +1,6 @@
 <?php
+require_once __DIR__ . '/../config/bootstrap.php';
 include '../includes/dbh.inc.php';
-// session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $arm_id = $_POST['arm_id'];

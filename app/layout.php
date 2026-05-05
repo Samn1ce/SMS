@@ -41,6 +41,11 @@ if ($role === 'teacher') {
   ];
 }
 $navItems[] = [
+  'id' => 'notice-board',
+  'label' => 'Notice Board',
+  'icon' => 'person',
+];
+$navItems[] = [
   'id' => 'profile',
   'label' => 'Student Profile',
   'icon' => 'person',

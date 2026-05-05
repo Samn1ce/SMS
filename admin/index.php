@@ -92,12 +92,11 @@ $navItems = [
 
             <nav class="flex-1 flex flex-col gap-1 lg:space-y-2 w-full">
                 <?php foreach ($navItems as $item):
-
                   $isActive = $page === $item['page'];
                   $classes = $isActive
                     ? 'bg-gray-50 text-gray-900 border-2 border-blue-400/60'
                     : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50';
-                  ?>
+                ?>
                 <a href="/schoolManagementSystem/s/<?= $slug ?>/admin/<?= $item['page'] ?>"
                    class="flex items-center justify-center lg:justify-start gap-4 px-0 lg:px-4 py-3 rounded-xl font-medium transition-colors <?= $classes ?>">
                     <svg class="w-5 h-5 shrink-0 <?= $isActive ? 'text-gray-500' : '' ?>"

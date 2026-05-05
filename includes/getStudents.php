@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/bootstrap.php';
 include "dbh.inc.php";
 
 $class_id = $_GET['class_id'];

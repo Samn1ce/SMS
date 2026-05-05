@@ -1,10 +1,6 @@
 <?php
+require_once __DIR__ . '/../config/bootstrap.php';
 session_start();
-
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/api-error.log');
-error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');

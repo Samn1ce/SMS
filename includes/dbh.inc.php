@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/bootstrap.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $dsn = "localhost";
 $dbusername = "root";

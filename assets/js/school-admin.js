@@ -1,34 +1,34 @@
-document.addEventListener("alpine:init", () => {
-  Alpine.data("setupApp", () => ({
+document.addEventListener('alpine:init', () => {
+  Alpine.data('setupApp', () => ({
     step: 1,
     success: false,
     submitting: false,
     showPassword: false,
     school: {
-      name: "",
-      slug: "",
-      email: "",
-      phone: "",
-      address: "",
+      name: '',
+      slug: '',
+      email: '',
+      phone: '',
+      address: '',
     },
     admin: {
       name: {
-        surname: "",
-        firstname: "",
-        othername: "",
+        surname: '',
+        firstname: '',
+        othername: '',
       },
-      email: "",
-      password: "",
-      confirm_password: "",
+      email: '',
+      password: '',
+      confirm_password: '',
     },
     setupResult: {},
     notification: {
       show: false,
-      message: "",
-      type: "success",
+      message: '',
+      type: 'success',
     },
 
-    showNotification(message, type = "success") {
+    showNotification(message, type = 'success') {
       this.notification.message = message;
       this.notification.type = type;
       this.notification.show = true;
@@ -40,14 +40,14 @@ document.addEventListener("alpine:init", () => {
 
     nextStep() {
       if (!this.school.name || !this.school.slug || !this.school.email) {
-        this.showNotification("Please fill all required fields", "error");
+        this.showNotification('Please fill all required fields', 'error');
         return;
       }
 
       // Validate email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.school.email)) {
-        this.showNotification("Please enter a valid email address", "error");
+        this.showNotification('Please enter a valid email address', 'error');
         return;
       }
       this.step = 2;
@@ -61,67 +61,70 @@ document.addEventListener("alpine:init", () => {
         !this.admin.password ||
         !this.admin.confirm_password
       ) {
-        this.showNotification("Please fill all required fields", "error");
+        this.showNotification('Please fill all required fields', 'error');
         return;
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.admin.email)) {
-        this.showNotification("Please enter a valid email address", "error");
+        this.showNotification('Please enter a valid email address', 'error');
         return;
       }
 
       if (this.admin.password.length < 8) {
-        this.showNotification(
-          "Password must be at least 8 characters long",
-          "error"
-        );
+        this.showNotification('Password must be at least 8 characters long', 'error');
         return;
       }
 
       if (this.admin.password !== this.admin.confirm_password) {
-        this.showNotification("Passwords do not match", "error");
+        this.showNotification('Passwords do not match', 'error');
         return;
       }
 
       this.submitting = true;
 
       try {
-        const response = await fetch(
-          "/schoolmanagementsystem/api/admin_setup_api.php",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              action: "create_school_and_admin",
-              school: this.school,
-              admin: {
-                name: {
-                  surname: this.admin.name.surname,
-                  firstname: this.admin.name.firstname,
-                  othername: this.admin.name.othername,
-                },
-                email: this.admin.email,
-                password: this.admin.password,
+        const response = await fetch('/schoolManagementSystem/api/admin_setup_api.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'create_school_and_admin',
+            school: this.school,
+            admin: {
+              name: {
+                surname: this.admin.name.surname,
+                firstname: this.admin.name.firstname,
+                othername: this.admin.name.othername,
               },
-            }),
-          }
-        );
+              email: this.admin.email,
+              password: this.admin.password,
+            },
+          }),
+        });
 
-        const data = await response.json();
-        console.log(data);
+        const responseText = await response.text();
 
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch (e) {
+          console.log('Raw server response:', responseText);
+          this.showNotification('Server error - check console', 'error');
+          return;
+        }
         if (data.success) {
           this.setupResult = data.data;
           this.success = true;
-          this.showNotification("Setup completed successfully!", "success");
+          this.showNotification('Setup completed successfully!', 'success');
         } else {
-          this.showNotification(data.message || "Setup failed", "error");
+          this.showNotification(data.message || 'Setup failed', 'error');
         }
       } catch (error) {
-        this.showNotification("Error: " + error.message, "error");
+        console.log(error);
+        console.log(error.message);
+        this.showNotification('Error: ' + error.message, 'error');
       } finally {
         this.submitting = false;
       }

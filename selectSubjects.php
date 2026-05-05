@@ -1,6 +1,5 @@
 <?php 
-// session_start();
-// include '../includes/dbh.inc.php';
+require_once __DIR__ . '/config/bootstrap.php';
 include '../components/header.php';
 include '../components/logoutDialogue.php';
 
